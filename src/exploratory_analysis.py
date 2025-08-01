@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from src.config import RAW_DATA_FILE, CLEAN_DATA_FILE
+from src.id_mapping_utils import IDMappingUtils
 
 
 class ExploratoryDataAnalysis:
@@ -21,6 +22,15 @@ class ExploratoryDataAnalysis:
         """
         self.data_path = data_path or RAW_DATA_FILE
         self.df = None
+        self.id_mapper = IDMappingUtils()
+        
+        # Carregar mapeamentos de IDs
+        try:
+            self.id_mapper.load_mappings()
+            print("Mapeamentos de IDs carregados para análise exploratória!")
+        except Exception as e:
+            print(f"Aviso: Não foi possível carregar mapeamentos de IDs: {e}")
+            self.id_mapper = None
         
     def load_data(self):
         """Carrega os dados do arquivo CSV"""
@@ -171,6 +181,60 @@ class ExploratoryDataAnalysis:
         specialty_counts = self.df['medical_specialty'].value_counts().head(10)
         print(specialty_counts)
     
+    def analyze_id_mappings(self):
+        """Analisa dados com mapeamentos de IDs aplicados"""
+        print("\n" + "="*60)
+        print("ANÁLISE DE MAPEAMENTOS DE IDs")
+        print("="*60)
+        
+        if self.id_mapper is None:
+            print("Mapeamentos de IDs não disponíveis.")
+            return
+        
+        # Aplicar mapeamentos temporariamente para análise
+        df_with_mappings = self.id_mapper.apply_mappings_to_dataframe(self.df)
+        
+        # Analisar admission_type
+        if 'admission_type_desc' in df_with_mappings.columns:
+            print("\nTIPOS DE ADMISSÃO:")
+            admission_analysis = df_with_mappings.groupby('admission_type_desc').agg({
+                'target': ['count', 'mean']
+            }).round(3)
+            admission_analysis.columns = ['Total_Casos', 'Taxa_Readmissao']
+            print(admission_analysis.sort_values('Taxa_Readmissao', ascending=False))
+        
+        # Analisar discharge_disposition
+        if 'discharge_disposition_desc' in df_with_mappings.columns:
+            print("\nDISPOSIÇÃO DE ALTA:")
+            discharge_analysis = df_with_mappings.groupby('discharge_disposition_desc').agg({
+                'target': ['count', 'mean']
+            }).round(3)
+            discharge_analysis.columns = ['Total_Casos', 'Taxa_Readmissao']
+            # Mostrar apenas os 10 mais comuns
+            top_discharges = discharge_analysis.sort_values('Total_Casos', ascending=False).head(10)
+            print(top_discharges)
+        
+        # Analisar admission_source
+        if 'admission_source_desc' in df_with_mappings.columns:
+            print("\nFONTE DE ADMISSÃO:")
+            source_analysis = df_with_mappings.groupby('admission_source_desc').agg({
+                'target': ['count', 'mean']
+            }).round(3)
+            source_analysis.columns = ['Total_Casos', 'Taxa_Readmissao']
+            # Mostrar apenas os 10 mais comuns
+            top_sources = source_analysis.sort_values('Total_Casos', ascending=False).head(10)
+            print(top_sources)
+        
+        # Análise cruzada dos mapeamentos
+        if all(col in df_with_mappings.columns for col in ['admission_type_desc', 'discharge_disposition_desc']):
+            print("\nANÁLISE CRUZADA - TIPO DE ADMISSÃO x DISPOSIÇÃO DE ALTA:")
+            cross_analysis = pd.crosstab(
+                df_with_mappings['admission_type_desc'],
+                df_with_mappings['discharge_disposition_desc'],
+                margins=True
+            )
+            print(cross_analysis.head())
+    
     def analyze_medication_data(self):
         """Analisa dados de medicamentos"""
         print("\n" + "="*60)
@@ -226,6 +290,7 @@ class ExploratoryDataAnalysis:
         self.analyze_missing_data()
         self.analyze_demographic_data()
         self.analyze_medical_data()
+        self.analyze_id_mappings()  # Nova análise de mapeamentos
         self.analyze_medication_data()
         
         print("\n" + "="*80)

@@ -26,3 +26,21 @@ RANDOM_STATE = 42
 
 # Configurações de avaliação
 CLASSIFICATION_METRICS = ['accuracy', 'precision', 'recall', 'f1', 'roc_auc']
+
+# Arquivos de modelos
+MODELS_DIR = os.path.join(PROJECT_ROOT, 'models')
+RESULTS_DIR = os.path.join(PROJECT_ROOT, 'results')
+
+# Arquivos de dados para modelagem
+X_TRAIN_FILE = os.path.join(DATA_DIR, 'X_train.csv')
+X_TEST_FILE = os.path.join(DATA_DIR, 'X_test.csv')
+Y_TRAIN_FILE = os.path.join(DATA_DIR, 'y_train.csv')
+Y_TEST_FILE = os.path.join(DATA_DIR, 'y_test.csv')
+
+# Configurações de Regressão Logística
+LOGISTIC_REGRESSION_CONFIG = {
+    'random_state': RANDOM_STATE,
+    'max_iter': 1000,
+    'solver': 'liblinear',
+    'class_weight': 'balanced'  # Para lidar com desbalanceamento
+}
