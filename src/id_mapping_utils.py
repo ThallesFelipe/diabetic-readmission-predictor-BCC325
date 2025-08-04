@@ -5,6 +5,7 @@ Este módulo enriquece os dados com descrições legíveis dos códigos IDs
 
 import pandas as pd
 import os
+from io import StringIO
 
 # Import condicional para config
 try:
@@ -29,7 +30,7 @@ class IDMappingUtils:
         
     def load_mappings(self):
         """
-        Carrega todos os mapeamentos do arquivo IDS_mapping.csv
+        Carrega todos os mapeamentos do arquivo IDS_mapping.csv de forma robusta usando pandas.
         
         Returns:
             dict: Dicionário com os mapeamentos para cada tipo de ID
@@ -39,59 +40,47 @@ class IDMappingUtils:
         if not os.path.exists(self.mapping_file_path):
             raise FileNotFoundError(f"Arquivo de mapeamento não encontrado: {self.mapping_file_path}")
         
-        # Ler o arquivo linha por linha
-        with open(self.mapping_file_path, 'r', encoding='utf-8') as file:
-            lines = file.readlines()
+        with open(self.mapping_file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
         
-        current_mapping = None
-        current_dict = {}
+        # Encontrar as linhas que definem o início de cada tabela de mapeamento
+        header_indices = [i for i, line in enumerate(lines) if '_id,description' in line]
         
-        for line in lines:
-            line = line.strip()
+        for i, start_index in enumerate(header_indices):
+            # O nome do mapeamento vem da linha de cabeçalho
+            header_line = lines[start_index].strip()
+            mapping_name = header_line.split(',')[0].replace('_id', '')
             
-            # Linha vazia indica fim de uma seção
-            if not line or line == ',':
-                if current_mapping and current_dict:
-                    self.mappings[current_mapping] = current_dict
-                    print(f"Carregado mapeamento para '{current_mapping}': {len(current_dict)} itens")
-                current_mapping = None
-                current_dict = {}
+            # O fim do bloco é o início do próximo bloco ou o fim do arquivo
+            end_index = header_indices[i+1] if i + 1 < len(header_indices) else len(lines)
+            
+            # Extrair as linhas de dados para este bloco
+            data_lines = lines[start_index + 1 : end_index]
+            
+            # Filtrar linhas vazias
+            csv_block = [line for line in data_lines if line.strip() and line.strip() != ',']
+            
+            if not csv_block:
+                print(f"Nenhum dado encontrado para o mapeamento '{mapping_name}'")
                 continue
             
-            # Verificar se é uma linha de cabeçalho (contém "_id,description")
-            if '_id,description' in line:
-                # Novo tipo de mapeamento
-                id_column = line.split(',')[0].strip()
-                current_mapping = id_column.replace('_id', '') if id_column.endswith('_id') else id_column
-                current_dict = {}
-                continue
+            # Usar pandas para ler o bloco de CSV
+            # O StringIO trata uma lista de strings como se fosse um arquivo
+            df_map = pd.read_csv(StringIO("".join(csv_block)), header=None, names=['id', 'description'])
             
-            # Linha de dados
-            if current_mapping is not None:
-                # Encontrar a primeira vírgula para separar ID da descrição
-                comma_index = line.find(',')
-                if comma_index == -1:
-                    continue
-                    
-                id_part = line[:comma_index].strip()
-                desc_part = line[comma_index + 1:].strip()
-                
-                # Verificar se temos ID válido
-                if not id_part or not desc_part:
-                    continue
-                    
-                try:
-                    id_value = int(id_part)
-                    # Remover aspas se houver
-                    description = desc_part.strip(' "')
-                    current_dict[id_value] = description
-                except ValueError:
-                    continue
-        
-        # Adicionar o último mapeamento se existir
-        if current_mapping and current_dict:
-            self.mappings[current_mapping] = current_dict
-            print(f"Carregado mapeamento para '{current_mapping}': {len(current_dict)} itens")
+            # Criar o dicionário de mapeamento
+            # pd.to_numeric com errors='coerce' transforma o que não for número em NaN, que é então filtrado
+            df_map['id'] = pd.to_numeric(df_map['id'], errors='coerce')
+            df_map.dropna(subset=['id'], inplace=True)
+            df_map['id'] = df_map['id'].astype(int)
+            
+            # Remover aspas das descrições se houver
+            df_map['description'] = df_map['description'].str.strip(' "')
+            
+            mapping_dict = pd.Series(df_map.description.values, index=df_map.id).to_dict()
+            
+            self.mappings[mapping_name] = mapping_dict
+            print(f"Carregado mapeamento para '{mapping_name}': {len(mapping_dict)} itens")
         
         print(f"Total de mapeamentos carregados: {len(self.mappings)}")
         return self.mappings
@@ -136,17 +125,20 @@ class IDMappingUtils:
                 # Aplicar mapeamento
                 df_enriched[desc_column] = df_enriched[id_column].map(mapping_dict)
                 
-                # Contar valores mapeados
-                mapped_count = df_enriched[desc_column].notna().sum()
+                # Preencher valores não mapeados com um valor padrão
+                df_enriched[desc_column] = df_enriched[desc_column].fillna('Unknown')
+                
+                # Contar valores mapeados (antes de preencher com 'Unknown')
+                mapped_count = df_enriched[id_column].isin(mapping_dict.keys()).sum()
                 total_count = len(df_enriched)
                 
                 print(f"Aplicado mapeamento '{mapping_type}': {mapped_count}/{total_count} valores mapeados")
                 applied_mappings.append(mapping_type)
                 
                 # Verificar valores não mapeados
-                unmapped = df_enriched[df_enriched[desc_column].isna()][id_column].unique()
-                if len(unmapped) > 0:
-                    print(f"  Valores não mapeados em {id_column}: {sorted(unmapped)}")
+                unmapped_ids = df_enriched[~df_enriched[id_column].isin(mapping_dict.keys())][id_column].unique()
+                if len(unmapped_ids) > 0:
+                    print(f"  Valores não mapeados em {id_column}: {sorted(unmapped_ids)} (preenchidos com 'Unknown')")
         
         print(f"Mapeamentos aplicados: {applied_mappings}")
         return df_enriched
