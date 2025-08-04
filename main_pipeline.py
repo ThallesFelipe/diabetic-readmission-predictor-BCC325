@@ -221,11 +221,6 @@ def print_pipeline_summary(X_train, X_test, y_train, y_test, lr_model, execution
     
     print(f"\n⏱️ TEMPO DE EXECUÇÃO: {execution_time:.1f} segundos")
     
-    print(f"\n🔬 INTERPRETAÇÃO CLÍNICA:")
-    print(f"   • O modelo pode auxiliar na identificação de pacientes com maior risco")
-    print(f"   • Útil para otimização de recursos hospitalares e cuidados preventivos")
-    print(f"   • Recomenda-se validação adicional com dados mais recentes")
-    
     print(f"\n🚀 PRÓXIMOS PASSOS SUGERIDOS:")
     print(f"   • Implementar Random Forest e XGBoost para comparação")
     print(f"   • Validação cruzada mais robusta")

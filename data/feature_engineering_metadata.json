@@ -1,0 +1,266 @@
+{
+  "columns_removed": [
+    "encounter_id",
+    "patient_nbr",
+    "readmitted",
+    "diag_1",
+    "diag_2",
+    "diag_3",
+    "admission_type_id",
+    "discharge_disposition_id",
+    "admission_source_id"
+  ],
+  "high_cardinality_columns": [
+    [
+      "medical_specialty",
+      69
+    ]
+  ],
+  "encoding_stats": {
+    "race": {
+      "original_categories": 6,
+      "final_categories": 6,
+      "grouped": false
+    },
+    "gender": {
+      "original_categories": 3,
+      "final_categories": 3,
+      "grouped": false
+    },
+    "age": {
+      "original_categories": 10,
+      "final_categories": 10,
+      "grouped": false
+    },
+    "medical_specialty": {
+      "original_categories": 69,
+      "final_categories": 69,
+      "grouped": false
+    },
+    "max_glu_serum": {
+      "original_categories": 3,
+      "final_categories": 3,
+      "grouped": false
+    },
+    "A1Cresult": {
+      "original_categories": 3,
+      "final_categories": 3,
+      "grouped": false
+    },
+    "metformin": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "repaglinide": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "nateglinide": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "chlorpropamide": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "glimepiride": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "acetohexamide": {
+      "original_categories": 1,
+      "final_categories": 1,
+      "grouped": false
+    },
+    "glipizide": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "glyburide": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "tolbutamide": {
+      "original_categories": 2,
+      "final_categories": 2,
+      "grouped": false
+    },
+    "pioglitazone": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "rosiglitazone": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "acarbose": {
+      "original_categories": 3,
+      "final_categories": 3,
+      "grouped": false
+    },
+    "miglitol": {
+      "original_categories": 3,
+      "final_categories": 3,
+      "grouped": false
+    },
+    "troglitazone": {
+      "original_categories": 2,
+      "final_categories": 2,
+      "grouped": false
+    },
+    "tolazamide": {
+      "original_categories": 2,
+      "final_categories": 2,
+      "grouped": false
+    },
+    "examide": {
+      "original_categories": 1,
+      "final_categories": 1,
+      "grouped": false
+    },
+    "citoglipton": {
+      "original_categories": 1,
+      "final_categories": 1,
+      "grouped": false
+    },
+    "insulin": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "glyburide-metformin": {
+      "original_categories": 4,
+      "final_categories": 4,
+      "grouped": false
+    },
+    "glipizide-metformin": {
+      "original_categories": 2,
+      "final_categories": 2,
+      "grouped": false
+    },
+    "glimepiride-pioglitazone": {
+      "original_categories": 1,
+      "final_categories": 1,
+      "grouped": false
+    },
+    "metformin-rosiglitazone": {
+      "original_categories": 2,
+      "final_categories": 2,
+      "grouped": false
+    },
+    "metformin-pioglitazone": {
+      "original_categories": 1,
+      "final_categories": 1,
+      "grouped": false
+    },
+    "change": {
+      "original_categories": 2,
+      "final_categories": 2,
+      "grouped": false
+    },
+    "diabetesMed": {
+      "original_categories": 2,
+      "final_categories": 2,
+      "grouped": false
+    },
+    "admission_type_desc": {
+      "original_categories": 8,
+      "final_categories": 8,
+      "grouped": false
+    },
+    "discharge_disposition_desc": {
+      "original_categories": 16,
+      "final_categories": 16,
+      "grouped": false
+    },
+    "admission_source_desc": {
+      "original_categories": 17,
+      "final_categories": 17,
+      "grouped": false
+    }
+  },
+  "feature_stats": {
+    "total_features": 182,
+    "numeric_features": 12,
+    "binary_features": 172,
+    "categorical_features": 2,
+    "missing_data_features": 0
+  },
+  "scaling_info": {
+    "applied": true,
+    "n_features_scaled": 9,
+    "features_scaled": [
+      "time_in_hospital",
+      "num_lab_procedures",
+      "num_procedures",
+      "num_medications",
+      "number_outpatient",
+      "number_emergency",
+      "number_inpatient",
+      "number_diagnoses",
+      "total_procedures"
+    ],
+    "scaler_params": {
+      "mean": [
+        3.746514334576376,
+        42.015557825229806,
+        1.4411771691883803,
+        14.64228878173915,
+        0.2706824065936676,
+        0.10928481508752762,
+        0.2066934277095556,
+        7.019999524951901,
+        56.65784660696895
+      ],
+      "scale": [
+        2.688912621519004,
+        19.703557547669146,
+        1.8018882182392861,
+        7.697662314496897,
+        1.0464759114841173,
+        0.5539723464037605,
+        0.6446737411204496,
+        2.055263426038011,
+        22.906549577527812
+      ]
+    },
+    "train_stats_after": {
+      "mean_max": 2.1467669648864573e-16,
+      "std_mean": 1.0000118764140358
+    }
+  },
+  "timestamp": "2025-08-04T19:54:41.136709",
+  "pipeline_config": {
+    "high_cardinality_threshold": 50,
+    "stratify_enabled": true,
+    "test_size": 0.2,
+    "random_state": 42
+  },
+  "data_info": {
+    "original_shape": [
+      52627,
+      56
+    ],
+    "processed_shape": [
+      52627,
+      47
+    ],
+    "final_train_shape": [
+      42101,
+      182
+    ],
+    "final_test_shape": [
+      10526,
+      182
+    ]
+  }
+}
