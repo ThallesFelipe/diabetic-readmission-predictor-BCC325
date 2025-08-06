@@ -1,23 +1,33 @@
 """
-Módulo para engenharia de features e preparação dos dados para modelagem
+Módulo de Engenharia de Features e Preparação de Dados para Machine Learning
 
-Este módulo implementa o pipeline completo de Feature Engineering para o projeto
-de predição de readmissão hospitalar diabética, incluindo:
+Este módulo implementa o pipeline completo e profissional de Feature Engineering
+para o sistema de predição de readmissão hospitalar diabética, incluindo:
 
-1. Carregamento e validação de dados limpos
-2. Remoção de colunas desnecessárias para modelagem
-3. Identificação e tratamento de colunas categóricas e numéricas
-4. One-Hot Encoding com controle de alta cardinalidade
-5. Divisão estratificada dos dados
-6. Validações e estatísticas detalhadas
-7. Salvamento dos conjuntos finais
+Funcionalidades de Transformação:
+1. Carregamento e validação rigorosa de dados limpos
+2. Remoção inteligente de colunas desnecessárias para modelagem
+3. Identificação automática e tratamento de colunas categóricas e numéricas
+4. One-Hot Encoding otimizado com controle de alta cardinalidade
+5. Divisão estratificada e balanceada dos dados
+6. Escalonamento e normalização de features numéricas
+7. Validações estatísticas e verificações de qualidade
+8. Geração de relatórios detalhados de transformações
+9. Salvamento organizado dos conjuntos finais
+10. Pipeline sklearn compatível para produção
 
-Pré-requisitos:
+Pré-requisitos Técnicos:
 - Dados limpos em formato CSV com coluna 'target' binária (0/1)
-- Arquivo de configuração (config.py) com parâmetros apropriados
+- Arquivo de configuração (config.py) com parâmetros adequados
 - Estrutura de diretórios definida (data/, results/, models/)
 
-Autor: Projeto BCC325 - Inteligência Artificial UFOP
+Autor: Thalles Felipe Rodrigues de Almeida Santos
+Projeto: Predição de Readmissão Hospitalar em Pacientes com Diabetes Usando Aprendizado de Máquina
+Instituição: Universidade Federal de Ouro Preto (UFOP)
+Disciplina: Inteligência Artificial
+Professor: Jadson Castro Gertrudes
+Data: Agosto 2025
+
 """
 
 import pandas as pd
@@ -808,10 +818,22 @@ class FeatureEngineer:
             try:
                 # Tentar recarregar para validar
                 test_df = pd.read_csv(info['path'])
-                if test_df.shape != info['shape']:
-                    logging.warning(f"⚠️ Tamanho inconsistente para {filename}")
+                
+                # Para arquivos y_, ajustar validação (Series foram salvos como DataFrame com header)
+                if 'y_' in filename:
+                    # Comparar apenas o número de linhas (shape original é Series)
+                    expected_rows = info['shape'][0]
+                    actual_rows = test_df.shape[0]
+                    if actual_rows != expected_rows:
+                        logging.warning(f"⚠️ Tamanho inconsistente para {filename}: esperado {expected_rows} linhas, encontrado {actual_rows}")
+                    else:
+                        logging.info(f"✅ {filename} validado ({actual_rows} linhas)")
                 else:
-                    logging.info(f"✅ {filename} validado")
+                    # Para outros arquivos, comparar shape completo
+                    if test_df.shape != info['shape']:
+                        logging.warning(f"⚠️ Tamanho inconsistente para {filename}: esperado {info['shape']}, encontrado {test_df.shape}")
+                    else:
+                        logging.info(f"✅ {filename} validado")
             except Exception as e:
                 logging.error(f"❌ Erro na validação de {filename}: {e}")
         

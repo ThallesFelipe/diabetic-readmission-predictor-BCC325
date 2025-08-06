@@ -1,20 +1,26 @@
 """
-Script principal para execução do pipeline completo de análise de readmissão hospitalar diabética
+Pipeline Principal de Análise de Readmissão Hospitalar Diabética
 
-Este script executa todas as etapas do projeto:
-1. Análise exploratória dos dados
-2. Limpeza e pré-processamento dos dados  
-3. Engenharia de features e preparação para modelagem
-4. Treinamento e avaliação do modelo de Regressão Logística
-5. Geração de relatórios e visualizações
+Este script orquestra a execução completa do pipeline de Machine Learning, incluindo:
+1. Análise Exploratória de Dados (EDA) - Compreensão inicial dos padrões
+2. Limpeza e Pré-processamento - Tratamento de dados faltantes e inconsistências  
+3. Engenharia de Features - Transformação e preparação para modelagem
+4. Treinamento de Modelos ML - Regressão Logística e Random Forest
+5. Avaliação e Validação - Métricas de performance e visualizações
+6. Geração de Relatórios - Documentação completa dos resultados
 
-Uso:
-    python main_pipeline.py                # Pipeline completo
+Modos de Execução:
+    python main_pipeline.py                # Pipeline completo com otimizações
     python main_pipeline.py --demo        # Demonstração rápida (apenas modelagem)
     python main_pipeline.py --fast        # Pipeline completo sem otimização de hiperparâmetros
 
-Autor: Projeto BCC325 - Inteligência Artificial UFOP
-Data: 2025
+Autor: Thalles Felipe Rodrigues de Almeida Santos
+Projeto: Predição de Readmissão Hospitalar em Pacientes com Diabetes Usando Aprendizado de Máquina
+Instituição: Universidade Federal de Ouro Preto (UFOP)
+Disciplina: Inteligência Artificial
+Professor: Jadson Castro Gertrudes
+Data: Agosto 2025
+
 """
 
 import os
@@ -49,7 +55,7 @@ def print_pipeline_header():
     """Imprime cabeçalho do pipeline"""
     print("🏥" + "="*70 + "🏥")
     print("    PIPELINE COMPLETO DE ANÁLISE DE READMISSÃO HOSPITALAR DIABÉTICA")
-    print("    Projeto: BCC325 - Inteligência Artificial - UFOP")
+    print("    Projeto: Predição de Readmissão Hospitalar em Pacientes com Diabetes Usando Aprendizado de Máquina")
     print("    Dataset: UCI Diabetes 130-US hospitals (1999-2008)")
     print("    Objetivo: Predizer readmissão em < 30 dias")
     print("🏥" + "="*70 + "🏥")
@@ -145,22 +151,25 @@ def run_feature_engineering():
 
 
 def run_machine_learning_models(fast_mode=False):
-    """Executa treinamento e avaliação do modelo de Regressão Logística"""
+    """Executa treinamento e avaliação de modelos de Machine Learning"""
     print_stage_header(4, "Modelagem de Machine Learning", 
-                      "Treinamento e avaliação do modelo de Regressão Logística")
+                      "Treinamento e avaliação de múltiplos modelos preditivos")
+    
+    trained_models = {}
     
     try:
-        # Inicializar modelo de Regressão Logística
+        # 1. Regressão Logística
         print("🤖 Inicializando Regressão Logística...")
         lr_model = LogisticRegressionModel()
         
         # Executar pipeline completo do modelo (com ou sem otimização)
-        success = lr_model.run_complete_pipeline(
+        lr_success = lr_model.run_complete_pipeline(
             tune_hyperparams=not fast_mode,    # Otimizar hiperparâmetros apenas se não estiver em modo rápido
             optimize_threshold=True            # Sempre otimizar limiar de decisão
         )
         
-        if success:
+        if lr_success:
+            trained_models['logistic_regression'] = lr_model
             print(f"✅ Regressão Logística executada com sucesso!")
             
             # Mostrar métricas principais
@@ -171,20 +180,100 @@ def run_machine_learning_models(fast_mode=False):
                 print(f"   📈 Recall: {metrics.get('recall', 0):.1%}")
                 print(f"   📈 F1-Score: {metrics.get('f1', 0):.1%}")
                 print(f"   📈 ROC-AUC: {metrics.get('roc_auc', 0):.3f}")
-                
-            print(f"   💾 Modelo salvo em: {MODELS_DIR}")
-            print(f"   📊 Resultados salvos em: {RESULTS_DIR}")
             
-            if fast_mode:
-                print(f"   ⚡ Modo rápido: hiperparâmetros padrão utilizados")
-            
-            return lr_model
         else:
             print(f"❌ Erro na execução da Regressão Logística")
-            return None
+        
+        # 2. Random Forest
+        print("\n🌲 Inicializando Random Forest...")
+        
+        try:
+            from src.random_forest_model import RandomForestModel
+            
+            rf_model = RandomForestModel()
+            
+            if fast_mode:
+                print("⚡ Modo rápido: configurações otimizadas sem busca")
+                # Configurar para demo rápida
+                rf_model.model_config.update({
+                    'n_estimators': 200,
+                    'max_depth': 12,
+                    'min_samples_split': 8,
+                    'min_samples_leaf': 3
+                })
+                rf_success = rf_model.run_complete_pipeline(
+                    tune_hyperparams=False,
+                    optimize_threshold=True,
+                    cv_folds=3
+                )
+            else:
+                rf_success = rf_model.run_complete_pipeline(
+                    tune_hyperparams=True,
+                    method='random_search',
+                    optimize_threshold=True
+                )
+            
+            if rf_success:
+                trained_models['random_forest'] = rf_model
+                print(f"✅ Random Forest executado com sucesso!")
+                print(f"   📈 Accuracy: {rf_model.metrics['accuracy']:.1%}")
+                print(f"   📈 Precision: {rf_model.metrics['precision']:.1%}")
+                print(f"   📈 Recall: {rf_model.metrics['recall']:.1%}")
+                print(f"   📈 F1-Score: {rf_model.metrics['f1']:.1%}")
+                print(f"   📈 ROC-AUC: {rf_model.metrics['roc_auc']:.3f}")
+                if rf_model.oob_score:
+                    print(f"   📈 OOB Score: {rf_model.oob_score:.3f}")
+            else:
+                print(f"❌ Erro na execução do Random Forest")
+                
+        except ImportError as e:
+            print(f"⚠️ Random Forest não disponível: {e}")
+        except Exception as e:
+            print(f"❌ Erro no Random Forest: {e}")
+            import traceback
+            traceback.print_exc()
+        
+        # Comparação de modelos (se múltiplos foram treinados)
+        if len(trained_models) > 1:
+            print(f"\n📊 COMPARAÇÃO DE MODELOS:")
+            print(f"{'='*70}")
+            print(f"{'Modelo':<20}{'Accuracy':<12}{'Precision':<12}{'Recall':<12}{'F1-Score':<12}{'ROC-AUC':<12}")
+            print(f"{'='*70}")
+            
+            for model_name, model in trained_models.items():
+                name_display = model_name.replace('_', ' ').title()
+                if hasattr(model, 'metrics'):
+                    acc = model.metrics.get('accuracy', 0)
+                    prec = model.metrics.get('precision', 0)
+                    rec = model.metrics.get('recall', 0)
+                    f1 = model.metrics.get('f1', 0)
+                    auc = model.metrics.get('roc_auc', 0)
+                elif hasattr(model, 'evaluation_results'):
+                    metrics = model.evaluation_results
+                    acc = metrics.get('accuracy', 0)
+                    prec = metrics.get('precision', 0)
+                    rec = metrics.get('recall', 0)
+                    f1 = metrics.get('f1', 0)
+                    auc = metrics.get('roc_auc', 0)
+                else:
+                    acc = prec = rec = f1 = auc = 0
+                    
+                print(f"{name_display:<20}{acc:<12.4f}{prec:<12.4f}{rec:<12.4f}{f1:<12.4f}{auc:<12.4f}")
+        
+        print(f"\n💾 Modelos salvos em: {MODELS_DIR}")
+        print(f"📊 Resultados salvos em: {RESULTS_DIR}")
+        
+        if fast_mode:
+            print(f"⚡ Modo rápido: hiperparâmetros padrão utilizados")
+        
+        # Retornar o primeiro modelo para compatibilidade
+        return trained_models.get('logistic_regression') or trained_models.get('random_forest')
             
     except Exception as e:
-        print(f"❌ Erro no treinamento do modelo: {e}")
+        print(f"❌ Erro no treinamento dos modelos: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
         raise
 
 

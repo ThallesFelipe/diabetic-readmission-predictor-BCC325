@@ -1,6 +1,33 @@
 """
-Utilitário para carregar e aplicar mapeamentos de IDs do arquivo IDS_mapping.csv
-Este módulo enriquece os dados com descrições legíveis dos códigos IDs
+Utilitário de Mapeamento de IDs e Enriquecimento de Dados Médicos
+
+Este módulo fornece funcionalidades robustas e profissionais para carregar e aplicar
+mapeamentos de IDs do sistema hospitalar, enriquecendo os dados com descrições legíveis
+e validações de consistência.
+
+Funcionalidades Principais:
+- Carregamento inteligente de mapeamentos do arquivo IDS_mapping.csv
+- Aplicação automática de mapeamentos com validação de integridade
+- Enriquecimento de dados com descrições humanamente legíveis
+- Validação de consistência e identificação de códigos órfãos
+- Relatórios detalhados de qualidade dos mapeamentos
+- Tratamento robusto de erros e dados inconsistentes
+- Suporte para múltiplos tipos de mapeamento simultâneos
+- Logging detalhado de operações de transformação
+- Validação de completude e cobertura dos mapeamentos
+
+Tipos de Mapeamento Suportados:
+- admission_type_id: Tipos de admissão hospitalar
+- discharge_disposition_id: Tipos de alta hospitalar  
+- admission_source_id: Origens de admissão
+
+Autor: Thalles Felipe Rodrigues de Almeida Santos
+Projeto: Predição de Readmissão Hospitalar em Pacientes com Diabetes Usando Aprendizado de Máquina
+Instituição: Universidade Federal de Ouro Preto (UFOP)
+Disciplina: Inteligência Artificial
+Professor: Jadson Castro Gertrudes
+Data: Agosto 2025
+
 """
 
 import pandas as pd

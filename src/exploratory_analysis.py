@@ -1,13 +1,40 @@
 """
-Módulo para análise exploratória dos dados de readmissão hospitalar diabética
+Módulo de Análise Exploratória de Dados Médicos Avançada
 
-Este módulo implementa uma análise exploratória completa com visualizações gráficas,
-estatísticas descritivas detalhadas e análises de relações entre variáveis.
+Este módulo implementa uma análise exploratória completa e profissional para
+o sistema de predição de readmissão hospitalar diabética, fornecendo:
+
+Funcionalidades de Análise:
+- Estatísticas descritivas detalhadas e distribuições
+- Visualizações gráficas interativas e profissionais
+- Análise de correlações e relações entre variáveis
+- Análise temporal e de padrões sazonais
+- Estudo de variáveis categóricas e numéricas
+- Análise de dados faltantes e qualidade dos dados
+- Análise de diagnósticos médicos e medicações
+- Análise demográfica e de características dos pacientes
+- Geração automatizada de relatórios HTML
+- Visualizações específicas para dados médicos
+- Insights estatísticos e recomendações
+
+Autor: Thalles Felipe Rodrigues de Almeida Santos
+Projeto: Predição de Readmissão Hospitalar em Pacientes com Diabetes Usando Aprendizado de Máquina
+Instituição: Universidade Federal de Ouro Preto (UFOP)
+Disciplina: Inteligência Artificial
+Professor: Jadson Castro Gertrudes
+Data: Agosto 2025
+
 """
 
 import pandas as pd
 import numpy as np
+
+# Configurar matplotlib ANTES de importar pyplot para evitar problemas de thread
+import matplotlib
+matplotlib.use('Agg')  # Backend não-interativo
 import matplotlib.pyplot as plt
+plt.ioff()  # Desabilitar modo interativo
+
 import seaborn as sns
 import os
 import warnings
@@ -15,11 +42,15 @@ import sys
 from datetime import datetime
 from scipy import stats
 
+# Configurações específicas do matplotlib para Windows
+matplotlib.rcParams['backend'] = 'Agg'
+
 # Adicionar o diretório pai ao path para importações
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.config import RAW_DATA_FILE, CLEAN_DATA_FILE, RESULTS_DIR
 from src.id_mapping_utils import IDMappingUtils
+from src.visualization_utils import ProfessionalVisualizer
 
 # Configurações de visualização
 plt.style.use('seaborn-v0_8')
@@ -104,7 +135,7 @@ class ExploratoryDataAnalysis:
         print(self.df.head())
         
     def analyze_target_variable(self):
-        """Analisa a variável alvo 'readmitted' com visualizações"""
+        """Analisa a variável alvo 'readmitted' com visualizações profissionais"""
         print("\n" + "="*60)
         print("ANÁLISE DA VARIÁVEL ALVO")
         print("="*60)
@@ -149,68 +180,8 @@ class ExploratoryDataAnalysis:
             print("⚠️  Sem dados válidos para visualização da variável target")
             return
         
-        # Visualizações
-        fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-        
-        # Gráfico de barras - readmitted
-        ax1 = axes[0]
-        order = ['NO', '>30', '<30']
-        # Filtrar apenas valores que existem nos dados
-        available_order = [val for val in order if val in readmitted_counts.index]
-        
-        if available_order:
-            sns.countplot(data=self.df, x='readmitted', order=available_order, ax=ax1)
-            ax1.set_title('Distribuição da Variável Readmitted', fontsize=14, fontweight='bold')
-            ax1.set_xlabel('Status de Readmissão')
-            ax1.set_ylabel('Contagem')
-            
-            # Adicionar valores nas barras
-            for i, cat in enumerate(available_order):
-                if cat in readmitted_counts.index:
-                    v = readmitted_counts[cat]
-                    pct = readmitted_pct[cat] if cat in readmitted_pct.index else 0
-                    ax1.text(i, v + max(readmitted_counts.values)*0.01, f'{v:,}\n({pct:.1f}%)', 
-                            ha='center', va='bottom', fontweight='bold')
-        else:
-            ax1.text(0.5, 0.5, 'Dados insuficientes\npara visualização', 
-                    ha='center', va='center', transform=ax1.transAxes)
-        
-        # Gráfico de pizza - target binário
-        ax2 = axes[1]
-        target_counts = self.df['target'].value_counts()
-        if len(target_counts) > 1:
-            labels = ['Não Readmitido (<30d)', 'Readmitido (<30d)']
-            colors = ['lightblue', 'salmon']
-            wedges, texts, autotexts = ax2.pie(target_counts.values, labels=labels, 
-                                              autopct='%1.1f%%', colors=colors, startangle=90)
-            ax2.set_title('Distribuição da Variável Target\n(Readmissão <30 dias)', 
-                         fontsize=14, fontweight='bold')
-        else:
-            ax2.text(0.5, 0.5, 'Dados de target\ninsuficientes', 
-                    ha='center', va='center', transform=ax2.transAxes)
-        
-        # Gráfico de barras horizontais - comparação
-        ax3 = axes[2]
-        comparison_data = pd.DataFrame({
-            'Categoria': ['Total de Casos', 'Readmissões <30d', 'Readmissões >30d', 'Não Readmitidos'],
-            'Valor': [len(self.df), 
-                     (self.df['readmitted'] == '<30').sum(),
-                     (self.df['readmitted'] == '>30').sum(),
-                     (self.df['readmitted'] == 'NO').sum()]
-        })
-        
-        bars = ax3.barh(comparison_data['Categoria'], comparison_data['Valor'], 
-                       color=['darkblue', 'red', 'orange', 'green'])
-        ax3.set_title('Comparação de Categorias', fontsize=14, fontweight='bold')
-        ax3.set_xlabel('Número de Casos')
-        
-        # Adicionar valores nas barras
-        for i, (bar, value) in enumerate(zip(bars, comparison_data['Valor'])):
-            ax3.text(value + max(comparison_data['Valor'])*0.01, i, f'{value:,}', 
-                    va='center', fontweight='bold')
-        
-        plt.tight_layout()
-        self.save_figure(fig, 'target_variable_analysis')
+        # Criar visualizações profissionais
+        self._create_target_variable_visualization(readmitted_counts, readmitted_pct)
         
         # Estatísticas detalhadas
         print(f"\n📊 ESTATÍSTICAS DETALHADAS:")
@@ -226,6 +197,98 @@ class ExploratoryDataAnalysis:
             print(f"  • Razão readmissão <30d / >30d: {ratio:.2f}")
         else:
             print(f"  • Razão readmissão <30d / >30d: N/A (sem readmissões >30d)")
+    
+    def _create_target_variable_visualization(self, readmitted_counts, readmitted_pct):
+        """Cria visualização profissional da variável target"""
+        # Inicializar o visualizador profissional
+        visualizer = ProfessionalVisualizer(save_dir=RESULTS_DIR)
+        
+        # Criar figura com 3 subplots
+        fig, axes = visualizer.create_figure(figsize=(18, 6), ncols=3)
+        
+        # 1. Gráfico de barras - readmitted
+        ax1 = axes[0]
+        order = ['NO', '>30', '<30']
+        available_order = [val for val in order if val in readmitted_counts.index]
+        
+        if available_order:
+            # Preparar dados
+            counts = [readmitted_counts[cat] for cat in available_order]
+            percentages = [readmitted_pct[cat] if cat in readmitted_pct.index else 0 for cat in available_order]
+            
+            # Cores profissionais
+            from src.visualization_utils import PROFESSIONAL_COLORS
+            colors = [PROFESSIONAL_COLORS['success'], 
+                     PROFESSIONAL_COLORS['warning'],
+                     PROFESSIONAL_COLORS['danger']][:len(available_order)]
+            
+            bars = ax1.bar(available_order, counts, color=colors, 
+                          edgecolor=PROFESSIONAL_COLORS['dark'], linewidth=1)
+            
+            ax1.set_title('Distribuição da Variável Readmitted', fontweight='bold', pad=20)
+            ax1.set_xlabel('Status de Readmissão', fontweight='bold')
+            ax1.set_ylabel('Contagem', fontweight='bold')
+            
+            # Adicionar valores nas barras
+            for i, (bar, count, pct) in enumerate(zip(bars, counts, percentages)):
+                height = bar.get_height()
+                ax1.text(bar.get_x() + bar.get_width()/2., height + max(counts)*0.01, 
+                        f'{count:,}\n({pct:.1f}%)', 
+                        ha='center', va='bottom', fontweight='bold', fontsize=10)
+        else:
+            ax1.text(0.5, 0.5, 'Dados insuficientes\npara visualização', 
+                    ha='center', va='center', transform=ax1.transAxes, fontsize=12)
+        
+        # 2. Gráfico de pizza - target binário
+        ax2 = axes[1]
+        target_counts = self.df['target'].value_counts()
+        if len(target_counts) > 1:
+            labels = ['Não Readmitido (<30d)', 'Readmitido (<30d)']
+            colors = [PROFESSIONAL_COLORS['primary'], 
+                     PROFESSIONAL_COLORS['danger']]
+            
+            wedges, texts, autotexts = ax2.pie(target_counts.values, labels=labels, 
+                                              autopct='%1.1f%%', colors=colors, 
+                                              startangle=90, textprops={'fontweight': 'bold'})
+            ax2.set_title('Distribuição da Variável Target\n(Readmissão <30 dias)', 
+                         fontweight='bold', pad=20)
+        else:
+            ax2.text(0.5, 0.5, 'Dados de target\ninsuficientes', 
+                    ha='center', va='center', transform=ax2.transAxes, fontsize=12)
+        
+        # 3. Gráfico de barras horizontais - comparação detalhada
+        ax3 = axes[2]
+        comparison_data = pd.DataFrame({
+            'Categoria': ['Total de Casos', 'Readmissões <30d', 'Readmissões >30d', 'Não Readmitidos'],
+            'Valor': [len(self.df), 
+                     (self.df['readmitted'] == '<30').sum(),
+                     (self.df['readmitted'] == '>30').sum(),
+                     (self.df['readmitted'] == 'NO').sum()]
+        })
+        
+        # Cores categóricas profissionais
+        bar_colors = [PROFESSIONAL_COLORS['info'],
+                     PROFESSIONAL_COLORS['danger'],
+                     PROFESSIONAL_COLORS['warning'],
+                     PROFESSIONAL_COLORS['success']]
+        
+        bars = ax3.barh(comparison_data['Categoria'], comparison_data['Valor'], 
+                       color=bar_colors, edgecolor=PROFESSIONAL_COLORS['dark'], 
+                       linewidth=0.5)
+        ax3.set_title('Comparação de Categorias', fontweight='bold', pad=20)
+        ax3.set_xlabel('Número de Casos', fontweight='bold')
+        
+        # Adicionar valores nas barras
+        for i, (bar, value) in enumerate(zip(bars, comparison_data['Valor'])):
+            width = bar.get_width()
+            ax3.text(width + max(comparison_data['Valor'])*0.01, 
+                    bar.get_y() + bar.get_height()/2, 
+                    f'{value:,}', va='center', fontweight='bold', fontsize=10)
+        
+        # Salvar figura
+        visualizer.save_figure(fig, 'target_variable_analysis',
+                              title='Análise da Variável Target - Readmissão Hospitalar',
+                              subtitle='Distribuição e Estatísticas da Variável de Interesse')
     
     def analyze_missing_data(self):
         """Analisa dados faltantes no dataset com visualizações"""

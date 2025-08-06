@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 """
 Script para validar a instalação e configuração do projeto
+
+Este script verifica se todos os pré-requisitos estão atendidos para execução
+do projeto de predição de readmissão hospitalar diabética.
+
+Autor: Thalles Felipe Rodrigues de Almeida Santos
+Projeto: Predição de Readmissão Hospitalar em Pacientes com Diabetes Usando Aprendizado de Máquina
+Data: Agosto 2025
+
 Uso: python scripts/validate_setup.py
 """
 

@@ -1,22 +1,29 @@
 """
-Módulo para limpeza e pré-processamento dos dados de readmissão hospitalar diabética
+Módulo de Limpeza e Pré-processamento de Dados Médicos
 
-Este módulo implementa uma pipeline robusta de limpeza de dados que inclui:
-- Criação de variável alvo binária
-- Remoção de pacientes expirados e transferidos
-- Tratamento abrangente de dados faltantes
+Este módulo implementa uma pipeline robusta e profissional de limpeza de dados para
+o sistema de predição de readmissão hospitalar diabética, incluindo:
+
+Funcionalidades Principais:
+- Criação de variável alvo binária otimizada
+- Remoção inteligente de pacientes expirados e transferidos
+- Tratamento abrangente e estatístico de dados faltantes
 - Remoção de duplicatas com preservação de informações históricas
-- Aplicação de mapeamentos de IDs com validação
-- Verificações de consistência de dados
-- Criação de features derivadas
-- Logging detalhado de operações
+- Aplicação de mapeamentos de IDs com validação rigorosa
+- Verificações automáticas de consistência de dados
+- Criação de features derivadas baseadas em conhecimento médico
+- Sistema de logging detalhado e auditoria completa
 - Validações pré e pós-processamento
-- Diagnósticos de qualidade dos dados
-- Tratamento flexível de configurações
+- Diagnósticos avançados de qualidade dos dados
+- Configurações flexíveis e modulares
 
-Versão: 2.0 - Aprimorada e totalmente funcional
-Autor: Projeto BCC325 - Inteligência Artificial UFOP
-Data: 2025
+Autor: Thalles Felipe Rodrigues de Almeida Santos
+Projeto: Predição de Readmissão Hospitalar em Pacientes com Diabetes Usando Aprendizado de Máquina
+Instituição: Universidade Federal de Ouro Preto (UFOP)
+Disciplina: Inteligência Artificial
+Professor: Jadson Castro Gertrudes
+Data: Agosto 2025
+
 """
 
 import pandas as pd

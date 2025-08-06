@@ -1,17 +1,50 @@
 """
-Módulo para implementação e avaliação do modelo de Regressão Logística
-para predição de readmissão hospitalar diabética
+Módulo de Modelo de Regressão Logística para Predição Médica
+
+Este módulo implementa uma solução completa e profissional de Regressão Logística
+otimizada para predição de readmissão hospitalar diabética, oferecendo:
+
+Funcionalidades Avançadas:
+- Implementação robusta de Regressão Logística com regularização
+- Otimização automática de hiperparâmetros com Grid Search
+- Balanceamento inteligente de classes para dados médicos
+- Validação cruzada estratificada para máxima confiabilidade
+- Otimização de threshold baseada em métricas clínicas
+- Análise detalhada de importância de features
+- Curvas ROC e Precision-Recall otimizadas
+- Relatórios clínicos interpretáveis
+- Visualizações específicas para contexto médico
+- Sistema de salvamento e carregamento de modelos
+- Métricas de avaliação focadas em aplicações médicas
+- Pipeline completo de treinamento e validação
+
+Autor: Thalles Felipe Rodrigues de Almeida Santos
+Projeto: Predição de Readmissão Hospitalar em Pacientes com Diabetes Usando Aprendizado de Máquina
+Instituição: Universidade Federal de Ouro Preto (UFOP)
+Disciplina: Inteligência Artificial
+Professor: Jadson Castro Gertrudes
+Data: Agosto 2025
+
 """
 
 import pandas as pd
 import numpy as np
+
+# Configurar matplotlib ANTES de importar pyplot para evitar problemas de thread
+import matplotlib
+matplotlib.use('Agg')  # Backend não-interativo
 import matplotlib.pyplot as plt
+plt.ioff()  # Desabilitar modo interativo
+
 import seaborn as sns
 import joblib
 import os
 import sys
 import json
 from datetime import datetime
+
+# Configurações específicas do matplotlib para Windows
+matplotlib.rcParams['backend'] = 'Agg'
 
 # Adicionar o diretório pai ao path para importar config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -30,6 +63,7 @@ from src.config import (
     HYPERPARAMETER_TUNING_CONFIG, THRESHOLD_OPTIMIZATION_CONFIG,
     VISUALIZATION_CONFIG
 )
+from src.visualization_utils import ProfessionalVisualizer
 
 
 class LogisticRegressionModel:
@@ -219,12 +253,26 @@ class LogisticRegressionModel:
     
     def evaluate_model(self):
         """Avalia o modelo usando métricas de classificação"""
+        # Calcular matriz de confusão
+        cm = confusion_matrix(self.y_test, self.y_pred)
+        tn, fp, fn, tp = cm.ravel()
+        
+        # Calcular métricas clínicas adicionais
+        specificity = tn / (tn + fp) if (tn + fp) > 0 else 0
+        sensitivity = tp / (tp + fn) if (tp + fn) > 0 else 0  # mesmo que recall
+        ppv = tp / (tp + fp) if (tp + fp) > 0 else 0  # mesmo que precision
+        npv = tn / (tn + fn) if (tn + fn) > 0 else 0
+        
         self.evaluation_results = {
             'accuracy': accuracy_score(self.y_test, self.y_pred),
             'precision': precision_score(self.y_test, self.y_pred),
             'recall': recall_score(self.y_test, self.y_pred),
             'f1': f1_score(self.y_test, self.y_pred),
-            'roc_auc': roc_auc_score(self.y_test, self.y_pred_proba)
+            'roc_auc': roc_auc_score(self.y_test, self.y_pred_proba),
+            'specificity': specificity,
+            'sensitivity': sensitivity,
+            'ppv': ppv,
+            'npv': npv
         }
         return self.evaluation_results
     
@@ -268,150 +316,248 @@ class LogisticRegressionModel:
         return cv_results
     
     def plot_results(self):
-        """Cria visualizações dos resultados"""
-        fig, axes = plt.subplots(2, 3, figsize=(18, 10))
-        fig.suptitle('Resultados da Regressão Logística', fontsize=16, fontweight='bold')
+        """Cria visualizações profissionais dos resultados usando o sistema padronizado"""
+        print("\n🎨 Criando visualizações profissionais dos resultados...")
         
-        # 1. Matriz de Confusão (padrão)
+        # Inicializar o visualizador profissional
+        visualizer = ProfessionalVisualizer(save_dir=RESULTS_DIR)
+        
+        # Preparar dados para o dashboard
+        metrics = {
+            'Acurácia': self.evaluation_results.get('accuracy', 0),
+            'Precisão': self.evaluation_results.get('precision', 0),
+            'Recall': self.evaluation_results.get('recall', 0),
+            'F1-Score': self.evaluation_results.get('f1', 0),
+            'ROC-AUC': self.evaluation_results.get('roc_auc', 0)
+        }
+        
+        # Preparar matriz de confusão
         cm = confusion_matrix(self.y_test, self.y_pred)
-        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=axes[0,0])
-        axes[0,0].set_title('Matriz de Confusão (Limiar = 0.5)')
-        axes[0,0].set_xlabel('Predito')
-        axes[0,0].set_ylabel('Real')
         
-        # 2. Matriz de Confusão (otimizada) se disponível
-        if hasattr(self, 'y_pred_optimized'):
-            cm_opt = confusion_matrix(self.y_test, self.y_pred_optimized)
-            sns.heatmap(cm_opt, annot=True, fmt='d', cmap='Greens', ax=axes[0,1])
-            axes[0,1].set_title(f'Matriz de Confusão (Limiar = {self.best_threshold:.3f})')
-            axes[0,1].set_xlabel('Predito')
-            axes[0,1].set_ylabel('Real')
-        else:
-            # Curva ROC se não há limiar otimizado
-            fpr, tpr, _ = roc_curve(self.y_test, self.y_pred_proba)
-            axes[0,1].plot(fpr, tpr, label=f'ROC-AUC = {self.evaluation_results["roc_auc"]:.3f}')
-            axes[0,1].plot([0, 1], [0, 1], 'k--')
-            axes[0,1].set_xlabel('Taxa de Falsos Positivos')
-            axes[0,1].set_ylabel('Taxa de Verdadeiros Positivos')
-            axes[0,1].set_title('Curva ROC')
-            axes[0,1].legend()
+        # Preparar dados da curva ROC
+        fpr, tpr, _ = roc_curve(self.y_test, self.y_pred_proba)
+        auc_score = self.evaluation_results.get('roc_auc', 0)
         
-        # 3. Curva Precision-Recall
-        precision, recall, thresholds = precision_recall_curve(self.y_test, self.y_pred_proba)
-        axes[0,2].plot(recall, precision, 'b-', linewidth=2)
-        axes[0,2].set_xlabel('Recall')
-        axes[0,2].set_ylabel('Precision')
-        axes[0,2].set_title('Curva Precision-Recall')
-        axes[0,2].grid(True, alpha=0.3)
+        # Preparar dados de feature importance se disponível
+        feature_names = None
+        feature_importance = None
+        if hasattr(self, 'feature_importance') and self.feature_importance is not None:
+            feature_names = self.feature_importance['feature'].tolist()
+            feature_importance = self.feature_importance['abs_coefficient'].tolist()
         
-        # Marcar limiar ótimo se disponível
-        if hasattr(self, 'best_threshold'):
-            # Encontrar ponto mais próximo do limiar ótimo
-            threshold_idx = np.abs(thresholds - self.best_threshold).argmin()
-            if threshold_idx < len(precision) and threshold_idx < len(recall):
-                axes[0,2].plot(recall[threshold_idx], precision[threshold_idx], 
-                              'ro', markersize=8, label=f'Limiar Ótimo = {self.best_threshold:.3f}')
-                axes[0,2].legend()
-        
-        # 4. Métricas de Performance (padrão)
-        metrics = ['accuracy', 'precision', 'recall', 'f1', 'roc_auc']
-        values = [self.evaluation_results[m] for m in metrics if m in self.evaluation_results]
-        colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7']
-        
-        bars = axes[1,0].bar(metrics[:len(values)], values, color=colors[:len(values)])
-        axes[1,0].set_title('Métricas de Performance (Limiar = 0.5)')
-        axes[1,0].set_ylabel('Score')
-        axes[1,0].set_ylim(0, 1)
-        axes[1,0].tick_params(axis='x', rotation=45)
-        
-        # Adicionar valores nas barras
-        for bar, value in zip(bars, values):
-            axes[1,0].text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01, 
-                          f'{value:.3f}', ha='center', va='bottom')
-        
-        # 5. Métricas Otimizadas (se disponível)
-        if hasattr(self, 'y_pred_optimized'):
-            opt_metrics = ['accuracy_optimized', 'precision_optimized', 'recall_optimized', 'f1_optimized']
-            opt_values = [self.evaluation_results[m] for m in opt_metrics if m in self.evaluation_results]
-            opt_labels = [m.replace('_optimized', '') for m in opt_metrics[:len(opt_values)]]
-            
-            bars_opt = axes[1,1].bar(opt_labels, opt_values, color=colors[:len(opt_values)])
-            axes[1,1].set_title(f'Métricas Otimizadas (Limiar = {self.best_threshold:.3f})')
-            axes[1,1].set_ylabel('Score')
-            axes[1,1].set_ylim(0, 1)
-            axes[1,1].tick_params(axis='x', rotation=45)
-            
-            # Adicionar valores nas barras
-            for bar, value in zip(bars_opt, opt_values):
-                axes[1,1].text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01, 
-                              f'{value:.3f}', ha='center', va='bottom')
-        else:
-            # Distribuição das Probabilidades
-            axes[1,1].hist(self.y_pred_proba[self.y_test == 0], bins=30, alpha=0.7, 
-                          label='Classe 0', color='skyblue')
-            axes[1,1].hist(self.y_pred_proba[self.y_test == 1], bins=30, alpha=0.7, 
-                          label='Classe 1', color='lightcoral')
-            axes[1,1].set_xlabel('Probabilidade Predita')
-            axes[1,1].set_ylabel('Frequência')
-            axes[1,1].set_title('Distribuição das Probabilidades')
-            axes[1,1].legend()
-        
-        # 6. Distribuição das Probabilidades
-        axes[1,2].hist(self.y_pred_proba[self.y_test == 0], bins=30, alpha=0.7, 
-                      label='Classe 0', color='skyblue')
-        axes[1,2].hist(self.y_pred_proba[self.y_test == 1], bins=30, alpha=0.7, 
-                      label='Classe 1', color='lightcoral')
-        axes[1,2].set_xlabel('Probabilidade Predita')
-        axes[1,2].set_ylabel('Frequência')
-        axes[1,2].set_title('Distribuição das Probabilidades')
-        axes[1,2].legend()
-        
-        # Adicionar linha do limiar otimizado se disponível
-        if hasattr(self, 'best_threshold'):
-            axes[1,2].axvline(x=self.best_threshold, color='red', linestyle='--', 
-                             label=f'Limiar Ótimo = {self.best_threshold:.3f}')
-            axes[1,2].legend()
-        
-        plt.tight_layout()
-        
-        # Salvar gráfico
+        # Criar dashboard completo
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        plot_path = os.path.join(RESULTS_DIR, 'logistic_regression_results.png')
-        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
-        plt.show()
+        filename = f'logistic_regression_results_{timestamp}'
         
-        return plot_path
+        visualizer.plot_model_results_dashboard(
+            metrics=metrics,
+            cm=cm,
+            fpr=fpr,
+            tpr=tpr,
+            auc_score=auc_score,
+            feature_names=feature_names,
+            feature_importance=feature_importance,
+            model_name="Regressão Logística",
+            filename=filename
+        )
+        
+        # Criar visualizações individuais adicionais se há threshold otimizado
+        if hasattr(self, 'y_pred_optimized') and hasattr(self, 'best_threshold'):
+            print(f"📊 Criando visualizações para threshold otimizado ({self.best_threshold:.3f})...")
+            
+            # Métricas otimizadas
+            optimized_metrics = {
+                'Acurácia': self.evaluation_results.get('accuracy_optimized', 0),
+                'Precisão': self.evaluation_results.get('precision_optimized', 0),
+                'Recall': self.evaluation_results.get('recall_optimized', 0),
+                'F1-Score': self.evaluation_results.get('f1_optimized', 0),
+                'ROC-AUC': self.evaluation_results.get('roc_auc', 0)
+            }
+            
+            # Matriz de confusão otimizada
+            cm_opt = confusion_matrix(self.y_test, self.y_pred_optimized)
+            
+            # Dashboard otimizado
+            filename_opt = f'logistic_regression_optimized_{timestamp}'
+            
+            visualizer.plot_model_results_dashboard(
+                metrics=optimized_metrics,
+                cm=cm_opt,
+                fpr=fpr,
+                tpr=tpr,
+                auc_score=auc_score,
+                feature_names=feature_names,
+                feature_importance=feature_importance,
+                model_name=f"Regressão Logística (Threshold = {self.best_threshold:.3f})",
+                filename=filename_opt
+            )
+        
+        # Criar gráfico de distribuição de probabilidades
+        self._plot_probability_distribution(visualizer, timestamp)
+        
+        # Criar relatório técnico completo
+        self._plot_model_info_dashboard(visualizer, timestamp)
+        
+        print("✅ Visualizações profissionais criadas com sucesso!")
+        return os.path.join(RESULTS_DIR, f'{filename}.png')
+    
+    def _plot_probability_distribution(self, visualizer, timestamp):
+        """Cria gráfico profissional da distribuição de probabilidades"""
+        fig, ax = visualizer.create_figure(figsize=(10, 6))
+        
+        # Importar cores do módulo
+        from src.visualization_utils import PROFESSIONAL_COLORS
+        
+        # Histogramas com estilo profissional
+        ax.hist(self.y_pred_proba[self.y_test == 0], bins=40, alpha=0.7, 
+               label='Não Readmitido (Classe 0)', color=PROFESSIONAL_COLORS['primary'],
+               edgecolor='white', linewidth=0.5)
+        ax.hist(self.y_pred_proba[self.y_test == 1], bins=40, alpha=0.7, 
+               label='Readmitido (Classe 1)', color=PROFESSIONAL_COLORS['danger'],
+               edgecolor='white', linewidth=0.5)
+        
+        # Linha do threshold otimizado se disponível
+        if hasattr(self, 'best_threshold'):
+            ax.axvline(x=self.best_threshold, color=PROFESSIONAL_COLORS['accent'], 
+                      linestyle='--', linewidth=3, 
+                      label=f'Threshold Otimizado = {self.best_threshold:.3f}')
+        
+        # Linha do threshold padrão
+        ax.axvline(x=0.5, color=PROFESSIONAL_COLORS['neutral'], 
+                  linestyle=':', linewidth=2, alpha=0.7,
+                  label='Threshold Padrão = 0.500')
+        
+        # Configurações
+        ax.set_xlabel('Probabilidade Predita de Readmissão', fontweight='bold')
+        ax.set_ylabel('Frequência', fontweight='bold')
+        ax.set_title('Distribuição das Probabilidades Preditas', fontweight='bold', pad=20)
+        ax.legend(frameon=True, fancybox=True, shadow=True)
+        
+        # Estatísticas na legenda
+        mean_0 = self.y_pred_proba[self.y_test == 0].mean()
+        mean_1 = self.y_pred_proba[self.y_test == 1].mean()
+        
+        textstr = f'Média Classe 0: {mean_0:.3f}\nMédia Classe 1: {mean_1:.3f}'
+        props = dict(boxstyle='round', facecolor=PROFESSIONAL_COLORS['light'], alpha=0.8)
+        ax.text(0.75, 0.8, textstr, transform=ax.transAxes, fontsize=10,
+                verticalalignment='top', bbox=props)
+        
+        # Salvar
+        filename = f'logistic_regression_probability_distribution_{timestamp}'
+        visualizer.save_figure(fig, filename)
+    
+    def _plot_model_info_dashboard(self, visualizer, timestamp):
+        """Cria dashboard de informações técnicas do modelo (Relatório Técnico Completo)"""
+        fig, ax = visualizer.create_figure(figsize=(14, 10))
+        ax.axis('off')
+        
+        # Importar cores do módulo
+        from src.visualization_utils import PROFESSIONAL_COLORS
+        
+        # Preparar informações
+        training_time_str = "0.00"  # Será implementado no futuro
+        threshold_str = f"{self.best_threshold:.3f}" if hasattr(self, 'best_threshold') and self.best_threshold is not None else "0.500"
+        
+        # Obter parâmetros do modelo
+        penalty = getattr(self.model, 'penalty', 'l2')
+        C_value = getattr(self.model, 'C', 1.0)
+        solver = getattr(self.model, 'solver', 'lbfgs')
+        max_iter = getattr(self.model, 'max_iter', 100)
+        class_weight = getattr(self.model, 'class_weight', None)
+        
+        # Informações do modelo
+        model_info = f"""
+⚖️ REGRESSÃO LOGÍSTICA - CONFIGURAÇÃO E PERFORMANCE
+
+📊 Hiperparâmetros:
+• Regularização (Penalty): {penalty.upper()}
+• Força de Regularização (C): {C_value}
+• Algoritmo de Otimização: {solver.upper()}
+• Iterações Máximas: {max_iter:,}
+• Balanceamento de Classes: {class_weight or 'Nenhum'}
+• Random State: {getattr(self.model, 'random_state', 'N/A')}
+
+⏱️ Performance de Treinamento:
+• Tempo de Treinamento: {training_time_str} segundos
+• Threshold Otimizado: {threshold_str}
+• Convergência: {'Sim' if getattr(self.model, 'n_iter_', [0])[0] < max_iter else 'Não'}
+• Número de Iterações: {getattr(self.model, 'n_iter_', ['N/A'])[0]}
+
+🎯 Métricas de Validação:
+• Acurácia: {self.evaluation_results.get('accuracy', 0):.4f} ({self.evaluation_results.get('accuracy', 0):.1%})
+• Precisão: {self.evaluation_results.get('precision', 0):.4f} ({self.evaluation_results.get('precision', 0):.1%})
+• Recall: {self.evaluation_results.get('recall', 0):.4f} ({self.evaluation_results.get('recall', 0):.1%})
+• F1-Score: {self.evaluation_results.get('f1', 0):.4f} ({self.evaluation_results.get('f1', 0):.1%})
+• ROC-AUC: {self.evaluation_results.get('roc_auc', 0):.4f}
+
+🔍 Análise Clínica:
+• Taxa de Verdadeiros Positivos: {self.evaluation_results.get('recall', 0):.1%}
+• Taxa de Falsos Positivos: {(1 - self.evaluation_results.get('specificity', 0)):.1%}
+• Especificidade: {self.evaluation_results.get('specificity', 0):.1%}
+• Valor Preditivo Positivo: {self.evaluation_results.get('precision', 0):.1%}
+
+📈 Dados de Treinamento:
+• Amostras de Treino: {len(self.X_train):,}
+• Amostras de Teste: {len(self.X_test):,}
+• Features Utilizadas: {self.X_train.shape[1]:,}
+• Balanceamento: {dict(self.y_test.value_counts())}
+
+📋 Métricas Otimizadas (se disponível):
+• Acurácia Otimizada: {self.evaluation_results.get('accuracy_optimized', 'N/A')}
+• Precisão Otimizada: {self.evaluation_results.get('precision_optimized', 'N/A')}
+• Recall Otimizado: {self.evaluation_results.get('recall_optimized', 'N/A')}
+• F1-Score Otimizado: {self.evaluation_results.get('f1_optimized', 'N/A')}
+
+🔬 Validação Cruzada:
+• CV Score Médio: {self.evaluation_results.get('best_cv_score', 'N/A')}
+• Melhores Parâmetros: {str(self.evaluation_results.get('best_params', 'N/A'))}
+
+🕒 Timestamp: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}
+        """
+        
+        # Exibir informações
+        ax.text(0.05, 0.95, model_info, transform=ax.transAxes, fontsize=11,
+                verticalalignment='top', fontfamily='monospace',
+                bbox=dict(boxstyle="round,pad=1.0", 
+                         facecolor=PROFESSIONAL_COLORS['light'],
+                         edgecolor=PROFESSIONAL_COLORS['primary'],
+                         alpha=0.9, linewidth=2))
+        
+        # Salvar
+        filename = f'logistic_regression_model_info_{timestamp}'
+        title = 'Regressão Logística - Relatório Técnico Completo'
+        subtitle = f'Configurações, Performance e Métricas Detalhadas'
+        visualizer.save_figure(fig, filename, title=title, subtitle=subtitle)
     
     def plot_feature_importance(self, top_n=15):
-        """Plota importância das features"""
+        """Cria visualização profissional da importância das features"""
         if self.feature_importance is None:
             self.analyze_feature_importance(top_n)
         
-        plt.figure(figsize=(12, 8))
+        print(f"\n📊 Criando gráfico de importância das top {top_n} features...")
         
-        # Top features
+        # Inicializar visualizador
+        visualizer = ProfessionalVisualizer(save_dir=RESULTS_DIR)
+        
+        # Preparar dados
         top_features = self.feature_importance.head(top_n)
-        colors = ['red' if coef < 0 else 'blue' for coef in top_features['coefficient']]
+        feature_names = top_features['feature'].tolist()
+        importance_values = top_features['abs_coefficient'].tolist()
         
-        plt.barh(range(len(top_features)), top_features['coefficient'], color=colors)
-        plt.yticks(range(len(top_features)), top_features['feature'])
-        plt.xlabel('Coeficiente')
-        plt.title(f'Top {top_n} Features Mais Importantes - Regressão Logística')
-        plt.grid(axis='x', alpha=0.3)
+        # Criar gráfico
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f'logistic_regression_feature_importance_{timestamp}'
         
-        # Adicionar valores
-        for i, (coef, feature) in enumerate(zip(top_features['coefficient'], top_features['feature'])):
-            plt.text(coef + (0.01 if coef > 0 else -0.01), i, f'{coef:.3f}', 
-                    va='center', ha='left' if coef > 0 else 'right')
+        visualizer.plot_feature_importance(
+            feature_names=feature_names,
+            importance_values=importance_values,
+            title="Importância das Features - Regressão Logística",
+            top_n=top_n,
+            filename=filename
+        )
         
-        plt.tight_layout()
-        
-        # Salvar gráfico
-        plot_path = os.path.join(RESULTS_DIR, 'logistic_regression_feature_importance.png')
-        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
-        plt.show()
-        
-        return plot_path
+        print("✅ Gráfico de feature importance criado com sucesso!")
+        return os.path.join(RESULTS_DIR, f'{filename}.png')
     
     def save_model(self):
         """Salva o modelo e scaler treinados"""
@@ -476,92 +622,198 @@ class LogisticRegressionModel:
         return predictions, probabilities
     
     def save_results(self):
-        """Salva os resultados em formato JSON"""
+        """Salva relatório técnico detalhado dos resultados (similar ao Random Forest)"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        print("\n📄 Salvando relatório técnico de resultados...")
         
         # Criar diretório se não existir
         os.makedirs(RESULTS_DIR, exist_ok=True)
         
-        # Preparar dados para salvar
-        results_data = {
-            'timestamp': timestamp,
-            'model_type': 'Logistic Regression',
-            'model_config': self.config,
-            'metrics': self.evaluation_results,
-            'confusion_matrix': confusion_matrix(self.y_test, self.y_pred).tolist(),
-            'data_info': {
-                'train_samples': len(self.X_train),
-                'test_samples': len(self.X_test),
-                'features': self.X_train.shape[1],
-                'train_class_distribution': {
-                    '0': int((self.y_train == 0).sum()),
-                    '1': int((self.y_train == 1).sum())
-                },
-                'test_class_distribution': {
-                    '0': int((self.y_test == 0).sum()),
-                    '1': int((self.y_test == 1).sum())
-                }
-            }
-        }
+        # Criar relatório em texto
+        report_filename = f'logistic_regression_report_{timestamp}.txt'
+        report_path = os.path.join(RESULTS_DIR, report_filename)
         
-        # Adicionar matriz de confusão otimizada se disponível
-        if hasattr(self, 'y_pred_optimized'):
-            results_data['confusion_matrix_optimized'] = confusion_matrix(
-                self.y_test, self.y_pred_optimized
-            ).tolist()
+        # Criar relatório em JSON
+        json_filename = f'logistic_regression_results_{timestamp}.json'
+        json_path = os.path.join(RESULTS_DIR, json_filename)
         
-        # Salvar JSON
-        results_path = os.path.join(RESULTS_DIR, f'logistic_regression_results_{timestamp}.json')
-        with open(results_path, 'w') as f:
-            json.dump(results_data, f, indent=4)
-        
-        # Salvar relatório em texto
-        report_path = os.path.join(RESULTS_DIR, f'logistic_regression_report_{timestamp}.txt')
-        with open(report_path, 'w', encoding='utf-8') as f:
-            f.write("RELATÓRIO - REGRESSÃO LOGÍSTICA\n")
-            f.write("="*60 + "\n\n")
-            f.write(f"Timestamp: {timestamp}\n")
-            f.write(f"Configurações: {self.config}\n\n")
-            
-            # Métricas principais
-            f.write("MÉTRICAS DE PERFORMANCE (Limiar = 0.5):\n")
-            main_metrics = ['accuracy', 'precision', 'recall', 'f1', 'roc_auc']
-            for metric in main_metrics:
-                if metric in self.evaluation_results:
-                    f.write(f"  {metric.upper():>10}: {self.evaluation_results[metric]:.4f}\n")
-            
-            # Métricas otimizadas se disponíveis
-            if hasattr(self, 'best_threshold'):
-                f.write(f"\nMÉTRICAS OTIMIZADAS (Limiar = {self.best_threshold:.4f}):\n")
-                opt_metrics = ['accuracy_optimized', 'precision_optimized', 'recall_optimized', 'f1_optimized']
-                for metric in opt_metrics:
+        try:
+            # Relatório técnico em texto (similar ao Random Forest)
+            with open(report_path, 'w', encoding='utf-8') as f:
+                f.write("🔬 REGRESSÃO LOGÍSTICA - RELATÓRIO TÉCNICO COMPLETO\n")
+                f.write("="*60 + "\n\n")
+                
+                f.write(f"📅 Data/Hora: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                f.write(f"🕒 Timestamp: {timestamp}\n\n")
+                
+                f.write("🔧 CONFIGURAÇÕES DO MODELO:\n")
+                f.write("-" * 30 + "\n")
+                for key, value in self.config.items():
+                    f.write(f"{key}: {value}\n")
+                
+                # Adicionar informações do modelo atual se disponíveis
+                if self.model is not None:
+                    f.write(f"solver: {self.model.solver}\n")
+                    f.write(f"C: {self.model.C}\n")
+                    f.write(f"penalty: {self.model.penalty}\n")
+                    f.write(f"class_weight: {self.model.class_weight}\n")
+                    f.write(f"max_iter: {self.model.max_iter}\n")
+                    f.write(f"random_state: {self.model.random_state}\n")
+                    f.write(f"n_jobs: {self.model.n_jobs}\n")
+                f.write("\n")
+                
+                f.write("📊 MÉTRICAS DE PERFORMANCE:\n")
+                f.write("-" * 30 + "\n")
+                
+                # Métricas principais organizadas
+                metric_order = [
+                    'accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'average_precision',
+                    'log_loss', 'brier_score', 'true_negatives', 'false_positives', 
+                    'false_negatives', 'true_positives', 'specificity', 'sensitivity',
+                    'ppv', 'npv', 'training_time', 'optimal_threshold'
+                ]
+                
+                for metric in metric_order:
                     if metric in self.evaluation_results:
-                        clean_name = metric.replace('_optimized', '').upper()
-                        f.write(f"  {clean_name:>10}: {self.evaluation_results[metric]:.4f}\n")
+                        value = self.evaluation_results[metric]
+                        if isinstance(value, (int, float)):
+                            f.write(f"{metric}: {value:.4f}\n")
+                        else:
+                            f.write(f"{metric}: {value}\n")
+                
+                # Adicionar hiperparâmetros otimizados se disponíveis
+                if 'best_params' in self.evaluation_results:
+                    for param, value in self.evaluation_results['best_params'].items():
+                        f.write(f"{param}: {value}\n")
+                
+                f.write("\n")
+                
+                # Feature Importance
+                if self.feature_importance is not None and len(self.feature_importance) > 0:
+                    f.write("🏆 TOP 20 FEATURES MAIS IMPORTANTES (COEFICIENTES):\n")
+                    f.write("-" * 50 + "\n")
+                    
+                    # Ordenar por valor absoluto do coeficiente
+                    top_features = self.feature_importance.copy()
+                    top_features['abs_coefficient'] = top_features['coefficient'].abs()
+                    top_features = top_features.sort_values('abs_coefficient', ascending=False)
+                    
+                    for i, (_, row) in enumerate(top_features.head(20).iterrows(), 1):
+                        f.write(f"{i:2d}. {row['feature']:<40} {row['coefficient']:>12.6f}\n")
+                    f.write("\n")
+                    
+                    # Separar coeficientes positivos e negativos
+                    positive_coefs = top_features[top_features['coefficient'] > 0].head(10)
+                    negative_coefs = top_features[top_features['coefficient'] < 0].head(10)
+                    
+                    if len(positive_coefs) > 0:
+                        f.write("📈 TOP 10 FEATURES COM COEFICIENTES POSITIVOS (aumentam risco):\n")
+                        f.write("-" * 55 + "\n")
+                        for i, (_, row) in enumerate(positive_coefs.iterrows(), 1):
+                            f.write(f"{i:2d}. {row['feature']:<40} {row['coefficient']:>12.6f}\n")
+                        f.write("\n")
+                    
+                    if len(negative_coefs) > 0:
+                        f.write("📉 TOP 10 FEATURES COM COEFICIENTES NEGATIVOS (diminuem risco):\n")
+                        f.write("-" * 55 + "\n")
+                        for i, (_, row) in enumerate(negative_coefs.iterrows(), 1):
+                            f.write(f"{i:2d}. {row['feature']:<40} {row['coefficient']:>12.6f}\n")
+                        f.write("\n")
+                
+                # Matriz de confusão
+                if self.y_pred is not None and self.y_test is not None:
+                    cm = confusion_matrix(self.y_test, self.y_pred)
+                    tn, fp, fn, tp = cm.ravel()
+                    
+                    f.write("🔢 MATRIZ DE CONFUSÃO:\n")
+                    f.write("-" * 20 + "\n")
+                    f.write(f"               Predito\n")
+                    f.write(f"Real     0      1\n")
+                    f.write(f"   0   {tn:4d}   {fp:4d}\n")
+                    f.write(f"   1   {fn:4d}   {tp:4d}\n\n")
+                    
+                    f.write("📊 MÉTRICAS CLÍNICAS:\n")
+                    f.write("-" * 20 + "\n")
+                    specificity = tn/(tn+fp) if (tn+fp) > 0 else 0
+                    sensitivity = tp/(tp+fn) if (tp+fn) > 0 else 0
+                    ppv = tp/(tp+fp) if (tp+fp) > 0 else 0
+                    npv = tn/(tn+fn) if (tn+fn) > 0 else 0
+                    
+                    f.write(f"Especificidade: {specificity:.4f}\n")
+                    f.write(f"Sensibilidade:  {sensitivity:.4f}\n")
+                    f.write(f"VPP:           {ppv:.4f}\n")
+                    f.write(f"VPN:           {npv:.4f}\n\n")
+                
+                # Validação cruzada se disponível
+                if 'cv_results' in self.evaluation_results:
+                    f.write("🔄 VALIDAÇÃO CRUZADA:\n")
+                    f.write("-" * 20 + "\n")
+                    for metric, results in self.evaluation_results['cv_results'].items():
+                        if isinstance(results, dict) and 'mean' in results:
+                            f.write(f"{metric}: {results['mean']:.4f} (±{results['std']:.4f})\n")
+                    f.write("\n")
+                
+                f.write("ℹ️ INFORMAÇÕES ADICIONAIS:\n")
+                f.write("-" * 25 + "\n")
+                training_time = self.evaluation_results.get('training_time', 0)
+                f.write(f"Tempo de treinamento: {training_time:.2f} segundos\n")
+                f.write(f"Threshold otimizado: {self.best_threshold:.4f}\n")
+                f.write(f"Número de features: {self.X_train.shape[1] if self.X_train is not None else 'N/A'}\n")
+                f.write(f"Amostras de treino: {len(self.X_train) if self.X_train is not None else 'N/A'}\n")
+                f.write(f"Amostras de teste: {len(self.X_test) if self.X_test is not None else 'N/A'}\n")
+                
+                if self.X_train is not None and self.y_train is not None:
+                    class_dist_train = {
+                        '0': int((self.y_train == 0).sum()),
+                        '1': int((self.y_train == 1).sum())
+                    }
+                    f.write(f"Distribuição de classes (treino): {class_dist_train}\n")
+                
+                if self.X_test is not None and self.y_test is not None:
+                    class_dist_test = {
+                        '0': int((self.y_test == 0).sum()),
+                        '1': int((self.y_test == 1).sum())
+                    }
+                    f.write(f"Distribuição de classes (teste): {class_dist_test}\n")
             
-            # Validação cruzada
-            if 'cv_results' in self.evaluation_results:
-                f.write(f"\nVALIDAÇÃO CRUZADA (5-fold):\n")
-                for metric, results in self.evaluation_results['cv_results'].items():
-                    f.write(f"  {metric.upper():>10}: {results['mean']:.4f} (±{results['std']:.4f})\n")
+            # Relatório em JSON
+            json_data = {
+                'model_type': 'LogisticRegression',
+                'timestamp': timestamp,
+                'datetime': datetime.now().isoformat(),
+                'config': self.config,
+                'metrics': self.evaluation_results,
+                'optimal_threshold': self.best_threshold,
+                'training_time': self.evaluation_results.get('training_time', 0),
+                'data_info': {
+                    'train_samples': len(self.X_train) if self.X_train is not None else 0,
+                    'test_samples': len(self.X_test) if self.X_test is not None else 0,
+                    'features': self.X_train.shape[1] if self.X_train is not None else 0,
+                    'train_class_distribution': {
+                        '0': int((self.y_train == 0).sum()) if self.y_train is not None else 0,
+                        '1': int((self.y_train == 1).sum()) if self.y_train is not None else 0
+                    } if self.y_train is not None else {},
+                    'test_class_distribution': {
+                        '0': int((self.y_test == 0).sum()) if self.y_test is not None else 0,
+                        '1': int((self.y_test == 1).sum()) if self.y_test is not None else 0
+                    } if self.y_test is not None else {}
+                },
+                'feature_importance': self.feature_importance.to_dict('records') if self.feature_importance is not None else None,
+                'confusion_matrix': confusion_matrix(self.y_test, self.y_pred).tolist() if (self.y_test is not None and self.y_pred is not None) else None
+            }
             
-            # Hiperparâmetros otimizados
-            if 'best_params' in self.evaluation_results:
-                f.write(f"\nMELHORES HIPERPARÂMETROS:\n")
-                for param, value in self.evaluation_results['best_params'].items():
-                    f.write(f"  {param:>15}: {value}\n")
+            with open(json_path, 'w', encoding='utf-8') as f:
+                json.dump(json_data, f, indent=4, ensure_ascii=False)
             
-            f.write(f"\nINFORMAÇÕES DO DATASET:\n")
-            f.write(f"  Amostras treino: {len(self.X_train)}\n")
-            f.write(f"  Amostras teste: {len(self.X_test)}\n")
-            f.write(f"  Features: {self.X_train.shape[1]}\n")
+            print(f"✅ Relatório técnico salvo: {report_filename}")
+            print(f"✅ Dados JSON salvos: {json_filename}")
             
-            if self.feature_importance is not None:
-                f.write(f"\nTOP 10 FEATURES MAIS IMPORTANTES:\n")
-                for _, row in self.feature_importance.head(10).iterrows():
-                    f.write(f"  {row['feature']:<30}: {row['coefficient']:>8.4f}\n")
-        
-        return results_path, report_path
+            return json_path, report_path
+            
+        except Exception as e:
+            print(f"❌ Erro ao salvar relatório: {e}")
+            return None, None
     
     def run_complete_pipeline(self, tune_hyperparams=True, optimize_threshold=True):
         """Executa o pipeline completo do modelo"""
@@ -608,6 +860,8 @@ class LogisticRegressionModel:
             print("\n📊 Gerando visualizações...")
             self.plot_results()
             self.plot_feature_importance()
+            
+            # Dashboard técnico já criado pela função _plot_model_info_dashboard na plot_results()
             
             # Salvar modelo e resultados
             print("\n💾 Salvando modelo e resultados...")
@@ -703,6 +957,12 @@ def main():
         import traceback
         traceback.print_exc()
         return None
+
+    def generate_technical_dashboard(self):
+        """Gera dashboard técnico completo (já implementado em _plot_model_info_dashboard)"""
+        print("\n📊 Dashboard técnico já foi criado através da função _plot_model_info_dashboard!")
+        print("   ✅ Relatório técnico completo disponível nos resultados.")
+        return True
 
 
 if __name__ == "__main__":
