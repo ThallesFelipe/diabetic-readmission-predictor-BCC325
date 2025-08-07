@@ -27,7 +27,6 @@ Instituição: Universidade Federal de Ouro Preto (UFOP)
 Disciplina: Inteligência Artificial
 Professor: Jadson Castro Gertrudes
 Data: Agosto 2025
-
 """
 
 import pandas as pd

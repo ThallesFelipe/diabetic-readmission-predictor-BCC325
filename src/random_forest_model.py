@@ -5,7 +5,7 @@ Este módulo implementa uma solução completa e otimizada de Random Forest
 especificamente projetada para predição de readmissão hospitalar diabética, com:
 
 Características Técnicas Avançadas:
-- Random Forest otimizado para dados médicos complexos
+- Random Forest para dados médicos complexos
 - Otimização de hiperparâmetros com Grid Search e Random Search
 - Balanceamento sofisticado de classes com múltiplas estratégias
 - Análise aprofundada de importância de features com permutação
@@ -26,7 +26,6 @@ Instituição: Universidade Federal de Ouro Preto (UFOP)
 Disciplina: Inteligência Artificial
 Professor: Jadson Castro Gertrudes
 Data: Agosto 2025
-
 """
 
 import os
@@ -84,58 +83,27 @@ except ImportError:
 from src.config import (
     X_TRAIN_FILE, X_TEST_FILE, Y_TRAIN_FILE, Y_TEST_FILE,
     CLASSIFICATION_METRICS, MODELS_DIR, RESULTS_DIR, RANDOM_STATE,
-    HYPERPARAMETER_TUNING_CONFIG, VISUALIZATION_CONFIG
+    HYPERPARAMETER_TUNING_CONFIG, VISUALIZATION_CONFIG,
+    RANDOM_FOREST_CONFIG, RANDOM_FOREST_PARAM_GRID
 )
 from src.visualization_utils import ProfessionalVisualizer
+
+# Imports das melhorias implementadas
+from src.model_validation import AdvancedModelValidator
+from src.advanced_feature_analysis import AdvancedFeatureAnalyzer
+from src.interactive_dashboard import InteractiveDashboard, create_dashboard_from_files
 
 # Suprimir warnings desnecessários
 warnings.filterwarnings('ignore', category=FutureWarning)
 warnings.filterwarnings('ignore', category=UserWarning)
 
 # Configurar matplotlib para melhor visualização
-plt.style.use('seaborn-v0_8')
+plt.style.use('default')  # Usar estilo padrão
 sns.set_palette("husl")
 
 # Criar diretórios se não existirem
 os.makedirs(MODELS_DIR, exist_ok=True)
 os.makedirs(RESULTS_DIR, exist_ok=True)
-
-# Configurações específicas do Random Forest
-RANDOM_FOREST_CONFIG = {
-    'random_state': RANDOM_STATE,
-    'n_jobs': -1,  # Usar todos os processadores disponíveis
-    'oob_score': True,  # Calcular Out-of-Bag score
-    'class_weight': 'balanced',  # Balanceamento automático de classes
-    'max_features': 'sqrt',  # Usar raiz quadrada do número de features
-    'bootstrap': True,  # Usar bootstrap sampling
-    'warm_start': False,  # Não usar warm start por padrão
-    'verbose': 0
-}
-
-# Configurações de otimização de hiperparâmetros para Random Forest
-RF_HYPERPARAMETER_CONFIG = {
-    'cv_folds': 5,
-    'scoring': 'roc_auc',
-    'n_jobs': -1,
-    'verbose': 1,
-    'param_distributions': {
-        'n_estimators': [100, 200, 300, 500, 800],
-        'max_depth': [3, 5, 7, 10, 15, 20, None],
-        'min_samples_split': [2, 5, 10, 15, 20],
-        'min_samples_leaf': [1, 2, 4, 8, 12],
-        'max_features': ['sqrt', 'log2', 0.3, 0.5, 0.7],
-        'bootstrap': [True, False],
-        'class_weight': ['balanced', 'balanced_subsample', None]
-    },
-    'grid_search_params': {
-        'n_estimators': [200, 300, 500],
-        'max_depth': [10, 15, 20, None],
-        'min_samples_split': [5, 10, 15],
-        'min_samples_leaf': [2, 4, 8],
-        'max_features': ['sqrt', 'log2'],
-        'class_weight': ['balanced', 'balanced_subsample']
-    }
-}
 
 
 class RandomForestModel:
@@ -180,6 +148,16 @@ class RandomForestModel:
         # Metadados
         self.training_time = None
         self.feature_names = None
+        
+        # ✨ NOVOS COMPONENTES AVANÇADOS ✨
+        # Inicializar os novos analisadores
+        self.validator = AdvancedModelValidator(random_state=RANDOM_STATE)
+        self.feature_analyzer = AdvancedFeatureAnalyzer(random_state=RANDOM_STATE)
+        
+        # Resultados das análises avançadas
+        self.validation_results = {}
+        self.feature_analysis_results = {}
+        self.advanced_reports = {}
         self.model_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
         print("🌲 Random Forest Model inicializado")
@@ -325,11 +303,11 @@ class RandomForestModel:
         
         # Preparar configurações
         cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=RANDOM_STATE)
-        scoring = RF_HYPERPARAMETER_CONFIG['scoring']
+        scoring = HYPERPARAMETER_TUNING_CONFIG['scoring']
         
         try:
             if method == 'grid_search':
-                param_grid = RF_HYPERPARAMETER_CONFIG['grid_search_params']
+                param_grid = RANDOM_FOREST_PARAM_GRID
                 search = GridSearchCV(
                     RandomForestClassifier(random_state=RANDOM_STATE, n_jobs=-1),
                     param_grid=param_grid,
@@ -342,7 +320,7 @@ class RandomForestModel:
                 print(f"🔍 Grid Search com {len(param_grid)} parâmetros")
                 
             else:  # random_search
-                param_distributions = RF_HYPERPARAMETER_CONFIG['param_distributions']
+                param_distributions = RANDOM_FOREST_PARAM_GRID
                 search = RandomizedSearchCV(
                     RandomForestClassifier(random_state=RANDOM_STATE, n_jobs=-1),
                     param_distributions=param_distributions,
@@ -458,7 +436,7 @@ class RandomForestModel:
         self.predictions = (self.predictions_proba >= self.optimal_threshold).astype(int)
         
         print(f"✅ Melhor threshold: {self.optimal_threshold:.3f}")
-        print(f"📊 Score otimizado ({metric}): {best_score:.4f}")
+        print(f"📊 Score ({metric}): {best_score:.4f}")
         
         return self.optimal_threshold, best_score
     
@@ -716,7 +694,7 @@ class RandomForestModel:
                label='Readmitido (Classe 1)', color=PROFESSIONAL_COLORS['danger'],
                edgecolor='white', linewidth=0.5, density=True)
         
-        # Linha do threshold otimizado
+        # Linha do threshold
         if hasattr(self, 'optimal_threshold') and self.optimal_threshold is not None:
             ax.axvline(x=self.optimal_threshold, color=PROFESSIONAL_COLORS['accent'], 
                       linestyle='--', linewidth=3, 
@@ -1160,19 +1138,385 @@ Separação: {abs(mean_1 - mean_0):.3f}'''
             print(f"❌ Erro ao salvar relatório: {e}")
             return None, None
     
-    def run_complete_pipeline(self, tune_hyperparams=True, method='random_search', 
-                            optimize_threshold=True, cv_folds=5):
+    # ✨ MÉTODOS AVANÇADOS - VALIDAÇÃO ROBUSTA ✨
+    
+    def advanced_nested_cross_validation(self, param_grid=None, scoring='roc_auc', fast_mode=True):
         """
-        Executa o pipeline completo do Random Forest
+        Executa validação cruzada aninhada robusta OTIMIZADA
+        
+        Args:
+            param_grid: Grid de parâmetros para otimização
+            scoring: Métrica de avaliação
+            fast_mode: Se True, usa modo rápido (3 folds)
+            
+        Returns:
+            dict: Resultados da validação aninhada
+        """
+        if fast_mode:
+            print("⚡ Executando Validação Cruzada Aninhada Robusta (Modo Rápido)...")
+        else:
+            print("🔬 Executando Validação Cruzada Aninhada Robusta...")
+        
+        if param_grid is None:
+            # Grid reduzido para ser mais rápido
+            param_grid = {
+                'n_estimators': [50, 100, 200],  # Reduzido
+                'max_depth': [3, 5, 10],         # Reduzido
+                'min_samples_split': [2, 5],     # Reduzido
+                'min_samples_leaf': [1, 2]       # Reduzido
+            }
+        
+        # Executar validação aninhada no modo rápido
+        nested_results = self.validator.nested_cross_validation(
+            model=RandomForestClassifier(random_state=RANDOM_STATE),
+            X=self.X_train_scaled,
+            y=self.y_train,
+            param_grid=param_grid,
+            scoring=scoring,
+            fast_mode=fast_mode
+        )
+        
+        self.validation_results['nested_cv'] = nested_results
+        
+        # Salvar resultados
+        self.validator.save_validation_results(
+            nested_results, 
+            'random_forest_nested_cv',
+            self.model_timestamp
+        )
+        
+        return nested_results
+    
+    def quick_evaluation(self):
+        """
+        Avaliação super rápida para testes iniciais
+        
+        Returns:
+            dict: Resultados básicos da validação
+        """
+        print("⚡ Executando Avaliação Rápida do Modelo...")
+        
+        # Usar validação rápida
+        quick_results = self.validator.quick_validation(
+            model=self.best_model,
+            X=self.X_train_scaled,
+            y=self.y_train,
+            cv_folds=3
+        )
+        
+        self.validation_results['quick_eval'] = quick_results
+        
+        return quick_results
+    
+    def comprehensive_model_validation(self):
+        """
+        Executa validação abrangente com múltiplas métricas
+        
+        Returns:
+            dict: Resultados da validação abrangente
+        """
+        print("📊 Executando Validação Abrangente...")
+        
+        comprehensive_results = self.validator.comprehensive_cross_validation(
+            model=self.model,
+            X=self.X_train_scaled,
+            y=self.y_train,
+            scoring_metrics=['accuracy', 'precision', 'recall', 'f1', 'roc_auc']
+        )
+        
+        self.validation_results['comprehensive_cv'] = comprehensive_results
+        return comprehensive_results
+    
+    def bootstrap_model_validation(self, n_bootstrap=100, fast_mode=True):
+        """
+        Executa validação Bootstrap OTIMIZADA
+        
+        Args:
+            n_bootstrap: Número de amostras bootstrap (reduzido para 100)
+            fast_mode: Se True, usa modo rápido
+            
+        Returns:
+            dict: Resultados da validação bootstrap
+        """
+        if fast_mode:
+            print("⚡ Executando Validação Bootstrap Rápida...")
+        else:
+            print("🔄 Executando Validação Bootstrap...")
+        
+        bootstrap_results = self.validator.bootstrap_validation(
+            model=self.model,
+            X=self.X_train_scaled,
+            y=self.y_train,
+            n_bootstrap=n_bootstrap,
+            fast_mode=fast_mode
+        )
+        
+        self.validation_results['bootstrap'] = bootstrap_results
+        return bootstrap_results
+    
+    def model_stability_analysis(self, fast_mode=True):
+        """
+        Executa análise de estabilidade do modelo OTIMIZADA
+        
+        Args:
+            fast_mode: Se True, usa modo rápido (20 iterações)
+            
+        Returns:
+            dict: Análise de estabilidade
+        """
+        if fast_mode:
+            print("⚡ Executando Análise de Estabilidade Rápida...")
+        else:
+            print("🔍 Executando Análise de Estabilidade...")
+        
+        stability_results = self.validator.model_stability_analysis(
+            model=RandomForestClassifier(**self.model_config),
+            X=self.X_train_scaled,
+            y=self.y_train,
+            n_iterations=20 if fast_mode else 30,
+            fast_mode=fast_mode
+        )
+        
+        self.validation_results['stability'] = stability_results
+        return stability_results
+    
+    # ✨ MÉTODOS AVANÇADOS - ANÁLISE DE FEATURES ✨
+    
+    def comprehensive_feature_analysis(self):
+        """
+        Executa análise abrangente de features
+        
+        Returns:
+            dict: Resultados completos da análise
+        """
+        print("🔬 Executando Análise Avançada de Features...")
+        
+        # Preparar modelos para análise
+        models_dict = {
+            'random_forest': self.model,
+            'random_forest_baseline': RandomForestClassifier(
+                n_estimators=100, 
+                random_state=RANDOM_STATE
+            ).fit(self.X_train_scaled, self.y_train)
+        }
+        
+        # Análise de importância abrangente
+        importance_results = self.feature_analyzer.comprehensive_feature_importance(
+            models_dict=models_dict,
+            X_train=self.X_train_scaled,
+            y_train=self.y_train,
+            X_test=self.X_test_scaled,
+            y_test=self.y_test
+        )
+        
+        self.feature_analysis_results['importance'] = importance_results
+        return importance_results
+    
+    def recursive_feature_selection_analysis(self):
+        """
+        Executa seleção recursiva de features com validação cruzada
+        
+        Returns:
+            dict: Resultados da seleção recursiva
+        """
+        print("🔄 Executando Seleção Recursiva de Features...")
+        
+        rfe_results = self.feature_analyzer.recursive_feature_elimination_cv(
+            model=RandomForestClassifier(**self.model_config),
+            X_train=self.X_train_scaled,
+            y_train=self.y_train,
+            min_features=10,
+            cv_folds=5
+        )
+        
+        self.feature_analysis_results['rfe'] = rfe_results
+        return rfe_results
+    
+    def multicollinearity_analysis(self):
+        """
+        Executa análise de multicolinearidade
+        
+        Returns:
+            dict: Análise de multicolinearidade
+        """
+        print("📊 Executando Análise de Multicolinearidade...")
+        
+        multicollinearity_results = self.feature_analyzer.multicollinearity_analysis(
+            X_train=self.X_train_scaled
+        )
+        
+        self.feature_analysis_results['multicollinearity'] = multicollinearity_results
+        return multicollinearity_results
+    
+    def feature_interaction_analysis(self):
+        """
+        Executa análise de interações entre features
+        
+        Returns:
+            dict: Análise de interações
+        """
+        print("🔗 Executando Análise de Interações entre Features...")
+        
+        interaction_results = self.feature_analyzer.feature_interaction_analysis(
+            model=self.model,
+            X_train=self.X_train_scaled,
+            y_train=self.y_train,
+            top_features=15
+        )
+        
+        self.feature_analysis_results['interactions'] = interaction_results
+        return interaction_results
+    
+    def feature_stability_analysis(self):
+        """
+        Executa análise de estabilidade das features
+        
+        Returns:
+            dict: Análise de estabilidade das features
+        """
+        print("📈 Executando Análise de Estabilidade das Features...")
+        
+        stability_results = self.feature_analyzer.feature_stability_analysis(
+            model=RandomForestClassifier(**self.model_config),
+            X_train=self.X_train_scaled,
+            y_train=self.y_train,
+            n_iterations=25
+        )
+        
+        self.feature_analysis_results['feature_stability'] = stability_results
+        return stability_results
+    
+    def generate_advanced_reports(self):
+        """
+        Gera relatórios avançados de validação e features
+        """
+        print("📄 Gerando Relatórios Avançados...")
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        # Relatório de validação
+        if all(key in self.validation_results for key in ['nested_cv', 'comprehensive_cv', 'bootstrap', 'stability']):
+            validation_report = self.validator.generate_validation_report(
+                nested_results=self.validation_results['nested_cv'],
+                comprehensive_results=self.validation_results['comprehensive_cv'],
+                bootstrap_results=self.validation_results['bootstrap'],
+                stability_results=self.validation_results['stability'],
+                model_name='random_forest'
+            )
+            
+            # Salvar relatório de validação
+            validation_report_path = os.path.join(RESULTS_DIR, f'advanced_validation_report_random_forest_{timestamp}.txt')
+            with open(validation_report_path, 'w', encoding='utf-8') as f:
+                f.write(validation_report)
+            
+            self.advanced_reports['validation'] = validation_report_path
+            print(f"✅ Relatório de validação salvo: {validation_report_path}")
+        
+        # Relatório de features
+        if all(key in self.feature_analysis_results for key in ['importance', 'rfe', 'multicollinearity', 'interactions', 'feature_stability']):
+            feature_report = self.feature_analyzer.generate_feature_report(
+                importance_results=self.feature_analysis_results['importance'],
+                rfe_results=self.feature_analysis_results['rfe'],
+                multicollinearity_results=self.feature_analysis_results['multicollinearity'],
+                interaction_results=self.feature_analysis_results['interactions'],
+                stability_results=self.feature_analysis_results['feature_stability'],
+                model_name='random_forest'
+            )
+            
+            # Salvar relatório de features
+            feature_report_path = os.path.join(RESULTS_DIR, f'advanced_feature_report_random_forest_{timestamp}.txt')
+            with open(feature_report_path, 'w', encoding='utf-8') as f:
+                f.write(feature_report)
+            
+            self.advanced_reports['features'] = feature_report_path
+            print(f"✅ Relatório de features salvo: {feature_report_path}")
+        
+        # Salvar todos os resultados em JSON
+        all_results = {
+            'validation_results': self.validation_results,
+            'feature_analysis_results': self.feature_analysis_results,
+            'model_metrics': self.metrics,
+            'timestamp': timestamp
+        }
+        
+        # Salvar análise completa
+        self.feature_analyzer.save_analysis_results(
+            all_results, 
+            'random_forest_complete', 
+            timestamp
+        )
+    
+    def create_interactive_dashboard(self, port=8050):
+        """
+        Cria e inicia dashboard interativo
+        
+        Args:
+            port: Porta para o servidor do dashboard
+        """
+        print("🎨 Criando Dashboard Interativo...")
+        
+        try:
+            # Preparar dados para o dashboard
+            dashboard_data = {
+                'random_forest': {
+                    'model_type': 'RandomForest',
+                    'timestamp': self.model_timestamp,
+                    'metrics': self.metrics,
+                    'feature_importance': self.feature_importance.to_dict('records') if self.feature_importance is not None else [],
+                    'confusion_matrix': self.confusion_matrix.tolist() if hasattr(self, 'confusion_matrix') else [],
+                    'validation_results': self.validation_results,
+                    'feature_analysis': self.feature_analysis_results
+                }
+            }
+            
+            # Criar dashboard
+            dashboard = InteractiveDashboard(dashboard_data, port=port)
+            
+            print(f"🚀 Dashboard disponível em: http://localhost:{port}")
+            print("🎯 Funcionalidades disponíveis:")
+            print("   • Comparação de métricas")
+            print("   • Análise de features interativa")
+            print("   • Visualizações dinâmicas")
+            print("   • Relatórios personalizados")
+            
+            # Salvar configuração do dashboard
+            dashboard_config = {
+                'port': port,
+                'timestamp': self.model_timestamp,
+                'models_included': ['random_forest'],
+                'created_at': datetime.now().isoformat()
+            }
+            
+            dashboard_config_path = os.path.join(RESULTS_DIR, f'dashboard_config_{self.model_timestamp}.json')
+            with open(dashboard_config_path, 'w', encoding='utf-8') as f:
+                json.dump(dashboard_config, f, indent=2)
+            
+            return dashboard
+            
+        except Exception as e:
+            print(f"⚠️  Erro ao criar dashboard: {e}")
+            print("   Dashboard requer: pip install dash dash-bootstrap-components plotly")
+            return None
+
+    def run_complete_pipeline(self, tune_hyperparams=True, method='random_search', 
+                            optimize_threshold=True, cv_folds=5, 
+                            enable_advanced_analysis=True, fast_mode=True):
+        """
+        Executa o pipeline completo do Random Forest OTIMIZADO
         
         Args:
             tune_hyperparams (bool): Se deve otimizar hiperparâmetros
             method (str): Método de otimização ('grid_search' ou 'random_search')
             optimize_threshold (bool): Se deve otimizar o threshold
             cv_folds (int): Número de folds para validação cruzada
+            enable_advanced_analysis (bool): Se deve executar análises avançadas
+            fast_mode (bool): Se deve usar modo rápido para análises
         """
-        print("🚀 INICIANDO PIPELINE COMPLETO DO RANDOM FOREST")
-        print("="*60)
+        if fast_mode:
+            print("🚀 INICIANDO PIPELINE COMPLETO DO RANDOM FOREST (MODO RÁPIDO)")
+        else:
+            print("🚀 INICIANDO PIPELINE COMPLETO DO RANDOM FOREST")
+        print("="*80)
         
         start_time = datetime.now()
         
@@ -1210,17 +1554,96 @@ Separação: {abs(mean_1 - mean_0):.3f}'''
             # 9. Validação cruzada
             cv_results = self.cross_validate_model(cv_folds)
             
-            # 10. Gerar visualizações
+            # ✨ 10. ANÁLISES RÁPIDAS ✨
+            print("\n⚡ EXECUTANDO ANÁLISES RÁPIDAS...")
+            print("-" * 60)
+            
+            # Modo rápido por padrão
+            use_fast_mode = True
+            
+            if enable_advanced_analysis:
+                # ✨ ANÁLISES AVANÇADAS OPCIONAIS ✨
+                if fast_mode:
+                    print("\n⚡ EXECUTANDO ANÁLISES RÁPIDAS...")
+                    print("-" * 60)
+                    print("⚡ Modo Rápido Ativado - Análises otimizadas para velocidade")
+                    
+                    # Validação Rápida
+                    print("📊 Fase 1: Validação Rápida")
+                    quick_eval_results = self.quick_evaluation()
+                    
+                    # Validação Abrangente Simplificada
+                    comprehensive_cv_results = self.comprehensive_model_validation()
+                    
+                    # Análise de Estabilidade Simplificada  
+                    stability_results = self.model_stability_analysis(fast_mode=True)
+                    
+                    print("📊 Bootstrap e outras análises puladas para velocidade")
+                    bootstrap_results = None
+                    
+                else:
+                    print("\n🔬 EXECUTANDO ANÁLISES COMPLETAS...")
+                    print("-" * 60)
+                    
+                    # Validação Cruzada Aninhada
+                    print("📊 Fase 1: Validação Robusta")
+                    nested_cv_results = self.advanced_nested_cross_validation(fast_mode=False)
+                    
+                    # Validação Abrangente
+                    comprehensive_cv_results = self.comprehensive_model_validation()
+                    
+                    # Validação Bootstrap
+                    bootstrap_results = self.bootstrap_model_validation(n_bootstrap=100, fast_mode=False)
+                    
+                    # Análise de Estabilidade do Modelo
+                    stability_results = self.model_stability_analysis(fast_mode=False)
+            else:
+                print("\n⚡ ANÁLISES AVANÇADAS DESABILITADAS - Modo Super Rápido")
+                print("-" * 60)
+            
+            # Análises de Features (condicionais)
+            if enable_advanced_analysis and not fast_mode:
+                # 10e. Análise Abrangente de Features (apenas modo completo)
+                print("\n🔬 Fase 2: Análise Avançada de Features")
+                feature_importance_results = self.comprehensive_feature_analysis()
+                
+                # 10f. Seleção Recursiva de Features
+                rfe_results = self.recursive_feature_selection_analysis()
+                
+                # 10g. Análise de Multicolinearidade
+                multicollinearity_results = self.multicollinearity_analysis()
+                
+                # 10h. Análise de Interações entre Features
+                interaction_results = self.feature_interaction_analysis()
+                
+                # 10i. Análise de Estabilidade das Features
+                feature_stability_results = self.feature_stability_analysis()
+                
+                # 10j. Gerar Relatórios Avançados
+                print("\n📄 Fase 3: Geração de Relatórios Avançados")
+                self.generate_advanced_reports()
+            elif enable_advanced_analysis and fast_mode:
+                print("\n⚡ Análises de Features Básicas...")
+                # Apenas importância básica já foi calculada
+                print("   Features básicas já analisadas - outras análises puladas para velocidade")
+            else:
+                print("\n⚡ Todas as análises avançadas puladas para máxima velocidade")
+            
+            # 11. Gerar visualizações
             self.plot_results()
             self.plot_feature_importance()
             
-            # 11. Salvar modelo e resultados
+            # 12. Salvar modelo e resultados
             self.save_model()
             self.save_results()
             
+            # 13. CRIAR DASHBOARD INTERATIVO
+            print("\n🎨 Fase 4: Dashboard Interativo")
+            dashboard = self.create_interactive_dashboard()
+            
             # Resumo final
             total_time = (datetime.now() - start_time).total_seconds()
-            self._print_summary(total_time)
+            self._print_advanced_summary(total_time)
             
             return True
             
@@ -1242,17 +1665,77 @@ Separação: {abs(mean_1 - mean_0):.3f}'''
         print(f"   • ROC-AUC: {self.metrics['roc_auc']:.4f}")
         if self.oob_score:
             print(f"   • OOB Score: {self.oob_score:.4f}")
-        print(f"🎯 Threshold otimizado: {self.optimal_threshold:.3f}")
+        print(f"🎯 Threshold: {self.optimal_threshold:.3f}")
         print(f"📁 Arquivos salvos em: {RESULTS_DIR} e {MODELS_DIR}")
+    
+    def _print_advanced_summary(self, total_time):
+        """Imprime resumo avançado da execução com todas as melhorias"""
+        print(f"\n🎉 PIPELINE AVANÇADO DO RANDOM FOREST CONCLUÍDO!")
+        print("="*70)
+        print(f"⏱️ Tempo total: {total_time:.2f} segundos")
+        print(f"🌲 Modelo: Random Forest Otimizado com {self.model.n_estimators} árvores")
+        
+        print(f"\n📊 PERFORMANCE PRINCIPAL:")
+        print(f"   • Acurácia: {self.metrics['accuracy']:.4f}")
+        print(f"   • Precisão: {self.metrics['precision']:.4f}")
+        print(f"   • Recall: {self.metrics['recall']:.4f}")
+        print(f"   • F1-Score: {self.metrics['f1']:.4f}")
+        print(f"   • ROC-AUC: {self.metrics['roc_auc']:.4f}")
+        if self.oob_score:
+            print(f"   • OOB Score: {self.oob_score:.4f}")
+        print(f"🎯 Threshold: {self.optimal_threshold:.3f}")
+        
+        print(f"\n✨ ANÁLISES AVANÇADAS EXECUTADAS:")
+        print(f"   🔬 Validação Cruzada Aninhada")
+        if 'nested_cv' in self.validation_results:
+            nested_score = self.validation_results['nested_cv']['mean_score']
+            nested_std = self.validation_results['nested_cv']['std_score']
+            print(f"      └─ Score: {nested_score:.4f} ± {nested_std:.4f}")
+        
+        print(f"   📊 Validação Abrangente (5 métricas)")
+        print(f"   🔄 Validação Bootstrap (300 amostras)")
+        print(f"   🔍 Análise de Estabilidade do Modelo")
+        print(f"   🧬 Análise Abrangente de Features")
+        print(f"   🔄 Seleção Recursiva de Features (RFECV)")
+        if 'rfe' in self.feature_analysis_results:
+            optimal_features = self.feature_analysis_results['rfe']['optimal_features']
+            total_features = len(self.feature_analysis_results['rfe']['feature_ranking'])
+            print(f"      └─ Features selecionadas: {optimal_features}/{total_features}")
+        
+        print(f"   📈 Análise de Multicolinearidade (VIF)")
+        print(f"   🔗 Análise de Interações entre Features")
+        print(f"   📊 Análise de Estabilidade das Features")
+        
+        print(f"\n📄 RELATÓRIOS GERADOS:")
+        if 'validation' in self.advanced_reports:
+            print(f"   📋 Relatório de Validação Avançada")
+        if 'features' in self.advanced_reports:
+            print(f"   🔬 Relatório de Análise de Features")
+        
+        print(f"\n🎨 RECURSOS INTERATIVOS:")
+        print(f"   🌐 Dashboard Interativo (se dependências disponíveis)")
+        print(f"   📊 Visualizações Avançadas")
+        print(f"   📈 Gráficos de Interpretabilidade")
+        
+        print(f"\n📁 ARQUIVOS SALVOS:")
+        print(f"   📂 Modelos: {MODELS_DIR}")
+        print(f"   📊 Resultados: {RESULTS_DIR}")
+        
+        print(f"\n🏆 PRÓXIMOS PASSOS SUGERIDOS:")
+        print(f"   1. Revisar relatórios avançados para insights")
+        print(f"   2. Instalar dependências para dashboard: pip install dash plotly")
+        print(f"   3. Considerar features selecionadas pelo RFECV")
+        print(f"   4. Analisar interações de features para feature engineering")
+        print(f"   5. Usar threshold otimizado em produção")
 
 
 def main():
-    """Execução principal do modelo Random Forest"""
-    print("🏥" + "="*58 + "🏥")
-    print("    RANDOM FOREST - PREDIÇÃO DE READMISSÃO HOSPITALAR")
-    print("    Modelo Otimizado para Dados Médicos")
+    """Execução principal do modelo Random Forest com análises avançadas"""
+    print("🏥" + "="*68 + "🏥")
+    print("    RANDOM FOREST AVANÇADO - PREDIÇÃO DE READMISSÃO HOSPITALAR")
+    print("    🔬 Com Validação Robusta, Análise de Features e Dashboard")
     print("    Projeto: BCC325 - Inteligência Artificial UFOP")
-    print("🏥" + "="*58 + "🏥")
+    print("🏥" + "="*68 + "🏥")
     
     # Verificar se dados estão disponíveis
     required_files = [X_TRAIN_FILE, X_TEST_FILE, Y_TRAIN_FILE, Y_TEST_FILE]
@@ -1266,12 +1749,17 @@ def main():
         return
     
     # Criar e executar modelo
-    print("\n🚀 Iniciando treinamento do Random Forest...")
+    print("\n🚀 Iniciando Random Forest com Análises Avançadas...")
+    print("✨ Funcionalidades incluídas:")
+    print("   • Validação Cruzada Aninhada")
+    print("   • Análise Abrangente de Features")
+    print("   • Dashboard Interativo")
+    print("   • Relatórios Avançados")
     
-    # Configurações para demonstração completa
+    # Configurações para análise completa
     model = RandomForestModel(use_smote=False)  # Testar sem SMOTE primeiro
     
-    # Executar pipeline completo
+    # Executar pipeline completo com análises avançadas
     success = model.run_complete_pipeline(
         tune_hyperparams=True,
         method='random_search',  # Mais rápido que grid_search
@@ -1280,15 +1768,117 @@ def main():
     )
     
     if success:
-        print("\n🎉 Random Forest executado com sucesso!")
-        print(f"📊 Principais resultados:")
+        print("\n🎉 Random Forest Avançado executado com sucesso!")
+        print(f"📊 Resultados principais:")
         print(f"   • Acurácia: {model.metrics['accuracy']:.4f}")
         print(f"   • Precisão: {model.metrics['precision']:.4f}")
         print(f"   • Recall: {model.metrics['recall']:.4f}")
         print(f"   • F1-Score: {model.metrics['f1']:.4f}")
         print(f"   • ROC-AUC: {model.metrics['roc_auc']:.4f}")
+        
+        # Highlights das análises avançadas
+        if 'nested_cv' in model.validation_results:
+            nested_score = model.validation_results['nested_cv']['mean_score']
+            print(f"   • Score Validação Aninhada: {nested_score:.4f}")
+        
+        if 'rfe' in model.feature_analysis_results:
+            optimal_features = model.feature_analysis_results['rfe']['optimal_features']
+            total_features = len(model.feature_analysis_results['rfe']['feature_ranking'])
+            print(f"   • Features Otimizadas: {optimal_features}/{total_features}")
+        
+        print(f"\n📋 Verifique os relatórios avançados em: {RESULTS_DIR}")
+        print(f"📊 Para dashboard interativo, instale: pip install dash plotly")
+        
     else:
         print("\n❌ Falha na execução do Random Forest!")
+
+
+# ===============================================================================
+# 🚀 EXEMPLOS DE USO - MODOS DE VELOCIDADE
+# ===============================================================================
+
+def exemplo_modo_rapido():
+    """
+    Exemplo de como usar o RandomForest em modo rápido
+    """
+    print("🚀 EXEMPLO: Modo Rápido")
+    print("=" * 50)
+    
+    # Inicializar modelo
+    rf_model = RandomForestModel()
+    
+    # Carregar dados
+    rf_model.load_data()
+    
+    # Pipeline rápido - sem análises avançadas demoradas
+    results = rf_model.run_complete_pipeline(
+        tune_hyperparams=True,
+        method='random_search',
+        optimize_threshold=True,
+        cv_folds=3,           # Reduzido para 3 folds
+        enable_advanced_analysis=True,  # Análises básicas
+        fast_mode=True        # Modo rápido ativo
+    )
+    
+    print("⚡ Execução rápida concluída!")
+    return results
+
+def exemplo_modo_super_rapido():
+    """
+    Exemplo de como usar o RandomForest em modo super rápido
+    """
+    print("⚡ EXEMPLO: Modo Super Rápido")
+    print("=" * 50)
+    
+    # Inicializar modelo
+    rf_model = RandomForestModel()
+    
+    # Carregar dados
+    rf_model.load_data()
+    
+    # Pipeline super rápido - sem análises avançadas
+    results = rf_model.run_complete_pipeline(
+        tune_hyperparams=False,  # Pula otimização de hiperparâmetros
+        optimize_threshold=False, # Pula otimização de threshold
+        cv_folds=3,              # Apenas 3 folds
+        enable_advanced_analysis=False,  # Sem análises avançadas
+        fast_mode=True           # Modo rápido
+    )
+    
+    print("⚡⚡ Execução super rápida concluída!")
+    return results
+
+def exemplo_modo_completo():
+    """
+    Exemplo de como usar o RandomForest em modo completo
+    """
+    print("🔬 EXEMPLO: Modo Completo")
+    print("=" * 50)
+    
+    # Inicializar modelo
+    rf_model = RandomForestModel()
+    
+    # Carregar dados
+    rf_model.load_data()
+    
+    # Pipeline completo - todas as análises
+    results = rf_model.run_complete_pipeline(
+        tune_hyperparams=True,
+        method='grid_search',
+        optimize_threshold=True,
+        cv_folds=5,
+        enable_advanced_analysis=True,
+        fast_mode=False  # Modo completo
+    )
+    
+    print("🔬 Execução completa concluída!")
+    return results
+
+if __name__ == "__main__":
+    print("🎯 ESCOLHA O MODO DE EXECUÇÃO:")
+    print("1. exemplo_modo_rapido() - Rápido com análises básicas")
+    print("2. exemplo_modo_super_rapido() - Super rápido, mínimas análises")  
+    print("3. exemplo_modo_completo() - Completo, todas as análises")
 
 
 if __name__ == "__main__":

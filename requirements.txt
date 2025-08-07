@@ -19,6 +19,7 @@ scikit-learn>=1.3.0
 
 # Análise estatística
 scipy>=1.10.0
+statsmodels>=0.14.0
 
 # Balanceamento de classes (opcional)
 imbalanced-learn>=0.10.0
@@ -30,11 +31,46 @@ ipykernel>=6.25.0
 # Utilitários de sistema
 joblib>=1.3.0
 
-# DEPENDÊNCIAS OPCIONAIS PARA PRODUÇÃO
-# Logging estruturado
-# loguru>=0.7.0
+# ============================================================================
+# NOVAS DEPENDÊNCIAS PARA MELHORIAS AVANÇADAS
+# ============================================================================
 
-# Validação de dados
+# ANÁLISE DE FEATURES E INTERPRETABILIDADE
+# SHAP para interpretabilidade de modelos
+shap>=0.42.0
+
+# DASHBOARD INTERATIVO
+# Dash para dashboard web interativo
+dash>=2.14.0
+dash-bootstrap-components>=1.5.0
+
+# Plotly para visualizações interativas
+plotly>=5.15.0
+
+# LOGGING ESTRUTURADO (OPCIONAL)
+# Estrutura de logging avançada
+# structlog>=23.0.0
+
+# VALIDAÇÃO DE DADOS (OPCIONAL)
+# Validação de esquemas de dados
+# pydantic>=2.0.0
+
+# PERFORMANCE E OTIMIZAÇÃO (OPCIONAL)
+# Cache para otimização
+# joblib>=1.3.0  # já incluído acima
+
+# RELATÓRIOS AVANÇADOS (OPCIONAL)
+# Para geração de relatórios em PDF
+# reportlab>=4.0.0
+
+# DEPENDÊNCIAS DE DESENVOLVIMENTO (OPCIONAL)
+# Testes automatizados
+# pytest>=7.0.0
+# pytest-cov>=4.0.0
+
+# Linting e formatação
+# black>=23.0.0
+# flake8>=6.0.0
 # pydantic>=2.0.0
 
 # Interface de linha de comando

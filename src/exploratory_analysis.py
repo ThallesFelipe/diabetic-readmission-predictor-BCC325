@@ -23,7 +23,6 @@ Instituição: Universidade Federal de Ouro Preto (UFOP)
 Disciplina: Inteligência Artificial
 Professor: Jadson Castro Gertrudes
 Data: Agosto 2025
-
 """
 
 import pandas as pd
@@ -53,7 +52,7 @@ from src.id_mapping_utils import IDMappingUtils
 from src.visualization_utils import ProfessionalVisualizer
 
 # Configurações de visualização
-plt.style.use('seaborn-v0_8')
+plt.style.use('default')  # Usar estilo padrão
 sns.set_palette("husl")
 warnings.filterwarnings('ignore')
 

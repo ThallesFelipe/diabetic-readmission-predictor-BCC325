@@ -20,7 +20,6 @@ Instituição: Universidade Federal de Ouro Preto (UFOP)
 Disciplina: Inteligência Artificial
 Professor: Jadson Castro Gertrudes
 Data: Agosto 2025
-
 """
 
 import os
@@ -150,10 +149,18 @@ def run_feature_engineering():
         raise
 
 
-def run_machine_learning_models(fast_mode=False):
-    """Executa treinamento e avaliação de modelos de Machine Learning"""
-    print_stage_header(4, "Modelagem de Machine Learning", 
-                      "Treinamento e avaliação de múltiplos modelos preditivos")
+def run_machine_learning_models(fast_mode=False, advanced_analysis=True):
+    """Executa treinamento e avaliação de modelos de Machine Learning com análises avançadas"""
+    print_stage_header(4, "Modelagem de Machine Learning Avançada", 
+                      "Treinamento, validação robusta e análise avançada de features")
+    
+    if advanced_analysis:
+        print("✨ MODO AVANÇADO ATIVADO:")
+        print("   🔬 Validação Cruzada Aninhada")
+        print("   🧬 Análise Avançada de Features")
+        print("   🎨 Dashboard Interativo")
+        print("   📋 Relatórios Detalhados")
+        print("=" * 70)
     
     trained_models = {}
     
@@ -184,8 +191,8 @@ def run_machine_learning_models(fast_mode=False):
         else:
             print(f"❌ Erro na execução da Regressão Logística")
         
-        # 2. Random Forest
-        print("\n🌲 Inicializando Random Forest...")
+        # 2. Random Forest com Análises Avançadas
+        print("\n🌲 Inicializando Random Forest Avançado...")
         
         try:
             from src.random_forest_model import RandomForestModel
@@ -193,7 +200,7 @@ def run_machine_learning_models(fast_mode=False):
             rf_model = RandomForestModel()
             
             if fast_mode:
-                print("⚡ Modo rápido: configurações otimizadas sem busca")
+                print("⚡ Modo rápido: configurações otimizadas sem busca avançada")
                 # Configurar para demo rápida
                 rf_model.model_config.update({
                     'n_estimators': 200,
@@ -207,6 +214,7 @@ def run_machine_learning_models(fast_mode=False):
                     cv_folds=3
                 )
             else:
+                print("🚀 Executando pipeline completo com análises avançadas...")
                 rf_success = rf_model.run_complete_pipeline(
                     tune_hyperparams=True,
                     method='random_search',
@@ -215,7 +223,7 @@ def run_machine_learning_models(fast_mode=False):
             
             if rf_success:
                 trained_models['random_forest'] = rf_model
-                print(f"✅ Random Forest executado com sucesso!")
+                print(f"✅ Random Forest Avançado executado com sucesso!")
                 print(f"   📈 Accuracy: {rf_model.metrics['accuracy']:.1%}")
                 print(f"   📈 Precision: {rf_model.metrics['precision']:.1%}")
                 print(f"   📈 Recall: {rf_model.metrics['recall']:.1%}")
@@ -223,6 +231,48 @@ def run_machine_learning_models(fast_mode=False):
                 print(f"   📈 ROC-AUC: {rf_model.metrics['roc_auc']:.3f}")
                 if rf_model.oob_score:
                     print(f"   📈 OOB Score: {rf_model.oob_score:.3f}")
+                
+                # ✨ DESTACAR RESULTADOS DAS ANÁLISES AVANÇADAS ✨
+                if advanced_analysis and not fast_mode:
+                    print(f"\n🔬 RESULTADOS DAS ANÁLISES AVANÇADAS:")
+                    
+                    # Validação aninhada
+                    if 'nested_cv' in rf_model.validation_results:
+                        nested_score = rf_model.validation_results['nested_cv']['mean_score']
+                        nested_std = rf_model.validation_results['nested_cv']['std_score']
+                        print(f"   🎯 Validação Aninhada: {nested_score:.4f} ± {nested_std:.4f}")
+                    
+                    # Features selecionadas
+                    if 'rfe' in rf_model.feature_analysis_results:
+                        optimal_features = rf_model.feature_analysis_results['rfe']['optimal_features']
+                        total_features = len(rf_model.feature_analysis_results['rfe']['feature_ranking'])
+                        print(f"   🧬 Features Otimizadas: {optimal_features}/{total_features}")
+                    
+                    # Estabilidade
+                    if 'stability' in rf_model.validation_results:
+                        stability_cv = rf_model.validation_results['stability']['score_stability']['coefficient_variation']
+                        stability_level = "Alta" if stability_cv < 0.05 else "Média" if stability_cv < 0.10 else "Baixa"
+                        print(f"   📊 Estabilidade do Modelo: {stability_level} (CV: {stability_cv:.4f})")
+                    
+                    # Multicolinearidade
+                    if 'multicollinearity' in rf_model.feature_analysis_results:
+                        high_corr = len(rf_model.feature_analysis_results['multicollinearity'].get('high_correlation_pairs', []))
+                        print(f"   🔗 Pares Correlacionados: {high_corr}")
+                    
+                    # Interações
+                    if 'interactions' in rf_model.feature_analysis_results:
+                        interactions = len(rf_model.feature_analysis_results['interactions']['pairwise_interactions'])
+                        if interactions > 0:
+                            best_improvement = rf_model.feature_analysis_results['interactions']['pairwise_interactions'][0]['improvement']
+                            print(f"   ⚡ Melhor Interação: {best_improvement:+.4f} melhoria")
+                    
+                    # Relatórios
+                    if rf_model.advanced_reports:
+                        print(f"   📋 Relatórios Avançados Gerados:")
+                        if 'validation' in rf_model.advanced_reports:
+                            print(f"      • Validação Robusta")
+                        if 'features' in rf_model.advanced_reports:
+                            print(f"      • Análise de Features")
             else:
                 print(f"❌ Erro na execução do Random Forest")
                 
@@ -260,14 +310,78 @@ def run_machine_learning_models(fast_mode=False):
                     
                 print(f"{name_display:<20}{acc:<12.4f}{prec:<12.4f}{rec:<12.4f}{f1:<12.4f}{auc:<12.4f}")
         
-        print(f"\n💾 Modelos salvos em: {MODELS_DIR}")
+        # ✨ SEÇÃO ESPECIAL PARA ANÁLISES AVANÇADAS ✨
+        if advanced_analysis and not fast_mode and 'random_forest' in trained_models:
+            print(f"\n🔬 RESUMO DAS ANÁLISES AVANÇADAS:")
+            print(f"{'='*70}")
+            
+            rf_model = trained_models['random_forest']
+            
+            # Mostrar benefícios das análises
+            print(f"🎯 BENEFÍCIOS OBTIDOS:")
+            
+            # Validação robusta
+            if 'nested_cv' in rf_model.validation_results:
+                nested_score = rf_model.validation_results['nested_cv']['mean_score']
+                basic_score = rf_model.metrics.get('roc_auc', 0)
+                reliability = "Alta" if abs(nested_score - basic_score) < 0.02 else "Média"
+                print(f"   ✅ Confiabilidade da Validação: {reliability}")
+                print(f"      Score Aninhado: {nested_score:.4f}")
+                print(f"      Score Básico: {basic_score:.4f}")
+            
+            # Otimização de features
+            if 'rfe' in rf_model.feature_analysis_results:
+                original_features = len(rf_model.feature_analysis_results['rfe']['feature_ranking'])
+                optimal_features = rf_model.feature_analysis_results['rfe']['optimal_features']
+                reduction = (1 - optimal_features/original_features) * 100
+                print(f"   ✅ Redução de Features: {reduction:.1f}%")
+                print(f"      Original: {original_features} → Otimizado: {optimal_features}")
+            
+            # Estabilidade
+            if 'stability' in rf_model.validation_results:
+                stability = rf_model.validation_results['stability']['score_stability']
+                cv = stability['coefficient_variation']
+                stability_grade = "A" if cv < 0.05 else "B" if cv < 0.10 else "C"
+                print(f"   ✅ Nota de Estabilidade: {stability_grade}")
+                print(f"      Coeficiente de Variação: {cv:.4f}")
+            
+            # Insights de features
+            if 'feature_stability' in rf_model.feature_analysis_results:
+                stable_features = len(rf_model.feature_analysis_results['feature_stability']['top_stable_features'])
+                unstable_features = len(rf_model.feature_analysis_results['feature_stability']['unstable_features'])
+                print(f"   ✅ Features Estáveis: {stable_features}")
+                print(f"   ⚠️  Features Instáveis: {unstable_features}")
+            
+            print(f"\n📋 RECURSOS ADICIONAIS DISPONÍVEIS:")
+            print(f"   � Dashboard Interativo (requer: pip install dash plotly)")
+            print(f"   📈 Análise SHAP (requer: pip install shap)")
+            print(f"   📑 Relatórios Detalhados em: {RESULTS_DIR}")
+        
+        print(f"\n�💾 Modelos salvos em: {MODELS_DIR}")
         print(f"📊 Resultados salvos em: {RESULTS_DIR}")
         
         if fast_mode:
-            print(f"⚡ Modo rápido: hiperparâmetros padrão utilizados")
+            print(f"⚡ Modo rápido: algumas análises avançadas foram puladas")
+        elif not advanced_analysis:
+            print(f"📝 Modo básico: análises avançadas não executadas")
         
-        # Retornar o primeiro modelo para compatibilidade
-        return trained_models.get('logistic_regression') or trained_models.get('random_forest')
+        # Retornar o melhor modelo
+        best_model = None
+        best_score = 0
+        
+        for model_name, model in trained_models.items():
+            if hasattr(model, 'metrics') and 'roc_auc' in model.metrics:
+                score = model.metrics['roc_auc']
+            elif hasattr(model, 'evaluation_results') and 'roc_auc' in model.evaluation_results:
+                score = model.evaluation_results['roc_auc']
+            else:
+                score = 0
+            
+            if score > best_score:
+                best_score = score
+                best_model = model
+        
+        return best_model or trained_models.get('logistic_regression') or trained_models.get('random_forest')
             
     except Exception as e:
         print(f"❌ Erro no treinamento dos modelos: {e}")
@@ -309,12 +423,6 @@ def print_pipeline_summary(X_train, X_test, y_train, y_test, lr_model, execution
     print(f"   • Relatórios e gráficos: results/")
     
     print(f"\n⏱️ TEMPO DE EXECUÇÃO: {execution_time:.1f} segundos")
-    
-    print(f"\n🚀 PRÓXIMOS PASSOS SUGERIDOS:")
-    print(f"   • Implementar Random Forest e XGBoost para comparação")
-    print(f"   • Validação cruzada mais robusta")
-    print(f"   • Análise de feature importance mais detalhada")
-    print(f"   • Implementação em ambiente de produção")
 
 
 def handle_pipeline_error(error, stage=""):

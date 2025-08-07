@@ -32,7 +32,6 @@ Instituição: Universidade Federal de Ouro Preto (UFOP)
 Disciplina: Inteligência Artificial
 Professor: Jadson Castro Gertrudes
 Data: Agosto 2025
-Versão: 2.0 - Professional Edition
 """
 
 # Configurar matplotlib ANTES de qualquer import
@@ -113,6 +112,16 @@ GRID_CONFIG = {
     'linewidth': 0.5,
     'linestyle': '-',
     'color': '#BDC3C7'
+}
+
+# Configurações de layout e espaçamento
+LAYOUT_CONFIG = {
+    'hspace': 0.4,
+    'wspace': 0.3,
+    'top': 0.92,
+    'bottom': 0.1,
+    'left': 0.1,
+    'right': 0.95
 }
 
 class ProfessionalVisualizer:

@@ -23,7 +23,6 @@ Instituição: Universidade Federal de Ouro Preto (UFOP)
 Disciplina: Inteligência Artificial
 Professor: Jadson Castro Gertrudes
 Data: Agosto 2025
-
 """
 
 import pandas as pd
@@ -49,21 +48,13 @@ try:
     from src.id_mapping_utils import IDMappingUtils
 except ImportError:
     # Fallback para quando executado diretamente
-    import config as config_module
-    RAW_DATA_FILE = getattr(config_module, 'RAW_DATA_FILE', 'data/diabetic_data.csv')
-    CLEAN_DATA_FILE = getattr(config_module, 'CLEAN_DATA_FILE', 'data/diabetic_data_clean.csv')
-    EXPIRED_DISCHARGE_CODES = getattr(config_module, 'EXPIRED_DISCHARGE_CODES', [11, 19, 20, 21])
-    COLUMNS_TO_DROP_INITIAL = getattr(config_module, 'COLUMNS_TO_DROP_INITIAL', ['weight', 'payer_code'])
-    MISSING_DATA_THRESHOLD = getattr(config_module, 'MISSING_DATA_THRESHOLD', 0.8)
-    DATA_CONSISTENCY_CHECKS = getattr(config_module, 'DATA_CONSISTENCY_CHECKS', True)
-    CREATE_DERIVED_FEATURES = getattr(config_module, 'CREATE_DERIVED_FEATURES', True)
-    RESULTS_DIR = getattr(config_module, 'RESULTS_DIR', 'results')
-    
-    try:
-        from id_mapping_utils import IDMappingUtils
-    except ImportError:
-        print("Warning: IDMappingUtils não disponível. Mapeamentos de ID serão desabilitados.")
-        IDMappingUtils = None
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from src.config import (
+        RAW_DATA_FILE, CLEAN_DATA_FILE, EXPIRED_DISCHARGE_CODES,
+        COLUMNS_TO_DROP_INITIAL, MISSING_DATA_THRESHOLD, DATA_CONSISTENCY_CHECKS,
+        CREATE_DERIVED_FEATURES, RESULTS_DIR
+    )
+    from src.id_mapping_utils import IDMappingUtils
 
 # Suprimir warnings desnecessários
 warnings.filterwarnings('ignore', category=pd.errors.DtypeWarning)

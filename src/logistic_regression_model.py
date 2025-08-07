@@ -24,7 +24,6 @@ Instituição: Universidade Federal de Ouro Preto (UFOP)
 Disciplina: Inteligência Artificial
 Professor: Jadson Castro Gertrudes
 Data: Agosto 2025
-
 """
 
 import pandas as pd
@@ -377,7 +376,7 @@ class LogisticRegressionModel:
             # Matriz de confusão otimizada
             cm_opt = confusion_matrix(self.y_test, self.y_pred_optimized)
             
-            # Dashboard otimizado
+            # Dashboard 
             filename_opt = f'logistic_regression_optimized_{timestamp}'
             
             visualizer.plot_model_results_dashboard(
@@ -682,7 +681,7 @@ class LogisticRegressionModel:
                         else:
                             f.write(f"{metric}: {value}\n")
                 
-                # Adicionar hiperparâmetros otimizados se disponíveis
+                # Adicionar hiperparâmetros otimizado se disponíveis
                 if 'best_params' in self.evaluation_results:
                     for param, value in self.evaluation_results['best_params'].items():
                         f.write(f"{param}: {value}\n")

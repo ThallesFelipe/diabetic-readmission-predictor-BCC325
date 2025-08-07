@@ -14,7 +14,6 @@ Instituição: Universidade Federal de Ouro Preto (UFOP)
 Disciplina: Inteligência Artificial
 Professor: Jadson Castro Gertrudes
 Data: Agosto 2025
-
 """
 
 import os
@@ -89,6 +88,15 @@ RANDOM_FOREST_CONFIG = {
     'bootstrap': True,
     'warm_start': False,
     'verbose': 0
+}
+
+# Grid de parâmetros para Random Forest
+RANDOM_FOREST_PARAM_GRID = {
+    'n_estimators': [100, 200, 300],
+    'max_depth': [10, 15, 20, None],
+    'min_samples_split': [5, 10, 15],
+    'min_samples_leaf': [2, 4, 6],
+    'max_features': ['sqrt', 'log2', None]
 }
 
 # ============================================================================
