@@ -1,8 +1,8 @@
 🔬 REGRESSÃO LOGÍSTICA - RELATÓRIO TÉCNICO COMPLETO
 ============================================================
 
-📅 Data/Hora: 2025-08-08 19:16:58
-🕒 Timestamp: 20250808_191658
+📅 Data/Hora: 2025-08-08 20:07:06
+🕒 Timestamp: 20250808_200706
 
 🔧 CONFIGURAÇÕES DO MODELO:
 ------------------------------

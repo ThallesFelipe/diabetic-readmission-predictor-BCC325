@@ -1,544 +1,272 @@
-2025-08-08 18:53:36,430 - src.data_cleaning - INFO - Mapeamentos de IDs carregados com sucesso
-2025-08-08 18:53:36,431 - src.data_cleaning - INFO - DataCleaner inicializado com configuração: {'remove_expired_transferred': True, 'handle_missing_data': True, 'check_consistency': True, 'create_derived_features': True, 'remove_duplicates': True, 'apply_id_mappings': True, 'missing_threshold': 0.8, 'preserve_original_columns': True, 'generate_report': True}
-2025-08-08 18:53:36,431 - src.data_cleaning - INFO - ================================================================================
-2025-08-08 18:53:36,431 - src.data_cleaning - INFO - INICIANDO PIPELINE DE LIMPEZA DOS DADOS
-2025-08-08 18:53:36,431 - src.data_cleaning - INFO - ================================================================================
-2025-08-08 18:53:36,431 - src.data_cleaning - INFO - 
+2025-08-08 19:51:17,672 - src.data_cleaning - INFO - Mapeamentos de IDs carregados com sucesso
+2025-08-08 19:51:17,673 - src.data_cleaning - INFO - DataCleaner inicializado com configuração: {'remove_expired_transferred': True, 'handle_missing_data': True, 'check_consistency': True, 'create_derived_features': True, 'remove_duplicates': True, 'apply_id_mappings': True, 'missing_threshold': 0.8, 'preserve_original_columns': True, 'generate_report': True}
+2025-08-08 19:51:17,673 - src.data_cleaning - INFO - ================================================================================
+2025-08-08 19:51:17,673 - src.data_cleaning - INFO - INICIANDO PIPELINE DE LIMPEZA DOS DADOS
+2025-08-08 19:51:17,673 - src.data_cleaning - INFO - ================================================================================
+2025-08-08 19:51:17,674 - src.data_cleaning - INFO - 
 🔄 ETAPA 1/7: Carregamento de dados
-2025-08-08 18:53:36,432 - src.data_cleaning - INFO - Carregando dados de: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data.csv
-2025-08-08 18:53:36,432 - src.data_cleaning - INFO - Tamanho do arquivo: 18.27 MB
-2025-08-08 18:53:36,760 - src.data_cleaning - INFO - Arquivo carregado com codificação: utf-8
-2025-08-08 18:53:36,760 - src.data_cleaning - INFO - Dados carregados com sucesso. Shape: (101766, 50)
-2025-08-08 18:53:36,765 - src.data_cleaning - INFO - Colunas encontradas: ['encounter_id', 'patient_nbr', 'race', 'gender', 'age', 'weight', 'admission_type_id', 'discharge_disposition_id', 'admission_source_id', 'time_in_hospital', 'payer_code', 'medical_specialty', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient', 'number_emergency', 'number_inpatient', 'diag_1', 'diag_2', 'diag_3', 'number_diagnoses', 'max_glu_serum', 'A1Cresult', 'metformin', 'repaglinide', 'nateglinide', 'chlorpropamide', 'glimepiride', 'acetohexamide', 'glipizide', 'glyburide', 'tolbutamide', 'pioglitazone', 'rosiglitazone', 'acarbose', 'miglitol', 'troglitazone', 'tolazamide', 'examide', 'citoglipton', 'insulin', 'glyburide-metformin', 'glipizide-metformin', 'glimepiride-pioglitazone', 'metformin-rosiglitazone', 'metformin-pioglitazone', 'change', 'diabetesMed', 'readmitted']
-2025-08-08 18:53:36,765 - src.data_cleaning - INFO - Validando dados de entrada...
-2025-08-08 18:53:36,771 - src.data_cleaning - INFO - Validação dos dados de entrada: ✓ APROVADA
-2025-08-08 18:53:36,771 - src.data_cleaning - INFO - 
+2025-08-08 19:51:17,674 - src.data_cleaning - INFO - Carregando dados de: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data.csv
+2025-08-08 19:51:17,674 - src.data_cleaning - INFO - Tamanho do arquivo: 18.27 MB
+2025-08-08 19:51:17,969 - src.data_cleaning - INFO - Arquivo carregado com codificação: utf-8
+2025-08-08 19:51:17,969 - src.data_cleaning - INFO - Dados carregados com sucesso. Shape: (101766, 50)
+2025-08-08 19:51:17,973 - src.data_cleaning - INFO - Colunas encontradas: ['encounter_id', 'patient_nbr', 'race', 'gender', 'age', 'weight', 'admission_type_id', 'discharge_disposition_id', 'admission_source_id', 'time_in_hospital', 'payer_code', 'medical_specialty', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient', 'number_emergency', 'number_inpatient', 'diag_1', 'diag_2', 'diag_3', 'number_diagnoses', 'max_glu_serum', 'A1Cresult', 'metformin', 'repaglinide', 'nateglinide', 'chlorpropamide', 'glimepiride', 'acetohexamide', 'glipizide', 'glyburide', 'tolbutamide', 'pioglitazone', 'rosiglitazone', 'acarbose', 'miglitol', 'troglitazone', 'tolazamide', 'examide', 'citoglipton', 'insulin', 'glyburide-metformin', 'glipizide-metformin', 'glimepiride-pioglitazone', 'metformin-rosiglitazone', 'metformin-pioglitazone', 'change', 'diabetesMed', 'readmitted']
+2025-08-08 19:51:17,974 - src.data_cleaning - INFO - Validando dados de entrada...
+2025-08-08 19:51:17,979 - src.data_cleaning - INFO - Validação dos dados de entrada: ✓ APROVADA
+2025-08-08 19:51:17,979 - src.data_cleaning - INFO - 
 🔍 ETAPA 2/7: Diagnóstico de qualidade
-2025-08-08 18:53:36,771 - src.data_cleaning - INFO - Executando diagnóstico de qualidade dos dados...
-2025-08-08 18:53:37,500 - src.data_cleaning - INFO - Diagnóstico concluído. Score de qualidade: 92.6/100
-2025-08-08 18:53:37,501 - src.data_cleaning - INFO - 
+2025-08-08 19:51:17,979 - src.data_cleaning - INFO - Executando diagnóstico de qualidade dos dados...
+2025-08-08 19:51:18,690 - src.data_cleaning - INFO - Diagnóstico concluído. Score de qualidade: 92.6/100
+2025-08-08 19:51:18,691 - src.data_cleaning - INFO - 
 🎯 ETAPA 3/7: Criação de variável alvo
-2025-08-08 18:53:37,501 - src.data_cleaning - INFO - Criando variável alvo binária...
-2025-08-08 18:53:37,546 - src.data_cleaning - INFO - Distribuição da variável 'readmitted' original:
-2025-08-08 18:53:37,546 - src.data_cleaning - INFO -   NO: 54,864 (53.91%)
-2025-08-08 18:53:37,546 - src.data_cleaning - INFO -   >30: 35,545 (34.93%)
-2025-08-08 18:53:37,546 - src.data_cleaning - INFO -   <30: 11,357 (11.16%)
-2025-08-08 18:53:37,546 - src.data_cleaning - INFO - Distribuição da variável 'target' criada:
-2025-08-08 18:53:37,547 - src.data_cleaning - INFO -   0 (Não readmitido <30 dias): 90,409 (88.84%)
-2025-08-08 18:53:37,547 - src.data_cleaning - INFO -   1 (Readmitido <30 dias): 11,357 (11.16%)
-2025-08-08 18:53:37,547 - src.data_cleaning - INFO - Taxa de readmissão em <30 dias: 0.1116
-2025-08-08 18:53:37,547 - src.data_cleaning - INFO - 
+2025-08-08 19:51:18,691 - src.data_cleaning - INFO - Criando variável alvo binária...
+2025-08-08 19:51:18,735 - src.data_cleaning - INFO - Distribuição da variável 'readmitted' original:
+2025-08-08 19:51:18,736 - src.data_cleaning - INFO -   NO: 54,864 (53.91%)
+2025-08-08 19:51:18,736 - src.data_cleaning - INFO -   >30: 35,545 (34.93%)
+2025-08-08 19:51:18,736 - src.data_cleaning - INFO -   <30: 11,357 (11.16%)
+2025-08-08 19:51:18,736 - src.data_cleaning - INFO - Distribuição da variável 'target' criada:
+2025-08-08 19:51:18,736 - src.data_cleaning - INFO -   0 (Não readmitido <30 dias): 90,409 (88.84%)
+2025-08-08 19:51:18,736 - src.data_cleaning - INFO -   1 (Readmitido <30 dias): 11,357 (11.16%)
+2025-08-08 19:51:18,737 - src.data_cleaning - INFO - Taxa de readmissão em <30 dias: 0.1116
+2025-08-08 19:51:18,737 - src.data_cleaning - INFO - 
 🚫 ETAPA 4/7: Remoção de pacientes expirados/transferidos
-2025-08-08 18:53:37,547 - src.data_cleaning - INFO - Removendo pacientes expirados e transferidos
-2025-08-08 18:53:37,548 - src.data_cleaning - INFO - Registros antes da remoção: 101,766
-2025-08-08 18:53:37,551 - src.data_cleaning - INFO - Registros com pacientes expirados: 1,652
-2025-08-08 18:53:37,551 - src.data_cleaning - INFO - Registros com pacientes transferidos: 31,308
-2025-08-08 18:53:37,551 - src.data_cleaning - INFO - Total de registros a remover: 32,960
-2025-08-08 18:53:37,590 - src.data_cleaning - INFO - Registros após remoção: 68,806
-2025-08-08 18:53:37,590 - src.data_cleaning - INFO - Registros removidos: 32,960 (32.39%)
-2025-08-08 18:53:37,591 - src.data_cleaning - INFO - 
+2025-08-08 19:51:18,737 - src.data_cleaning - INFO - Removendo pacientes expirados e transferidos
+2025-08-08 19:51:18,737 - src.data_cleaning - INFO - Registros antes da remoção: 101,766
+2025-08-08 19:51:18,740 - src.data_cleaning - INFO - Registros com pacientes expirados: 1,652
+2025-08-08 19:51:18,740 - src.data_cleaning - INFO - Registros com pacientes transferidos: 31,308
+2025-08-08 19:51:18,741 - src.data_cleaning - INFO - Total de registros a remover: 32,960
+2025-08-08 19:51:18,777 - src.data_cleaning - INFO - Registros após remoção: 68,806
+2025-08-08 19:51:18,778 - src.data_cleaning - INFO - Registros removidos: 32,960 (32.39%)
+2025-08-08 19:51:18,778 - src.data_cleaning - INFO - 
 🔧 ETAPA 5/7: Tratamento de dados faltantes
-2025-08-08 18:53:37,591 - src.data_cleaning - INFO - Tratando dados faltantes
-2025-08-08 18:53:37,591 - src.data_cleaning - INFO - Removendo colunas com muitos dados faltantes (>80%): ['weight', 'payer_code']
-2025-08-08 18:53:37,596 - src.data_cleaning - INFO -   weight: 97.0% de dados faltantes
-2025-08-08 18:53:37,600 - src.data_cleaning - INFO -   payer_code: 42.7% de dados faltantes
-2025-08-08 18:53:37,624 - src.data_cleaning - INFO - Verificando valores '?' em colunas categóricas...
-2025-08-08 18:53:37,642 - src.data_cleaning - INFO -   race: 1,586 valores '?' substituídos por 'missing' (2.3%)
-2025-08-08 18:53:37,651 - src.data_cleaning - INFO -   medical_specialty: 32,352 valores '?' substituídos por 'missing' (47.0%)
-2025-08-08 18:53:37,658 - src.data_cleaning - INFO -   diag_1: 11 valores '?' substituídos por 'unknown' (0.0%)
-2025-08-08 18:53:37,665 - src.data_cleaning - INFO -   diag_2: 306 valores '?' substituídos por 'unknown' (0.4%)
-2025-08-08 18:53:37,672 - src.data_cleaning - INFO -   diag_3: 1,282 valores '?' substituídos por 'unknown' (1.9%)
-2025-08-08 18:53:37,754 - src.data_cleaning - INFO - Outras colunas com dados faltantes (NaN):
-2025-08-08 18:53:37,754 - src.data_cleaning - INFO -   max_glu_serum: 65,940 valores NaN (95.8%)
-2025-08-08 18:53:37,754 - src.data_cleaning - INFO -   A1Cresult: 56,553 valores NaN (82.2%)
-2025-08-08 18:53:37,755 - src.data_cleaning - INFO - 
+2025-08-08 19:51:18,778 - src.data_cleaning - INFO - Tratando dados faltantes
+2025-08-08 19:51:18,778 - src.data_cleaning - INFO - Removendo colunas com muitos dados faltantes (>80%): ['weight', 'payer_code']
+2025-08-08 19:51:18,782 - src.data_cleaning - INFO -   weight: 97.0% de dados faltantes
+2025-08-08 19:51:18,787 - src.data_cleaning - INFO -   payer_code: 42.7% de dados faltantes
+2025-08-08 19:51:18,809 - src.data_cleaning - INFO - Verificando valores '?' em colunas categóricas...
+2025-08-08 19:51:18,826 - src.data_cleaning - INFO -   race: 1,586 valores '?' substituídos por 'missing' (2.3%)
+2025-08-08 19:51:18,835 - src.data_cleaning - INFO -   medical_specialty: 32,352 valores '?' substituídos por 'missing' (47.0%)
+2025-08-08 19:51:18,842 - src.data_cleaning - INFO -   diag_1: 11 valores '?' substituídos por 'unknown' (0.0%)
+2025-08-08 19:51:18,849 - src.data_cleaning - INFO -   diag_2: 306 valores '?' substituídos por 'unknown' (0.4%)
+2025-08-08 19:51:18,855 - src.data_cleaning - INFO -   diag_3: 1,282 valores '?' substituídos por 'unknown' (1.9%)
+2025-08-08 19:51:18,932 - src.data_cleaning - INFO - Outras colunas com dados faltantes (NaN):
+2025-08-08 19:51:18,933 - src.data_cleaning - INFO -   max_glu_serum: 65,940 valores NaN (95.8%)
+2025-08-08 19:51:18,933 - src.data_cleaning - INFO -   A1Cresult: 56,553 valores NaN (82.2%)
+2025-08-08 19:51:18,933 - src.data_cleaning - INFO - 
 ✅ ETAPA 6/7: Verificação de consistência
-2025-08-08 18:53:37,755 - src.data_cleaning - INFO - Verificando consistência dos dados...
-2025-08-08 18:53:37,759 - src.data_cleaning - INFO -   Categorias de idade encontradas: ['[60-70)', '[70-80)', '[50-60)', '[40-50)', '[80-90)', '[30-40)', '[20-30)', '[90-100)', '[10-20)', '[0-10)']
-2025-08-08 18:53:37,796 - src.data_cleaning - INFO - Nenhum problema de consistência encontrado
-2025-08-08 18:53:37,797 - src.data_cleaning - INFO - 
+2025-08-08 19:51:18,933 - src.data_cleaning - INFO - Verificando consistência dos dados...
+2025-08-08 19:51:18,937 - src.data_cleaning - INFO -   Categorias de idade encontradas: ['[60-70)', '[70-80)', '[50-60)', '[40-50)', '[80-90)', '[30-40)', '[20-30)', '[90-100)', '[10-20)', '[0-10)']
+2025-08-08 19:51:18,974 - src.data_cleaning - INFO - Nenhum problema de consistência encontrado
+2025-08-08 19:51:18,974 - src.data_cleaning - INFO - 
 🧮 ETAPA 7/7: Criação de features derivadas
-2025-08-08 18:53:37,797 - src.data_cleaning - INFO - Criando features derivadas...
-2025-08-08 18:53:37,797 - src.data_cleaning - INFO -   Calculando número de internações anteriores por paciente...
-2025-08-08 18:53:37,866 - src.data_cleaning - INFO -     Internações anteriores - Média: 0.47, Máx: 38
-2025-08-08 18:53:37,870 - src.data_cleaning - INFO -   Taxa de mudança na medicação: 0.443
-2025-08-08 18:53:37,873 - src.data_cleaning - INFO -   Total de procedimentos - Média: 57.07
-2025-08-08 18:53:37,874 - src.data_cleaning - INFO -   Taxa de internação longa (>7 dias): 0.106
-2025-08-08 18:53:37,874 - src.data_cleaning - INFO - Features derivadas criadas: ['num_previous_admissions', 'medication_changed', 'total_procedures', 'long_stay']
-2025-08-08 18:53:37,874 - src.data_cleaning - INFO - 
+2025-08-08 19:51:18,974 - src.data_cleaning - INFO - Criando features derivadas...
+2025-08-08 19:51:18,975 - src.data_cleaning - INFO -   Calculando número de internações anteriores por paciente...
+2025-08-08 19:51:19,039 - src.data_cleaning - INFO -     Internações anteriores - Média: 0.47, Máx: 38
+2025-08-08 19:51:19,042 - src.data_cleaning - INFO -   Taxa de mudança na medicação: 0.443
+2025-08-08 19:51:19,044 - src.data_cleaning - INFO -   Total de procedimentos - Média: 57.07
+2025-08-08 19:51:19,045 - src.data_cleaning - INFO -   Taxa de internação longa (>7 dias): 0.106
+2025-08-08 19:51:19,045 - src.data_cleaning - INFO - Features derivadas criadas: ['num_previous_admissions', 'medication_changed', 'total_procedures', 'long_stay']
+2025-08-08 19:51:19,045 - src.data_cleaning - INFO - 
 🔄 ETAPA EXTRA: Remoção de duplicatas
-2025-08-08 18:53:37,874 - src.data_cleaning - INFO - Removendo dados duplicados de pacientes
-2025-08-08 18:53:37,874 - src.data_cleaning - INFO - Registros antes da remoção de duplicatas: 68,806
-2025-08-08 18:53:37,877 - src.data_cleaning - INFO - Pacientes únicos antes: 52,627
-2025-08-08 18:53:37,882 - src.data_cleaning - INFO - Pacientes com múltiplas internações: 9,775
-2025-08-08 18:53:37,882 - src.data_cleaning - INFO - Registros duplicados a remover: 16,179
-2025-08-08 18:53:37,907 - src.data_cleaning - INFO - Registros após remoção de duplicatas: 52,627
-2025-08-08 18:53:37,907 - src.data_cleaning - INFO - Pacientes únicos após limpeza: 52,627
-2025-08-08 18:53:37,907 - src.data_cleaning - INFO - 
+2025-08-08 19:51:19,046 - src.data_cleaning - INFO - Removendo dados duplicados de pacientes
+2025-08-08 19:51:19,046 - src.data_cleaning - INFO - Registros antes da remoção de duplicatas: 68,806
+2025-08-08 19:51:19,048 - src.data_cleaning - INFO - Pacientes únicos antes: 52,627
+2025-08-08 19:51:19,053 - src.data_cleaning - INFO - Pacientes com múltiplas internações: 9,775
+2025-08-08 19:51:19,053 - src.data_cleaning - INFO - Registros duplicados a remover: 16,179
+2025-08-08 19:51:19,077 - src.data_cleaning - INFO - Registros após remoção de duplicatas: 52,627
+2025-08-08 19:51:19,077 - src.data_cleaning - INFO - Pacientes únicos após limpeza: 52,627
+2025-08-08 19:51:19,077 - src.data_cleaning - INFO - 
 🗂️  ETAPA EXTRA: Aplicação de mapeamentos
-2025-08-08 18:53:37,907 - src.data_cleaning - INFO - Aplicando mapeamentos de IDs
-2025-08-08 18:53:37,908 - src.data_cleaning - INFO - Aplicando mapeamentos de IDs aos dados...
-2025-08-08 18:53:37,909 - src.data_cleaning - INFO - Relatório de validação dos mapeamentos:
-2025-08-08 18:53:37,910 - src.data_cleaning - INFO -   admission_type: 8/8 IDs mapeados (100.0%)
-2025-08-08 18:53:37,910 - src.data_cleaning - INFO -   discharge_disposition: 16/16 IDs mapeados (100.0%)
-2025-08-08 18:53:37,910 - src.data_cleaning - INFO -   admission_source: 17/17 IDs mapeados (100.0%)
-2025-08-08 18:53:37,951 - src.data_cleaning - INFO - Colunas descritivas adicionadas: 3
-2025-08-08 18:53:37,951 - src.data_cleaning - INFO - Dimensões finais após mapeamentos: (52627, 56)
-2025-08-08 18:53:37,952 - src.data_cleaning - INFO - 
+2025-08-08 19:51:19,077 - src.data_cleaning - INFO - Aplicando mapeamentos de IDs
+2025-08-08 19:51:19,078 - src.data_cleaning - INFO - Aplicando mapeamentos de IDs aos dados...
+2025-08-08 19:51:19,079 - src.data_cleaning - INFO - Relatório de validação dos mapeamentos:
+2025-08-08 19:51:19,079 - src.data_cleaning - INFO -   admission_type: 8/8 IDs mapeados (100.0%)
+2025-08-08 19:51:19,079 - src.data_cleaning - INFO -   discharge_disposition: 16/16 IDs mapeados (100.0%)
+2025-08-08 19:51:19,079 - src.data_cleaning - INFO -   admission_source: 17/17 IDs mapeados (100.0%)
+2025-08-08 19:51:19,120 - src.data_cleaning - INFO - Colunas descritivas adicionadas: 3
+2025-08-08 19:51:19,120 - src.data_cleaning - INFO - Dimensões finais após mapeamentos: (52627, 56)
+2025-08-08 19:51:19,120 - src.data_cleaning - INFO - 
 📊 Gerando resumo final...
-2025-08-08 18:53:37,952 - src.data_cleaning - INFO - ============================================================
-2025-08-08 18:53:37,952 - src.data_cleaning - INFO - RESUMO DA LIMPEZA DOS DADOS
-2025-08-08 18:53:37,952 - src.data_cleaning - INFO - ============================================================
-2025-08-08 18:53:37,952 - src.data_cleaning - INFO - Distribuição da variável 'readmitted' após limpeza:
-2025-08-08 18:53:37,955 - src.data_cleaning - INFO -   NO: 32,033 (60.87%)
-2025-08-08 18:53:37,955 - src.data_cleaning - INFO -   >30: 16,527 (31.40%)
-2025-08-08 18:53:37,955 - src.data_cleaning - INFO -   <30: 4,067 (7.73%)
-2025-08-08 18:53:37,955 - src.data_cleaning - INFO - Distribuição da variável 'target' após limpeza:
-2025-08-08 18:53:37,956 - src.data_cleaning - INFO -   0: 48,560 (92.27%)
-2025-08-08 18:53:37,956 - src.data_cleaning - INFO -   1: 4,067 (7.73%)
-2025-08-08 18:53:37,956 - src.data_cleaning - INFO - Taxa de readmissão final em <30 dias: 0.077
-2025-08-08 18:53:37,956 - src.data_cleaning - INFO - 
+2025-08-08 19:51:19,120 - src.data_cleaning - INFO - ============================================================
+2025-08-08 19:51:19,121 - src.data_cleaning - INFO - RESUMO DA LIMPEZA DOS DADOS
+2025-08-08 19:51:19,121 - src.data_cleaning - INFO - ============================================================
+2025-08-08 19:51:19,121 - src.data_cleaning - INFO - Distribuição da variável 'readmitted' após limpeza:
+2025-08-08 19:51:19,123 - src.data_cleaning - INFO -   NO: 32,033 (60.87%)
+2025-08-08 19:51:19,124 - src.data_cleaning - INFO -   >30: 16,527 (31.40%)
+2025-08-08 19:51:19,124 - src.data_cleaning - INFO -   <30: 4,067 (7.73%)
+2025-08-08 19:51:19,124 - src.data_cleaning - INFO - Distribuição da variável 'target' após limpeza:
+2025-08-08 19:51:19,125 - src.data_cleaning - INFO -   0: 48,560 (92.27%)
+2025-08-08 19:51:19,125 - src.data_cleaning - INFO -   1: 4,067 (7.73%)
+2025-08-08 19:51:19,125 - src.data_cleaning - INFO - Taxa de readmissão final em <30 dias: 0.077
+2025-08-08 19:51:19,125 - src.data_cleaning - INFO - 
 Estatísticas de Transformação:
-2025-08-08 18:53:37,956 - src.data_cleaning - INFO -   Registros originais: 101,766
-2025-08-08 18:53:37,956 - src.data_cleaning - INFO -   Registros finais: 52,627
-2025-08-08 18:53:37,956 - src.data_cleaning - INFO -   Registros removidos: 49,139
-2025-08-08 18:53:37,957 - src.data_cleaning - INFO -   Taxa de retenção: 51.7%
-2025-08-08 18:53:37,957 - src.data_cleaning - INFO -   Colunas originais: 50
-2025-08-08 18:53:37,957 - src.data_cleaning - INFO -   Colunas finais: 56
-2025-08-08 18:53:37,957 - src.data_cleaning - INFO -   Pacientes originais: 71,518
-2025-08-08 18:53:37,960 - src.data_cleaning - INFO -   Pacientes finais: 52,627
-2025-08-08 18:53:37,960 - src.data_cleaning - INFO - 
+2025-08-08 19:51:19,126 - src.data_cleaning - INFO -   Registros originais: 101,766
+2025-08-08 19:51:19,126 - src.data_cleaning - INFO -   Registros finais: 52,627
+2025-08-08 19:51:19,126 - src.data_cleaning - INFO -   Registros removidos: 49,139
+2025-08-08 19:51:19,126 - src.data_cleaning - INFO -   Taxa de retenção: 51.7%
+2025-08-08 19:51:19,126 - src.data_cleaning - INFO -   Colunas originais: 50
+2025-08-08 19:51:19,126 - src.data_cleaning - INFO -   Colunas finais: 56
+2025-08-08 19:51:19,126 - src.data_cleaning - INFO -   Pacientes originais: 71,518
+2025-08-08 19:51:19,128 - src.data_cleaning - INFO -   Pacientes finais: 52,627
+2025-08-08 19:51:19,129 - src.data_cleaning - INFO - 
 Qualidade dos Dados:
-2025-08-08 18:53:38,011 - src.data_cleaning - INFO -   Completude dos dados: 96.84%
-2025-08-08 18:53:38,011 - src.data_cleaning - INFO -   Dados faltantes totais: 93,209
-2025-08-08 18:53:38,436 - src.data_cleaning - INFO - 📁 Dataset limpo salvo em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data_clean.csv
-2025-08-08 18:53:38,439 - src.data_cleaning - INFO - Relatório de limpeza salvo em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\data_cleaning_report_20250808_185338.txt
-2025-08-08 18:53:38,441 - src.data_cleaning - INFO - Estatísticas JSON salvas em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\cleaning_stats_20250808_185338.json
-2025-08-08 18:53:38,441 - src.data_cleaning - INFO - 📋 Relatório salvo em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\data_cleaning_report_20250808_185338.txt
-2025-08-08 18:53:38,441 - src.data_cleaning - INFO - ================================================================================
-2025-08-08 18:53:38,441 - src.data_cleaning - INFO - ✅ LIMPEZA DOS DADOS CONCLUÍDA COM SUCESSO
-2025-08-08 18:53:38,442 - src.data_cleaning - INFO - ⏱️  Tempo de execução: 2.01 segundos
-2025-08-08 18:53:38,442 - src.data_cleaning - INFO - 📏 Dimensões finais: (52627, 56)
-2025-08-08 18:53:38,444 - src.data_cleaning - INFO - 🏥 Pacientes únicos: 52,627
-2025-08-08 18:53:38,444 - src.data_cleaning - INFO - 🎯 Taxa de readmissão: 0.0773
-2025-08-08 18:53:38,445 - src.data_cleaning - INFO - ================================================================================
-2025-08-08 18:53:38,445 - src.data_cleaning - INFO - ============================================================
-2025-08-08 18:53:38,445 - src.data_cleaning - INFO - RESUMO DA LIMPEZA DOS DADOS
-2025-08-08 18:53:38,445 - src.data_cleaning - INFO - ============================================================
-2025-08-08 18:53:38,445 - src.data_cleaning - INFO - Distribuição da variável 'readmitted' após limpeza:
-2025-08-08 18:53:38,448 - src.data_cleaning - INFO -   NO: 32,033 (60.87%)
-2025-08-08 18:53:38,448 - src.data_cleaning - INFO -   >30: 16,527 (31.40%)
-2025-08-08 18:53:38,448 - src.data_cleaning - INFO -   <30: 4,067 (7.73%)
-2025-08-08 18:53:38,448 - src.data_cleaning - INFO - Distribuição da variável 'target' após limpeza:
-2025-08-08 18:53:38,449 - src.data_cleaning - INFO -   0: 48,560 (92.27%)
-2025-08-08 18:53:38,449 - src.data_cleaning - INFO -   1: 4,067 (7.73%)
-2025-08-08 18:53:38,449 - src.data_cleaning - INFO - Taxa de readmissão final em <30 dias: 0.077
-2025-08-08 18:53:38,449 - src.data_cleaning - INFO - 
+2025-08-08 19:51:19,179 - src.data_cleaning - INFO -   Completude dos dados: 96.84%
+2025-08-08 19:51:19,180 - src.data_cleaning - INFO -   Dados faltantes totais: 93,209
+2025-08-08 19:51:19,597 - src.data_cleaning - INFO - 📁 Dataset limpo salvo em: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data_clean.csv
+2025-08-08 19:51:19,600 - src.data_cleaning - INFO - Relatório de limpeza salvo em: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\data_cleaning_report_20250808_195119.txt
+2025-08-08 19:51:19,602 - src.data_cleaning - INFO - Estatísticas JSON salvas em: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\cleaning_stats_20250808_195119.json
+2025-08-08 19:51:19,602 - src.data_cleaning - INFO - 📋 Relatório salvo em: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\data_cleaning_report_20250808_195119.txt
+2025-08-08 19:51:19,602 - src.data_cleaning - INFO - ================================================================================
+2025-08-08 19:51:19,602 - src.data_cleaning - INFO - ✅ LIMPEZA DOS DADOS CONCLUÍDA COM SUCESSO
+2025-08-08 19:51:19,603 - src.data_cleaning - INFO - ⏱️  Tempo de execução: 1.93 segundos
+2025-08-08 19:51:19,603 - src.data_cleaning - INFO - 📏 Dimensões finais: (52627, 56)
+2025-08-08 19:51:19,605 - src.data_cleaning - INFO - 🏥 Pacientes únicos: 52,627
+2025-08-08 19:51:19,605 - src.data_cleaning - INFO - 🎯 Taxa de readmissão: 0.0773
+2025-08-08 19:51:19,605 - src.data_cleaning - INFO - ================================================================================
+2025-08-08 19:51:19,605 - src.data_cleaning - INFO - ============================================================
+2025-08-08 19:51:19,606 - src.data_cleaning - INFO - RESUMO DA LIMPEZA DOS DADOS
+2025-08-08 19:51:19,606 - src.data_cleaning - INFO - ============================================================
+2025-08-08 19:51:19,606 - src.data_cleaning - INFO - Distribuição da variável 'readmitted' após limpeza:
+2025-08-08 19:51:19,608 - src.data_cleaning - INFO -   NO: 32,033 (60.87%)
+2025-08-08 19:51:19,608 - src.data_cleaning - INFO -   >30: 16,527 (31.40%)
+2025-08-08 19:51:19,608 - src.data_cleaning - INFO -   <30: 4,067 (7.73%)
+2025-08-08 19:51:19,609 - src.data_cleaning - INFO - Distribuição da variável 'target' após limpeza:
+2025-08-08 19:51:19,609 - src.data_cleaning - INFO -   0: 48,560 (92.27%)
+2025-08-08 19:51:19,610 - src.data_cleaning - INFO -   1: 4,067 (7.73%)
+2025-08-08 19:51:19,610 - src.data_cleaning - INFO - Taxa de readmissão final em <30 dias: 0.077
+2025-08-08 19:51:19,610 - src.data_cleaning - INFO - 
 Estatísticas de Transformação:
-2025-08-08 18:53:38,449 - src.data_cleaning - INFO -   Registros originais: 101,766
-2025-08-08 18:53:38,449 - src.data_cleaning - INFO -   Registros finais: 52,627
-2025-08-08 18:53:38,450 - src.data_cleaning - INFO -   Registros removidos: 49,139
-2025-08-08 18:53:38,450 - src.data_cleaning - INFO -   Taxa de retenção: 51.7%
-2025-08-08 18:53:38,450 - src.data_cleaning - INFO -   Colunas originais: 50
-2025-08-08 18:53:38,450 - src.data_cleaning - INFO -   Colunas finais: 56
-2025-08-08 18:53:38,450 - src.data_cleaning - INFO -   Pacientes originais: 71,518
-2025-08-08 18:53:38,452 - src.data_cleaning - INFO -   Pacientes finais: 52,627
-2025-08-08 18:53:38,452 - src.data_cleaning - INFO - 
+2025-08-08 19:51:19,610 - src.data_cleaning - INFO -   Registros originais: 101,766
+2025-08-08 19:51:19,610 - src.data_cleaning - INFO -   Registros finais: 52,627
+2025-08-08 19:51:19,610 - src.data_cleaning - INFO -   Registros removidos: 49,139
+2025-08-08 19:51:19,610 - src.data_cleaning - INFO -   Taxa de retenção: 51.7%
+2025-08-08 19:51:19,611 - src.data_cleaning - INFO -   Colunas originais: 50
+2025-08-08 19:51:19,611 - src.data_cleaning - INFO -   Colunas finais: 56
+2025-08-08 19:51:19,611 - src.data_cleaning - INFO -   Pacientes originais: 71,518
+2025-08-08 19:51:19,613 - src.data_cleaning - INFO -   Pacientes finais: 52,627
+2025-08-08 19:51:19,613 - src.data_cleaning - INFO - 
 Qualidade dos Dados:
-2025-08-08 18:53:38,504 - src.data_cleaning - INFO -   Completude dos dados: 96.84%
-2025-08-08 18:53:38,504 - src.data_cleaning - INFO -   Dados faltantes totais: 93,209
-2025-08-08 18:53:38,513 - root - INFO - ============================================================
-2025-08-08 18:53:38,514 - root - INFO - INICIANDO ENGENHARIA DE FEATURES
-2025-08-08 18:53:38,514 - root - INFO - ============================================================
-2025-08-08 18:53:38,516 - root - INFO - ETAPA 1/6: Carregamento de dados
-2025-08-08 18:53:38,516 - root - INFO - Carregando dados limpos de: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data_clean.csv
-2025-08-08 18:53:38,705 - root - INFO - Dados carregados com sucesso. Shape: (52627, 56)
-2025-08-08 18:53:38,705 - root - INFO - Validações básicas aprovadas. Target possui 2 valores únicos
-2025-08-08 18:53:38,705 - root - INFO - ETAPA 2/6: Remoção de colunas desnecessárias
-2025-08-08 18:53:38,706 - root - INFO - Removendo colunas desnecessárias...
-2025-08-08 18:53:38,759 - root - INFO - Colunas configuradas para remoção: ['encounter_id', 'patient_nbr', 'readmitted', 'diag_1', 'diag_2', 'diag_3']
-2025-08-08 18:53:38,759 - root - INFO - Colunas ID com mapeamentos removidas: ['admission_type_id', 'discharge_disposition_id', 'admission_source_id']
-2025-08-08 18:53:38,760 - root - INFO - Colunas descritivas mantidas: ['admission_type_desc', 'discharge_disposition_desc', 'admission_source_desc']
-2025-08-08 18:53:38,774 - root - INFO - Total de colunas removidas: 9
-2025-08-08 18:53:38,774 - root - INFO - Dimensões após remoção: (52627, 47)
-2025-08-08 18:53:38,774 - root - INFO - ETAPA 3/6: Identificação de tipos de colunas
-2025-08-08 18:53:38,774 - root - INFO - Identificando tipos de colunas...
-2025-08-08 18:53:38,831 - root - INFO - Colunas numéricas (12): ['time_in_hospital', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient']...
-2025-08-08 18:53:38,832 - root - INFO - Colunas categóricas (34): ['race', 'gender', 'age', 'medical_specialty', 'max_glu_serum']...
-2025-08-08 18:53:38,832 - root - WARNING - Colunas com alta cardinalidade detectadas:
-2025-08-08 18:53:38,832 - root - WARNING -   medical_specialty: 69 categorias únicas
-2025-08-08 18:53:38,832 - root - INFO - Estatísticas das features numéricas:
-2025-08-08 18:53:38,834 - root - INFO -   time_in_hospital: média=3.75, std=2.69
-2025-08-08 18:53:38,836 - root - INFO -   num_lab_procedures: média=42.02, std=19.68
-2025-08-08 18:53:38,838 - root - INFO -   num_procedures: média=1.44, std=1.80
-2025-08-08 18:53:38,838 - root - INFO - ETAPA 4/6: One-Hot Encoding
-2025-08-08 18:53:38,838 - root - INFO - Aplicando One-Hot Encoding...
-2025-08-08 18:53:38,838 - root - INFO - Processando 34 colunas categóricas
-2025-08-08 18:53:38,839 - root - INFO - Dimensões antes do encoding: (52627, 47)
-2025-08-08 18:53:38,982 - root - INFO - Dimensões após encoding: (52627, 183)
-2025-08-08 18:53:38,982 - root - INFO - Novas features criadas: 170
-2025-08-08 18:53:38,982 - root - INFO - ETAPA 5/6: Preparação de features e target
-2025-08-08 18:53:38,982 - root - INFO - Separando features (X) e variável alvo (y)...
-2025-08-08 18:53:38,989 - root - INFO - Features (X): (52627, 182)
-2025-08-08 18:53:38,989 - root - INFO - Target (y): (52627,)
-2025-08-08 18:53:38,990 - root - INFO - Distribuição da variável alvo:
-2025-08-08 18:53:38,990 - root - INFO -   Classe 0: 48,560 (92.3%)
-2025-08-08 18:53:38,990 - root - INFO -   Classe 1: 4,067 (7.7%)
-2025-08-08 18:53:38,990 - root - INFO - Taxa de desbalanceamento: 11.9:1
-2025-08-08 18:53:38,990 - root - WARNING - Dataset altamente desbalanceado detectado! Considere usar técnicas de balanceamento.
-2025-08-08 18:53:38,999 - root - INFO - ETAPA 6/7: Divisão treino/teste
-2025-08-08 18:53:38,999 - root - INFO - Dividindo dados em treino e teste...
-2025-08-08 18:53:38,999 - root - INFO - Proporção de teste: 0.2 (20.0%)
-2025-08-08 18:53:38,999 - root - INFO - Random state: 42
-2025-08-08 18:53:38,999 - root - INFO - Estratificação: Sim
-2025-08-08 18:53:39,035 - root - INFO - Distribuição após divisão:
-2025-08-08 18:53:39,035 - root - INFO -   Treino: Total=42,101
-2025-08-08 18:53:39,036 - root - INFO -     Classe 0: 38,847 (92.3%)
-2025-08-08 18:53:39,036 - root - INFO -     Classe 1: 3,254 (7.7%)
-2025-08-08 18:53:39,036 - root - INFO -   Teste:  Total=10,526
-2025-08-08 18:53:39,036 - root - INFO -     Classe 0: 9,713 (92.3%)
-2025-08-08 18:53:39,036 - root - INFO -     Classe 1: 813 (7.7%)
-2025-08-08 18:53:39,037 - root - INFO - ✅ Estratificação bem-sucedida (diferença < 1%)
-2025-08-08 18:53:39,037 - root - INFO - ETAPA 7/7: Escalonamento de features numéricas
-2025-08-08 18:53:39,037 - root - INFO - Aplicando escalonamento nas features numéricas...
-2025-08-08 18:53:39,044 - root - INFO - Features numéricas identificadas para escalonamento: 9
-2025-08-08 18:53:39,045 - root - INFO -   time_in_hospital: μ=3.75, σ=2.69, range=[1.0, 14.0]
-2025-08-08 18:53:39,045 - root - INFO -   num_lab_procedures: μ=42.02, σ=19.70, range=[1.0, 132.0]
-2025-08-08 18:53:39,046 - root - INFO -   num_procedures: μ=1.44, σ=1.80, range=[0.0, 6.0]
-2025-08-08 18:53:39,046 - root - INFO -   num_medications: μ=14.64, σ=7.70, range=[1.0, 75.0]
-2025-08-08 18:53:39,046 - root - INFO -   number_outpatient: μ=0.27, σ=1.05, range=[0.0, 38.0]
-2025-08-08 18:53:39,046 - root - INFO -   ... e mais 4 features numéricas
-2025-08-08 18:53:39,069 - root - INFO - ✅ Escalonamento aplicado com sucesso
-2025-08-08 18:53:39,069 - root - INFO -    Treino padronizado: média ≈ 0, std ≈ 1
-2025-08-08 18:53:39,072 - root - INFO -    Diferença treino-teste: média_max=0.016, std_max=0.102
-2025-08-08 18:53:39,072 - root - INFO - Estatísticas pós-escalonamento salvas nos metadados
-2025-08-08 18:53:39,074 - root - INFO - Gerando resumo das features finais...
-2025-08-08 18:53:39,075 - root - INFO - Total de features: 182
-2025-08-08 18:53:39,075 - root - INFO - Tipos de dados:
-2025-08-08 18:53:39,075 - root - INFO -   bool: 170 features
-2025-08-08 18:53:39,075 - root - INFO -   int64: 12 features
-2025-08-08 18:53:39,174 - root - INFO - Distribuição por tipo de feature:
-2025-08-08 18:53:39,174 - root - INFO -   Features numéricas: 12
-2025-08-08 18:53:39,175 - root - INFO -   Features binárias: 172
-2025-08-08 18:53:39,175 - root - INFO -   Features categóricas: 2
-2025-08-08 18:53:39,175 - root - INFO - Estatísticas das features numéricas:
-2025-08-08 18:53:39,193 - root - INFO -   time_in_hospital: μ=3.75, σ=2.69, min=1.00, max=14.00
-2025-08-08 18:53:39,194 - root - INFO -   num_lab_procedures: μ=42.02, σ=19.68, min=1.00, max=132.00
-2025-08-08 18:53:39,194 - root - INFO -   num_procedures: μ=1.44, σ=1.80, min=0.00, max=6.00
-2025-08-08 18:53:39,194 - root - INFO -   num_medications: μ=14.66, σ=7.73, min=1.00, max=75.00
-2025-08-08 18:53:39,195 - root - INFO -   number_outpatient: μ=0.27, σ=1.05, min=0.00, max=38.00
-2025-08-08 18:53:39,195 - root - INFO -   ... e mais 7 features numéricas
-2025-08-08 18:53:39,203 - root - INFO - ✅ Nenhum dado faltante encontrado
-2025-08-08 18:53:39,204 - root - INFO - Exemplos de features: ['time_in_hospital', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient', 'number_emergency', 'number_inpatient', 'number_diagnoses', 'num_previous_admissions', 'medication_changed']
-2025-08-08 18:53:39,204 - root - INFO - ... e mais 172 features
-2025-08-08 18:53:40,492 - root - INFO - Dados processados salvos em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data_processed.csv
-2025-08-08 18:53:40,494 - root - INFO - Metadados salvos em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\feature_engineering_metadata.json
-2025-08-08 18:53:40,495 - root - INFO - ============================================================
-2025-08-08 18:53:40,495 - root - INFO - ENGENHARIA DE FEATURES CONCLUÍDA COM SUCESSO
-2025-08-08 18:53:40,495 - root - INFO - Tempo total de processamento: 1.98 segundos
-2025-08-08 18:53:40,495 - root - INFO - Features finais: 182
-2025-08-08 18:53:40,496 - root - INFO - Features escaladas: 9
-2025-08-08 18:53:40,496 - root - INFO - Amostras de treino: 42,101
-2025-08-08 18:53:40,496 - root - INFO - Amostras de teste: 10,526
-2025-08-08 18:53:40,496 - root - INFO - ✅ Escalonamento aplicado com sucesso
-2025-08-08 18:53:40,496 - root - INFO - ============================================================
-2025-08-08 18:53:40,499 - root - INFO - Diretório de saída: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data
-2025-08-08 18:53:40,504 - root - INFO - Salvando conjuntos de dados...
-2025-08-08 18:53:41,794 - root - INFO - ✅ Features de treino: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\X_train.csv
-2025-08-08 18:53:41,794 - root - INFO -    Shape: (42101, 182), Tamanho: 47.54 MB
-2025-08-08 18:53:42,116 - root - INFO - ✅ Features de teste: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\X_test.csv
-2025-08-08 18:53:42,116 - root - INFO -    Shape: (10526, 182), Tamanho: 11.89 MB
-2025-08-08 18:53:42,126 - root - INFO - ✅ Target de treino: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\y_train.csv
-2025-08-08 18:53:42,126 - root - INFO -    Shape: (42101,), Tamanho: 0.12 MB
-2025-08-08 18:53:42,130 - root - INFO - ✅ Target de teste: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\y_test.csv
-2025-08-08 18:53:42,130 - root - INFO -    Shape: (10526,), Tamanho: 0.03 MB
-2025-08-08 18:53:43,437 - root - INFO - ✅ Dados de treino combinados (X + y): C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\train_combined.csv
-2025-08-08 18:53:43,437 - root - INFO -    Shape: (42101, 183), Tamanho: 47.62 MB
-2025-08-08 18:53:43,761 - root - INFO - ✅ Dados de teste combinados (X + y): C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\test_combined.csv
-2025-08-08 18:53:43,761 - root - INFO -    Shape: (10526, 183), Tamanho: 11.91 MB
-2025-08-08 18:53:43,761 - root - INFO - Validando arquivos salvos...
-2025-08-08 18:53:44,241 - root - INFO - ✅ X_train.csv validado
-2025-08-08 18:53:44,378 - root - INFO - ✅ X_test.csv validado
-2025-08-08 18:53:44,393 - root - INFO - ✅ y_train.csv validado (42101 linhas)
-2025-08-08 18:53:44,405 - root - INFO - ✅ y_test.csv validado (10526 linhas)
-2025-08-08 18:53:44,880 - root - INFO - ✅ train_combined.csv validado
-2025-08-08 18:53:45,021 - root - INFO - ✅ test_combined.csv validado
-2025-08-08 18:53:45,021 - root - INFO - Resumo do salvamento:
-2025-08-08 18:53:45,021 - root - INFO -   Total de arquivos: 6
-2025-08-08 18:53:45,021 - root - INFO -   Tamanho total: 119.12 MB
-2025-08-08 18:53:45,021 - root - INFO -   Diretório: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data
-2025-08-08 18:53:45,023 - root - INFO - ✅ Scaler salvo em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\feature_scaler.pkl
-2025-08-08 18:53:45,024 - root - INFO - ✅ Informações do scaler salvas em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\scaler_info.json
-2025-08-08 18:53:45,025 - root - INFO -   Scaler salvo: feature_scaler.pkl
-2025-08-08 19:00:38,193 - src.data_cleaning - INFO - Mapeamentos de IDs carregados com sucesso
-2025-08-08 19:00:38,193 - src.data_cleaning - INFO - DataCleaner inicializado com configuração: {'remove_expired_transferred': True, 'handle_missing_data': True, 'check_consistency': True, 'create_derived_features': True, 'remove_duplicates': True, 'apply_id_mappings': True, 'missing_threshold': 0.8, 'preserve_original_columns': True, 'generate_report': True}
-2025-08-08 19:00:38,193 - src.data_cleaning - INFO - ================================================================================
-2025-08-08 19:00:38,193 - src.data_cleaning - INFO - INICIANDO PIPELINE DE LIMPEZA DOS DADOS
-2025-08-08 19:00:38,193 - src.data_cleaning - INFO - ================================================================================
-2025-08-08 19:00:38,194 - src.data_cleaning - INFO - 
-🔄 ETAPA 1/7: Carregamento de dados
-2025-08-08 19:00:38,194 - src.data_cleaning - INFO - Carregando dados de: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data.csv
-2025-08-08 19:00:38,194 - src.data_cleaning - INFO - Tamanho do arquivo: 18.27 MB
-2025-08-08 19:00:38,515 - src.data_cleaning - INFO - Arquivo carregado com codificação: utf-8
-2025-08-08 19:00:38,515 - src.data_cleaning - INFO - Dados carregados com sucesso. Shape: (101766, 50)
-2025-08-08 19:00:38,519 - src.data_cleaning - INFO - Colunas encontradas: ['encounter_id', 'patient_nbr', 'race', 'gender', 'age', 'weight', 'admission_type_id', 'discharge_disposition_id', 'admission_source_id', 'time_in_hospital', 'payer_code', 'medical_specialty', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient', 'number_emergency', 'number_inpatient', 'diag_1', 'diag_2', 'diag_3', 'number_diagnoses', 'max_glu_serum', 'A1Cresult', 'metformin', 'repaglinide', 'nateglinide', 'chlorpropamide', 'glimepiride', 'acetohexamide', 'glipizide', 'glyburide', 'tolbutamide', 'pioglitazone', 'rosiglitazone', 'acarbose', 'miglitol', 'troglitazone', 'tolazamide', 'examide', 'citoglipton', 'insulin', 'glyburide-metformin', 'glipizide-metformin', 'glimepiride-pioglitazone', 'metformin-rosiglitazone', 'metformin-pioglitazone', 'change', 'diabetesMed', 'readmitted']
-2025-08-08 19:00:38,519 - src.data_cleaning - INFO - Validando dados de entrada...
-2025-08-08 19:00:38,524 - src.data_cleaning - INFO - Validação dos dados de entrada: ✓ APROVADA
-2025-08-08 19:00:38,525 - src.data_cleaning - INFO - 
-🔍 ETAPA 2/7: Diagnóstico de qualidade
-2025-08-08 19:00:38,525 - src.data_cleaning - INFO - Executando diagnóstico de qualidade dos dados...
-2025-08-08 19:00:39,250 - src.data_cleaning - INFO - Diagnóstico concluído. Score de qualidade: 92.6/100
-2025-08-08 19:00:39,250 - src.data_cleaning - INFO - 
-🎯 ETAPA 3/7: Criação de variável alvo
-2025-08-08 19:00:39,251 - src.data_cleaning - INFO - Criando variável alvo binária...
-2025-08-08 19:00:39,296 - src.data_cleaning - INFO - Distribuição da variável 'readmitted' original:
-2025-08-08 19:00:39,297 - src.data_cleaning - INFO -   NO: 54,864 (53.91%)
-2025-08-08 19:00:39,297 - src.data_cleaning - INFO -   >30: 35,545 (34.93%)
-2025-08-08 19:00:39,297 - src.data_cleaning - INFO -   <30: 11,357 (11.16%)
-2025-08-08 19:00:39,297 - src.data_cleaning - INFO - Distribuição da variável 'target' criada:
-2025-08-08 19:00:39,297 - src.data_cleaning - INFO -   0 (Não readmitido <30 dias): 90,409 (88.84%)
-2025-08-08 19:00:39,297 - src.data_cleaning - INFO -   1 (Readmitido <30 dias): 11,357 (11.16%)
-2025-08-08 19:00:39,297 - src.data_cleaning - INFO - Taxa de readmissão em <30 dias: 0.1116
-2025-08-08 19:00:39,298 - src.data_cleaning - INFO - 
-🚫 ETAPA 4/7: Remoção de pacientes expirados/transferidos
-2025-08-08 19:00:39,298 - src.data_cleaning - INFO - Removendo pacientes expirados e transferidos
-2025-08-08 19:00:39,298 - src.data_cleaning - INFO - Registros antes da remoção: 101,766
-2025-08-08 19:00:39,301 - src.data_cleaning - INFO - Registros com pacientes expirados: 1,652
-2025-08-08 19:00:39,301 - src.data_cleaning - INFO - Registros com pacientes transferidos: 31,308
-2025-08-08 19:00:39,301 - src.data_cleaning - INFO - Total de registros a remover: 32,960
-2025-08-08 19:00:39,343 - src.data_cleaning - INFO - Registros após remoção: 68,806
-2025-08-08 19:00:39,343 - src.data_cleaning - INFO - Registros removidos: 32,960 (32.39%)
-2025-08-08 19:00:39,344 - src.data_cleaning - INFO - 
-🔧 ETAPA 5/7: Tratamento de dados faltantes
-2025-08-08 19:00:39,344 - src.data_cleaning - INFO - Tratando dados faltantes
-2025-08-08 19:00:39,344 - src.data_cleaning - INFO - Removendo colunas com muitos dados faltantes (>80%): ['weight', 'payer_code']
-2025-08-08 19:00:39,348 - src.data_cleaning - INFO -   weight: 97.0% de dados faltantes
-2025-08-08 19:00:39,353 - src.data_cleaning - INFO -   payer_code: 42.7% de dados faltantes
-2025-08-08 19:00:39,375 - src.data_cleaning - INFO - Verificando valores '?' em colunas categóricas...
-2025-08-08 19:00:39,393 - src.data_cleaning - INFO -   race: 1,586 valores '?' substituídos por 'missing' (2.3%)
-2025-08-08 19:00:39,403 - src.data_cleaning - INFO -   medical_specialty: 32,352 valores '?' substituídos por 'missing' (47.0%)
-2025-08-08 19:00:39,409 - src.data_cleaning - INFO -   diag_1: 11 valores '?' substituídos por 'unknown' (0.0%)
-2025-08-08 19:00:39,415 - src.data_cleaning - INFO -   diag_2: 306 valores '?' substituídos por 'unknown' (0.4%)
-2025-08-08 19:00:39,421 - src.data_cleaning - INFO -   diag_3: 1,282 valores '?' substituídos por 'unknown' (1.9%)
-2025-08-08 19:00:39,500 - src.data_cleaning - INFO - Outras colunas com dados faltantes (NaN):
-2025-08-08 19:00:39,500 - src.data_cleaning - INFO -   max_glu_serum: 65,940 valores NaN (95.8%)
-2025-08-08 19:00:39,501 - src.data_cleaning - INFO -   A1Cresult: 56,553 valores NaN (82.2%)
-2025-08-08 19:00:39,501 - src.data_cleaning - INFO - 
-✅ ETAPA 6/7: Verificação de consistência
-2025-08-08 19:00:39,501 - src.data_cleaning - INFO - Verificando consistência dos dados...
-2025-08-08 19:00:39,505 - src.data_cleaning - INFO -   Categorias de idade encontradas: ['[60-70)', '[70-80)', '[50-60)', '[40-50)', '[80-90)', '[30-40)', '[20-30)', '[90-100)', '[10-20)', '[0-10)']
-2025-08-08 19:00:39,542 - src.data_cleaning - INFO - Nenhum problema de consistência encontrado
-2025-08-08 19:00:39,542 - src.data_cleaning - INFO - 
-🧮 ETAPA 7/7: Criação de features derivadas
-2025-08-08 19:00:39,543 - src.data_cleaning - INFO - Criando features derivadas...
-2025-08-08 19:00:39,543 - src.data_cleaning - INFO -   Calculando número de internações anteriores por paciente...
-2025-08-08 19:00:39,608 - src.data_cleaning - INFO -     Internações anteriores - Média: 0.47, Máx: 38
-2025-08-08 19:00:39,611 - src.data_cleaning - INFO -   Taxa de mudança na medicação: 0.443
-2025-08-08 19:00:39,614 - src.data_cleaning - INFO -   Total de procedimentos - Média: 57.07
-2025-08-08 19:00:39,615 - src.data_cleaning - INFO -   Taxa de internação longa (>7 dias): 0.106
-2025-08-08 19:00:39,615 - src.data_cleaning - INFO - Features derivadas criadas: ['num_previous_admissions', 'medication_changed', 'total_procedures', 'long_stay']
-2025-08-08 19:00:39,616 - src.data_cleaning - INFO - 
-🔄 ETAPA EXTRA: Remoção de duplicatas
-2025-08-08 19:00:39,616 - src.data_cleaning - INFO - Removendo dados duplicados de pacientes
-2025-08-08 19:00:39,616 - src.data_cleaning - INFO - Registros antes da remoção de duplicatas: 68,806
-2025-08-08 19:00:39,618 - src.data_cleaning - INFO - Pacientes únicos antes: 52,627
-2025-08-08 19:00:39,623 - src.data_cleaning - INFO - Pacientes com múltiplas internações: 9,775
-2025-08-08 19:00:39,624 - src.data_cleaning - INFO - Registros duplicados a remover: 16,179
-2025-08-08 19:00:39,649 - src.data_cleaning - INFO - Registros após remoção de duplicatas: 52,627
-2025-08-08 19:00:39,650 - src.data_cleaning - INFO - Pacientes únicos após limpeza: 52,627
-2025-08-08 19:00:39,650 - src.data_cleaning - INFO - 
-🗂️  ETAPA EXTRA: Aplicação de mapeamentos
-2025-08-08 19:00:39,650 - src.data_cleaning - INFO - Aplicando mapeamentos de IDs
-2025-08-08 19:00:39,650 - src.data_cleaning - INFO - Aplicando mapeamentos de IDs aos dados...
-2025-08-08 19:00:39,652 - src.data_cleaning - INFO - Relatório de validação dos mapeamentos:
-2025-08-08 19:00:39,652 - src.data_cleaning - INFO -   admission_type: 8/8 IDs mapeados (100.0%)
-2025-08-08 19:00:39,652 - src.data_cleaning - INFO -   discharge_disposition: 16/16 IDs mapeados (100.0%)
-2025-08-08 19:00:39,652 - src.data_cleaning - INFO -   admission_source: 17/17 IDs mapeados (100.0%)
-2025-08-08 19:00:39,695 - src.data_cleaning - INFO - Colunas descritivas adicionadas: 3
-2025-08-08 19:00:39,695 - src.data_cleaning - INFO - Dimensões finais após mapeamentos: (52627, 56)
-2025-08-08 19:00:39,696 - src.data_cleaning - INFO - 
-📊 Gerando resumo final...
-2025-08-08 19:00:39,696 - src.data_cleaning - INFO - ============================================================
-2025-08-08 19:00:39,696 - src.data_cleaning - INFO - RESUMO DA LIMPEZA DOS DADOS
-2025-08-08 19:00:39,696 - src.data_cleaning - INFO - ============================================================
-2025-08-08 19:00:39,696 - src.data_cleaning - INFO - Distribuição da variável 'readmitted' após limpeza:
-2025-08-08 19:00:39,699 - src.data_cleaning - INFO -   NO: 32,033 (60.87%)
-2025-08-08 19:00:39,699 - src.data_cleaning - INFO -   >30: 16,527 (31.40%)
-2025-08-08 19:00:39,699 - src.data_cleaning - INFO -   <30: 4,067 (7.73%)
-2025-08-08 19:00:39,699 - src.data_cleaning - INFO - Distribuição da variável 'target' após limpeza:
-2025-08-08 19:00:39,700 - src.data_cleaning - INFO -   0: 48,560 (92.27%)
-2025-08-08 19:00:39,700 - src.data_cleaning - INFO -   1: 4,067 (7.73%)
-2025-08-08 19:00:39,700 - src.data_cleaning - INFO - Taxa de readmissão final em <30 dias: 0.077
-2025-08-08 19:00:39,700 - src.data_cleaning - INFO - 
-Estatísticas de Transformação:
-2025-08-08 19:00:39,700 - src.data_cleaning - INFO -   Registros originais: 101,766
-2025-08-08 19:00:39,700 - src.data_cleaning - INFO -   Registros finais: 52,627
-2025-08-08 19:00:39,701 - src.data_cleaning - INFO -   Registros removidos: 49,139
-2025-08-08 19:00:39,701 - src.data_cleaning - INFO -   Taxa de retenção: 51.7%
-2025-08-08 19:00:39,701 - src.data_cleaning - INFO -   Colunas originais: 50
-2025-08-08 19:00:39,701 - src.data_cleaning - INFO -   Colunas finais: 56
-2025-08-08 19:00:39,701 - src.data_cleaning - INFO -   Pacientes originais: 71,518
-2025-08-08 19:00:39,704 - src.data_cleaning - INFO -   Pacientes finais: 52,627
-2025-08-08 19:00:39,704 - src.data_cleaning - INFO - 
-Qualidade dos Dados:
-2025-08-08 19:00:39,755 - src.data_cleaning - INFO -   Completude dos dados: 96.84%
-2025-08-08 19:00:39,755 - src.data_cleaning - INFO -   Dados faltantes totais: 93,209
-2025-08-08 19:00:40,187 - src.data_cleaning - INFO - 📁 Dataset limpo salvo em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data_clean.csv
-2025-08-08 19:00:40,191 - src.data_cleaning - INFO - Relatório de limpeza salvo em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\data_cleaning_report_20250808_190040.txt
-2025-08-08 19:00:40,193 - src.data_cleaning - INFO - Estatísticas JSON salvas em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\cleaning_stats_20250808_190040.json
-2025-08-08 19:00:40,193 - src.data_cleaning - INFO - 📋 Relatório salvo em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\data_cleaning_report_20250808_190040.txt
-2025-08-08 19:00:40,193 - src.data_cleaning - INFO - ================================================================================
-2025-08-08 19:00:40,193 - src.data_cleaning - INFO - ✅ LIMPEZA DOS DADOS CONCLUÍDA COM SUCESSO
-2025-08-08 19:00:40,193 - src.data_cleaning - INFO - ⏱️  Tempo de execução: 2.00 segundos
-2025-08-08 19:00:40,193 - src.data_cleaning - INFO - 📏 Dimensões finais: (52627, 56)
-2025-08-08 19:00:40,195 - src.data_cleaning - INFO - 🏥 Pacientes únicos: 52,627
-2025-08-08 19:00:40,196 - src.data_cleaning - INFO - 🎯 Taxa de readmissão: 0.0773
-2025-08-08 19:00:40,196 - src.data_cleaning - INFO - ================================================================================
-2025-08-08 19:00:40,196 - src.data_cleaning - INFO - ============================================================
-2025-08-08 19:00:40,196 - src.data_cleaning - INFO - RESUMO DA LIMPEZA DOS DADOS
-2025-08-08 19:00:40,196 - src.data_cleaning - INFO - ============================================================
-2025-08-08 19:00:40,196 - src.data_cleaning - INFO - Distribuição da variável 'readmitted' após limpeza:
-2025-08-08 19:00:40,199 - src.data_cleaning - INFO -   NO: 32,033 (60.87%)
-2025-08-08 19:00:40,199 - src.data_cleaning - INFO -   >30: 16,527 (31.40%)
-2025-08-08 19:00:40,199 - src.data_cleaning - INFO -   <30: 4,067 (7.73%)
-2025-08-08 19:00:40,199 - src.data_cleaning - INFO - Distribuição da variável 'target' após limpeza:
-2025-08-08 19:00:40,200 - src.data_cleaning - INFO -   0: 48,560 (92.27%)
-2025-08-08 19:00:40,200 - src.data_cleaning - INFO -   1: 4,067 (7.73%)
-2025-08-08 19:00:40,200 - src.data_cleaning - INFO - Taxa de readmissão final em <30 dias: 0.077
-2025-08-08 19:00:40,200 - src.data_cleaning - INFO - 
-Estatísticas de Transformação:
-2025-08-08 19:00:40,200 - src.data_cleaning - INFO -   Registros originais: 101,766
-2025-08-08 19:00:40,201 - src.data_cleaning - INFO -   Registros finais: 52,627
-2025-08-08 19:00:40,201 - src.data_cleaning - INFO -   Registros removidos: 49,139
-2025-08-08 19:00:40,201 - src.data_cleaning - INFO -   Taxa de retenção: 51.7%
-2025-08-08 19:00:40,201 - src.data_cleaning - INFO -   Colunas originais: 50
-2025-08-08 19:00:40,201 - src.data_cleaning - INFO -   Colunas finais: 56
-2025-08-08 19:00:40,201 - src.data_cleaning - INFO -   Pacientes originais: 71,518
-2025-08-08 19:00:40,203 - src.data_cleaning - INFO -   Pacientes finais: 52,627
-2025-08-08 19:00:40,203 - src.data_cleaning - INFO - 
-Qualidade dos Dados:
-2025-08-08 19:00:40,254 - src.data_cleaning - INFO -   Completude dos dados: 96.84%
-2025-08-08 19:00:40,254 - src.data_cleaning - INFO -   Dados faltantes totais: 93,209
-2025-08-08 19:00:40,263 - root - INFO - ============================================================
-2025-08-08 19:00:40,263 - root - INFO - INICIANDO ENGENHARIA DE FEATURES
-2025-08-08 19:00:40,264 - root - INFO - ============================================================
-2025-08-08 19:00:40,264 - root - INFO - ETAPA 1/6: Carregamento de dados
-2025-08-08 19:00:40,264 - root - INFO - Carregando dados limpos de: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data_clean.csv
-2025-08-08 19:00:40,469 - root - INFO - Dados carregados com sucesso. Shape: (52627, 56)
-2025-08-08 19:00:40,470 - root - INFO - Validações básicas aprovadas. Target possui 2 valores únicos
-2025-08-08 19:00:40,470 - root - INFO - ETAPA 2/6: Remoção de colunas desnecessárias
-2025-08-08 19:00:40,470 - root - INFO - Removendo colunas desnecessárias...
-2025-08-08 19:00:40,524 - root - INFO - Colunas configuradas para remoção: ['encounter_id', 'patient_nbr', 'readmitted', 'diag_1', 'diag_2', 'diag_3']
-2025-08-08 19:00:40,524 - root - INFO - Colunas ID com mapeamentos removidas: ['admission_type_id', 'discharge_disposition_id', 'admission_source_id']
-2025-08-08 19:00:40,525 - root - INFO - Colunas descritivas mantidas: ['admission_type_desc', 'discharge_disposition_desc', 'admission_source_desc']
-2025-08-08 19:00:40,539 - root - INFO - Total de colunas removidas: 9
-2025-08-08 19:00:40,539 - root - INFO - Dimensões após remoção: (52627, 47)
-2025-08-08 19:00:40,539 - root - INFO - ETAPA 3/6: Identificação de tipos de colunas
-2025-08-08 19:00:40,540 - root - INFO - Identificando tipos de colunas...
-2025-08-08 19:00:40,597 - root - INFO - Colunas numéricas (12): ['time_in_hospital', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient']...
-2025-08-08 19:00:40,597 - root - INFO - Colunas categóricas (34): ['race', 'gender', 'age', 'medical_specialty', 'max_glu_serum']...
-2025-08-08 19:00:40,597 - root - WARNING - Colunas com alta cardinalidade detectadas:
-2025-08-08 19:00:40,598 - root - WARNING -   medical_specialty: 69 categorias únicas
-2025-08-08 19:00:40,598 - root - INFO - Estatísticas das features numéricas:
-2025-08-08 19:00:40,600 - root - INFO -   time_in_hospital: média=3.75, std=2.69
-2025-08-08 19:00:40,602 - root - INFO -   num_lab_procedures: média=42.02, std=19.68
-2025-08-08 19:00:40,604 - root - INFO -   num_procedures: média=1.44, std=1.80
-2025-08-08 19:00:40,604 - root - INFO - ETAPA 4/6: One-Hot Encoding
-2025-08-08 19:00:40,604 - root - INFO - Aplicando One-Hot Encoding...
-2025-08-08 19:00:40,604 - root - INFO - Processando 34 colunas categóricas
-2025-08-08 19:00:40,604 - root - INFO - Dimensões antes do encoding: (52627, 47)
-2025-08-08 19:00:40,752 - root - INFO - Dimensões após encoding: (52627, 183)
-2025-08-08 19:00:40,752 - root - INFO - Novas features criadas: 170
-2025-08-08 19:00:40,752 - root - INFO - ETAPA 5/6: Preparação de features e target
-2025-08-08 19:00:40,752 - root - INFO - Separando features (X) e variável alvo (y)...
-2025-08-08 19:00:40,759 - root - INFO - Features (X): (52627, 182)
-2025-08-08 19:00:40,759 - root - INFO - Target (y): (52627,)
-2025-08-08 19:00:40,759 - root - INFO - Distribuição da variável alvo:
-2025-08-08 19:00:40,760 - root - INFO -   Classe 0: 48,560 (92.3%)
-2025-08-08 19:00:40,760 - root - INFO -   Classe 1: 4,067 (7.7%)
-2025-08-08 19:00:40,760 - root - INFO - Taxa de desbalanceamento: 11.9:1
-2025-08-08 19:00:40,760 - root - WARNING - Dataset altamente desbalanceado detectado! Considere usar técnicas de balanceamento.
-2025-08-08 19:00:40,769 - root - INFO - ETAPA 6/7: Divisão treino/teste
-2025-08-08 19:00:40,769 - root - INFO - Dividindo dados em treino e teste...
-2025-08-08 19:00:40,770 - root - INFO - Proporção de teste: 0.2 (20.0%)
-2025-08-08 19:00:40,770 - root - INFO - Random state: 42
-2025-08-08 19:00:40,770 - root - INFO - Estratificação: Sim
-2025-08-08 19:00:40,802 - root - INFO - Distribuição após divisão:
-2025-08-08 19:00:40,803 - root - INFO -   Treino: Total=42,101
-2025-08-08 19:00:40,803 - root - INFO -     Classe 0: 38,847 (92.3%)
-2025-08-08 19:00:40,803 - root - INFO -     Classe 1: 3,254 (7.7%)
-2025-08-08 19:00:40,803 - root - INFO -   Teste:  Total=10,526
-2025-08-08 19:00:40,803 - root - INFO -     Classe 0: 9,713 (92.3%)
-2025-08-08 19:00:40,803 - root - INFO -     Classe 1: 813 (7.7%)
-2025-08-08 19:00:40,804 - root - INFO - ✅ Estratificação bem-sucedida (diferença < 1%)
-2025-08-08 19:00:40,804 - root - INFO - ETAPA 7/7: Escalonamento de features numéricas
-2025-08-08 19:00:40,804 - root - INFO - Aplicando escalonamento nas features numéricas...
-2025-08-08 19:00:40,811 - root - INFO - Features numéricas identificadas para escalonamento: 9
-2025-08-08 19:00:40,812 - root - INFO -   time_in_hospital: μ=3.75, σ=2.69, range=[1.0, 14.0]
-2025-08-08 19:00:40,813 - root - INFO -   num_lab_procedures: μ=42.02, σ=19.70, range=[1.0, 132.0]
-2025-08-08 19:00:40,813 - root - INFO -   num_procedures: μ=1.44, σ=1.80, range=[0.0, 6.0]
-2025-08-08 19:00:40,814 - root - INFO -   num_medications: μ=14.64, σ=7.70, range=[1.0, 75.0]
-2025-08-08 19:00:40,814 - root - INFO -   number_outpatient: μ=0.27, σ=1.05, range=[0.0, 38.0]
-2025-08-08 19:00:40,814 - root - INFO -   ... e mais 4 features numéricas
-2025-08-08 19:00:40,838 - root - INFO - ✅ Escalonamento aplicado com sucesso
-2025-08-08 19:00:40,839 - root - INFO -    Treino padronizado: média ≈ 0, std ≈ 1
-2025-08-08 19:00:40,842 - root - INFO -    Diferença treino-teste: média_max=0.016, std_max=0.102
-2025-08-08 19:00:40,842 - root - INFO - Estatísticas pós-escalonamento salvas nos metadados
-2025-08-08 19:00:40,843 - root - INFO - Gerando resumo das features finais...
-2025-08-08 19:00:40,844 - root - INFO - Total de features: 182
-2025-08-08 19:00:40,844 - root - INFO - Tipos de dados:
-2025-08-08 19:00:40,844 - root - INFO -   bool: 170 features
-2025-08-08 19:00:40,844 - root - INFO -   int64: 12 features
-2025-08-08 19:00:40,949 - root - INFO - Distribuição por tipo de feature:
-2025-08-08 19:00:40,949 - root - INFO -   Features numéricas: 12
-2025-08-08 19:00:40,949 - root - INFO -   Features binárias: 172
-2025-08-08 19:00:40,949 - root - INFO -   Features categóricas: 2
-2025-08-08 19:00:40,949 - root - INFO - Estatísticas das features numéricas:
-2025-08-08 19:00:40,972 - root - INFO -   time_in_hospital: μ=3.75, σ=2.69, min=1.00, max=14.00
-2025-08-08 19:00:40,973 - root - INFO -   num_lab_procedures: μ=42.02, σ=19.68, min=1.00, max=132.00
-2025-08-08 19:00:40,973 - root - INFO -   num_procedures: μ=1.44, σ=1.80, min=0.00, max=6.00
-2025-08-08 19:00:40,973 - root - INFO -   num_medications: μ=14.66, σ=7.73, min=1.00, max=75.00
-2025-08-08 19:00:40,973 - root - INFO -   number_outpatient: μ=0.27, σ=1.05, min=0.00, max=38.00
-2025-08-08 19:00:40,973 - root - INFO -   ... e mais 7 features numéricas
-2025-08-08 19:00:40,982 - root - INFO - ✅ Nenhum dado faltante encontrado
-2025-08-08 19:00:40,983 - root - INFO - Exemplos de features: ['time_in_hospital', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient', 'number_emergency', 'number_inpatient', 'number_diagnoses', 'num_previous_admissions', 'medication_changed']
-2025-08-08 19:00:40,983 - root - INFO - ... e mais 172 features
-2025-08-08 19:00:42,309 - root - INFO - Dados processados salvos em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data_processed.csv
-2025-08-08 19:00:42,310 - root - INFO - Metadados salvos em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\feature_engineering_metadata.json
-2025-08-08 19:00:42,311 - root - INFO - ============================================================
-2025-08-08 19:00:42,311 - root - INFO - ENGENHARIA DE FEATURES CONCLUÍDA COM SUCESSO
-2025-08-08 19:00:42,311 - root - INFO - Tempo total de processamento: 2.05 segundos
-2025-08-08 19:00:42,311 - root - INFO - Features finais: 182
-2025-08-08 19:00:42,311 - root - INFO - Features escaladas: 9
-2025-08-08 19:00:42,311 - root - INFO - Amostras de treino: 42,101
-2025-08-08 19:00:42,311 - root - INFO - Amostras de teste: 10,526
-2025-08-08 19:00:42,311 - root - INFO - ✅ Escalonamento aplicado com sucesso
-2025-08-08 19:00:42,311 - root - INFO - ============================================================
-2025-08-08 19:00:42,313 - root - INFO - Diretório de saída: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data
-2025-08-08 19:00:42,319 - root - INFO - Salvando conjuntos de dados...
-2025-08-08 19:00:43,654 - root - INFO - ✅ Features de treino: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\X_train.csv
-2025-08-08 19:00:43,655 - root - INFO -    Shape: (42101, 182), Tamanho: 47.54 MB
-2025-08-08 19:00:43,990 - root - INFO - ✅ Features de teste: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\X_test.csv
-2025-08-08 19:00:43,990 - root - INFO -    Shape: (10526, 182), Tamanho: 11.89 MB
-2025-08-08 19:00:44,001 - root - INFO - ✅ Target de treino: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\y_train.csv
-2025-08-08 19:00:44,002 - root - INFO -    Shape: (42101,), Tamanho: 0.12 MB
-2025-08-08 19:00:44,005 - root - INFO - ✅ Target de teste: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\y_test.csv
-2025-08-08 19:00:44,006 - root - INFO -    Shape: (10526,), Tamanho: 0.03 MB
-2025-08-08 19:00:45,370 - root - INFO - ✅ Dados de treino combinados (X + y): C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\train_combined.csv
-2025-08-08 19:00:45,370 - root - INFO -    Shape: (42101, 183), Tamanho: 47.62 MB
-2025-08-08 19:00:45,751 - root - INFO - ✅ Dados de teste combinados (X + y): C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\test_combined.csv
-2025-08-08 19:00:45,752 - root - INFO -    Shape: (10526, 183), Tamanho: 11.91 MB
-2025-08-08 19:00:45,752 - root - INFO - Validando arquivos salvos...
-2025-08-08 19:00:46,268 - root - INFO - ✅ X_train.csv validado
-2025-08-08 19:00:46,407 - root - INFO - ✅ X_test.csv validado
-2025-08-08 19:00:46,425 - root - INFO - ✅ y_train.csv validado (42101 linhas)
-2025-08-08 19:00:46,437 - root - INFO - ✅ y_test.csv validado (10526 linhas)
-2025-08-08 19:00:46,940 - root - INFO - ✅ train_combined.csv validado
-2025-08-08 19:00:47,086 - root - INFO - ✅ test_combined.csv validado
-2025-08-08 19:00:47,086 - root - INFO - Resumo do salvamento:
-2025-08-08 19:00:47,086 - root - INFO -   Total de arquivos: 6
-2025-08-08 19:00:47,086 - root - INFO -   Tamanho total: 119.12 MB
-2025-08-08 19:00:47,086 - root - INFO -   Diretório: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data
-2025-08-08 19:00:47,088 - root - INFO - ✅ Scaler salvo em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\feature_scaler.pkl
-2025-08-08 19:00:47,088 - root - INFO - ✅ Informações do scaler salvas em: C:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\scaler_info.json
-2025-08-08 19:00:47,088 - root - INFO -   Scaler salvo: feature_scaler.pkl
+2025-08-08 19:51:19,663 - src.data_cleaning - INFO -   Completude dos dados: 96.84%
+2025-08-08 19:51:19,664 - src.data_cleaning - INFO -   Dados faltantes totais: 93,209
+2025-08-08 19:51:19,673 - root - INFO - ============================================================
+2025-08-08 19:51:19,673 - root - INFO - INICIANDO ENGENHARIA DE FEATURES
+2025-08-08 19:51:19,673 - root - INFO - ============================================================
+2025-08-08 19:51:19,673 - root - INFO - ETAPA 1/6: Carregamento de dados
+2025-08-08 19:51:19,673 - root - INFO - Carregando dados limpos de: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data_clean.csv
+2025-08-08 19:51:19,860 - root - INFO - Dados carregados com sucesso. Shape: (52627, 56)
+2025-08-08 19:51:19,861 - root - INFO - Validações básicas aprovadas. Target possui 2 valores únicos
+2025-08-08 19:51:19,861 - root - INFO - ETAPA 2/6: Remoção de colunas desnecessárias
+2025-08-08 19:51:19,861 - root - INFO - Removendo colunas desnecessárias...
+2025-08-08 19:51:19,914 - root - INFO - Colunas configuradas para remoção: ['encounter_id', 'patient_nbr', 'readmitted', 'diag_1', 'diag_2', 'diag_3']
+2025-08-08 19:51:19,915 - root - INFO - Colunas ID com mapeamentos removidas: ['admission_type_id', 'discharge_disposition_id', 'admission_source_id']
+2025-08-08 19:51:19,915 - root - INFO - Colunas descritivas mantidas: ['admission_type_desc', 'discharge_disposition_desc', 'admission_source_desc']
+2025-08-08 19:51:19,928 - root - INFO - Total de colunas removidas: 9
+2025-08-08 19:51:19,929 - root - INFO - Dimensões após remoção: (52627, 47)
+2025-08-08 19:51:19,929 - root - INFO - ETAPA 3/6: Identificação de tipos de colunas
+2025-08-08 19:51:19,929 - root - INFO - Identificando tipos de colunas...
+2025-08-08 19:51:19,985 - root - INFO - Colunas numéricas (12): ['time_in_hospital', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient']...
+2025-08-08 19:51:19,985 - root - INFO - Colunas categóricas (34): ['race', 'gender', 'age', 'medical_specialty', 'max_glu_serum']...
+2025-08-08 19:51:19,986 - root - WARNING - Colunas com alta cardinalidade detectadas:
+2025-08-08 19:51:19,986 - root - WARNING -   medical_specialty: 69 categorias únicas
+2025-08-08 19:51:19,986 - root - INFO - Estatísticas das features numéricas:
+2025-08-08 19:51:19,988 - root - INFO -   time_in_hospital: média=3.75, std=2.69
+2025-08-08 19:51:19,990 - root - INFO -   num_lab_procedures: média=42.02, std=19.68
+2025-08-08 19:51:19,992 - root - INFO -   num_procedures: média=1.44, std=1.80
+2025-08-08 19:51:19,992 - root - INFO - ETAPA 4/6: One-Hot Encoding
+2025-08-08 19:51:19,992 - root - INFO - Aplicando One-Hot Encoding...
+2025-08-08 19:51:19,992 - root - INFO - Processando 34 colunas categóricas
+2025-08-08 19:51:19,993 - root - INFO - Dimensões antes do encoding: (52627, 47)
+2025-08-08 19:51:20,130 - root - INFO - Dimensões após encoding: (52627, 183)
+2025-08-08 19:51:20,130 - root - INFO - Novas features criadas: 170
+2025-08-08 19:51:20,131 - root - INFO - ETAPA 5/6: Preparação de features e target
+2025-08-08 19:51:20,131 - root - INFO - Separando features (X) e variável alvo (y)...
+2025-08-08 19:51:20,137 - root - INFO - Features (X): (52627, 182)
+2025-08-08 19:51:20,137 - root - INFO - Target (y): (52627,)
+2025-08-08 19:51:20,138 - root - INFO - Distribuição da variável alvo:
+2025-08-08 19:51:20,138 - root - INFO -   Classe 0: 48,560 (92.3%)
+2025-08-08 19:51:20,138 - root - INFO -   Classe 1: 4,067 (7.7%)
+2025-08-08 19:51:20,138 - root - INFO - Taxa de desbalanceamento: 11.9:1
+2025-08-08 19:51:20,139 - root - WARNING - Dataset altamente desbalanceado detectado! Considere usar técnicas de balanceamento.
+2025-08-08 19:51:20,147 - root - INFO - ETAPA 6/7: Divisão treino/teste
+2025-08-08 19:51:20,147 - root - INFO - Dividindo dados em treino e teste...
+2025-08-08 19:51:20,148 - root - INFO - Proporção de teste: 0.2 (20.0%)
+2025-08-08 19:51:20,148 - root - INFO - Random state: 42
+2025-08-08 19:51:20,148 - root - INFO - Estratificação: Sim
+2025-08-08 19:51:20,180 - root - INFO - Distribuição após divisão:
+2025-08-08 19:51:20,180 - root - INFO -   Treino: Total=42,101
+2025-08-08 19:51:20,180 - root - INFO -     Classe 0: 38,847 (92.3%)
+2025-08-08 19:51:20,180 - root - INFO -     Classe 1: 3,254 (7.7%)
+2025-08-08 19:51:20,181 - root - INFO -   Teste:  Total=10,526
+2025-08-08 19:51:20,181 - root - INFO -     Classe 0: 9,713 (92.3%)
+2025-08-08 19:51:20,181 - root - INFO -     Classe 1: 813 (7.7%)
+2025-08-08 19:51:20,181 - root - INFO - ✅ Estratificação bem-sucedida (diferença < 1%)
+2025-08-08 19:51:20,181 - root - INFO - ETAPA 7/7: Escalonamento de features numéricas
+2025-08-08 19:51:20,182 - root - INFO - Aplicando escalonamento nas features numéricas...
+2025-08-08 19:51:20,189 - root - INFO - Features numéricas identificadas para escalonamento: 9
+2025-08-08 19:51:20,189 - root - INFO -   time_in_hospital: μ=3.75, σ=2.69, range=[1.0, 14.0]
+2025-08-08 19:51:20,190 - root - INFO -   num_lab_procedures: μ=42.02, σ=19.70, range=[1.0, 132.0]
+2025-08-08 19:51:20,190 - root - INFO -   num_procedures: μ=1.44, σ=1.80, range=[0.0, 6.0]
+2025-08-08 19:51:20,190 - root - INFO -   num_medications: μ=14.64, σ=7.70, range=[1.0, 75.0]
+2025-08-08 19:51:20,191 - root - INFO -   number_outpatient: μ=0.27, σ=1.05, range=[0.0, 38.0]
+2025-08-08 19:51:20,191 - root - INFO -   ... e mais 4 features numéricas
+2025-08-08 19:51:20,212 - root - INFO - ✅ Escalonamento aplicado com sucesso
+2025-08-08 19:51:20,212 - root - INFO -    Treino padronizado: média ≈ 0, std ≈ 1
+2025-08-08 19:51:20,215 - root - INFO -    Diferença treino-teste: média_max=0.016, std_max=0.102
+2025-08-08 19:51:20,215 - root - INFO - Estatísticas pós-escalonamento salvas nos metadados
+2025-08-08 19:51:20,217 - root - INFO - Gerando resumo das features finais...
+2025-08-08 19:51:20,217 - root - INFO - Total de features: 182
+2025-08-08 19:51:20,217 - root - INFO - Tipos de dados:
+2025-08-08 19:51:20,218 - root - INFO -   bool: 170 features
+2025-08-08 19:51:20,218 - root - INFO -   int64: 12 features
+2025-08-08 19:51:20,319 - root - INFO - Distribuição por tipo de feature:
+2025-08-08 19:51:20,319 - root - INFO -   Features numéricas: 12
+2025-08-08 19:51:20,319 - root - INFO -   Features binárias: 172
+2025-08-08 19:51:20,320 - root - INFO -   Features categóricas: 2
+2025-08-08 19:51:20,320 - root - INFO - Estatísticas das features numéricas:
+2025-08-08 19:51:20,343 - root - INFO -   time_in_hospital: μ=3.75, σ=2.69, min=1.00, max=14.00
+2025-08-08 19:51:20,343 - root - INFO -   num_lab_procedures: μ=42.02, σ=19.68, min=1.00, max=132.00
+2025-08-08 19:51:20,343 - root - INFO -   num_procedures: μ=1.44, σ=1.80, min=0.00, max=6.00
+2025-08-08 19:51:20,343 - root - INFO -   num_medications: μ=14.66, σ=7.73, min=1.00, max=75.00
+2025-08-08 19:51:20,344 - root - INFO -   number_outpatient: μ=0.27, σ=1.05, min=0.00, max=38.00
+2025-08-08 19:51:20,344 - root - INFO -   ... e mais 7 features numéricas
+2025-08-08 19:51:20,352 - root - INFO - ✅ Nenhum dado faltante encontrado
+2025-08-08 19:51:20,353 - root - INFO - Exemplos de features: ['time_in_hospital', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient', 'number_emergency', 'number_inpatient', 'number_diagnoses', 'num_previous_admissions', 'medication_changed']
+2025-08-08 19:51:20,353 - root - INFO - ... e mais 172 features
+2025-08-08 19:51:21,615 - root - INFO - Dados processados salvos em: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\diabetic_data_processed.csv
+2025-08-08 19:51:21,617 - root - INFO - Metadados salvos em: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\feature_engineering_metadata.json
+2025-08-08 19:51:21,617 - root - INFO - ============================================================
+2025-08-08 19:51:21,617 - root - INFO - ENGENHARIA DE FEATURES CONCLUÍDA COM SUCESSO
+2025-08-08 19:51:21,618 - root - INFO - Tempo total de processamento: 1.94 segundos
+2025-08-08 19:51:21,618 - root - INFO - Features finais: 182
+2025-08-08 19:51:21,618 - root - INFO - Features escaladas: 9
+2025-08-08 19:51:21,618 - root - INFO - Amostras de treino: 42,101
+2025-08-08 19:51:21,618 - root - INFO - Amostras de teste: 10,526
+2025-08-08 19:51:21,619 - root - INFO - ✅ Escalonamento aplicado com sucesso
+2025-08-08 19:51:21,619 - root - INFO - ============================================================
+2025-08-08 19:51:21,621 - root - INFO - Diretório de saída: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data
+2025-08-08 19:51:21,626 - root - INFO - Salvando conjuntos de dados...
+2025-08-08 19:51:22,846 - root - INFO - ✅ Features de treino: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\X_train.csv
+2025-08-08 19:51:22,847 - root - INFO -    Shape: (42101, 182), Tamanho: 47.54 MB
+2025-08-08 19:51:23,152 - root - INFO - ✅ Features de teste: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\X_test.csv
+2025-08-08 19:51:23,153 - root - INFO -    Shape: (10526, 182), Tamanho: 11.89 MB
+2025-08-08 19:51:23,162 - root - INFO - ✅ Target de treino: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\y_train.csv
+2025-08-08 19:51:23,163 - root - INFO -    Shape: (42101,), Tamanho: 0.12 MB
+2025-08-08 19:51:23,167 - root - INFO - ✅ Target de teste: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\y_test.csv
+2025-08-08 19:51:23,167 - root - INFO -    Shape: (10526,), Tamanho: 0.03 MB
+2025-08-08 19:51:24,389 - root - INFO - ✅ Dados de treino combinados (X + y): c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\train_combined.csv
+2025-08-08 19:51:24,389 - root - INFO -    Shape: (42101, 183), Tamanho: 47.62 MB
+2025-08-08 19:51:24,699 - root - INFO - ✅ Dados de teste combinados (X + y): c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\test_combined.csv
+2025-08-08 19:51:24,700 - root - INFO -    Shape: (10526, 183), Tamanho: 11.91 MB
+2025-08-08 19:51:24,700 - root - INFO - Validando arquivos salvos...
+2025-08-08 19:51:25,146 - root - INFO - ✅ X_train.csv validado
+2025-08-08 19:51:25,276 - root - INFO - ✅ X_test.csv validado
+2025-08-08 19:51:25,290 - root - INFO - ✅ y_train.csv validado (42101 linhas)
+2025-08-08 19:51:25,301 - root - INFO - ✅ y_test.csv validado (10526 linhas)
+2025-08-08 19:51:25,755 - root - INFO - ✅ train_combined.csv validado
+2025-08-08 19:51:25,885 - root - INFO - ✅ test_combined.csv validado
+2025-08-08 19:51:25,885 - root - INFO - Resumo do salvamento:
+2025-08-08 19:51:25,886 - root - INFO -   Total de arquivos: 6
+2025-08-08 19:51:25,886 - root - INFO -   Tamanho total: 119.12 MB
+2025-08-08 19:51:25,886 - root - INFO -   Diretório: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data
+2025-08-08 19:51:25,887 - root - INFO - ✅ Scaler salvo em: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\feature_scaler.pkl
+2025-08-08 19:51:25,887 - root - INFO - ✅ Informações do scaler salvas em: c:\Users\thall\Documents\GitHub\diabetic-readmission-predictor-BCC325\data\scaler_info.json
+2025-08-08 19:51:25,888 - root - INFO -   Scaler salvo: feature_scaler.pkl
