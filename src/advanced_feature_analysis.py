@@ -59,7 +59,13 @@ except ImportError:
 # Estatísticas avançadas
 from scipy import stats
 from scipy.stats import chi2_contingency, spearmanr, pearsonr
-from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+# Importar variance_inflation_factor com tratamento de erro
+try:
+    from statsmodels.stats.outliers_influence import variance_inflation_factor
+except ImportError:
+    print("⚠️  statsmodels não disponível. Instale com: pip install statsmodels")
+    variance_inflation_factor = None
 
 
 class AdvancedFeatureAnalyzer:
@@ -280,15 +286,19 @@ class AdvancedFeatureAnalyzer:
         
         # Variance Inflation Factor (VIF)
         vif_data = []
-        try:
-            for i, feature in enumerate(numeric_features.columns):
-                vif_value = variance_inflation_factor(numeric_features.values, i)
-                vif_data.append({
-                    'feature': feature,
-                    'vif': vif_value
-                })
-        except Exception as e:
-            print(f"   ⚠️  Erro no cálculo VIF: {e}")
+        if variance_inflation_factor is not None:
+            try:
+                for i, feature in enumerate(numeric_features.columns):
+                    vif_value = variance_inflation_factor(numeric_features.values, i)
+                    vif_data.append({
+                        'feature': feature,
+                        'vif': vif_value
+                    })
+            except Exception as e:
+                print(f"   ⚠️  Erro no cálculo VIF: {e}")
+                vif_data = []
+        else:
+            print("   ⚠️  VIF não disponível (statsmodels não instalado)")
             vif_data = []
         
         multicollinearity_results = {

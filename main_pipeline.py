@@ -36,6 +36,7 @@ from src.exploratory_analysis import ExploratoryDataAnalysis
 from src.data_cleaning import DataCleaner
 from src.feature_engineering import FeatureEngineer
 from src.logistic_regression_model import LogisticRegressionModel
+from src.random_forest_model import RandomForestModel
 from src.config import (
     RAW_DATA_FILE, CLEAN_DATA_FILE, PROCESSED_DATA_FILE,
     MODELS_DIR, RESULTS_DIR, DATA_DIR

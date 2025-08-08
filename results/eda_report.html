@@ -1,0 +1,58 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Relatório de Análise Exploratória - Readmissão Hospitalar Diabética</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+                h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+                h2 { color: #34495e; border-left: 4px solid #3498db; padding-left: 10px; }
+                .summary { background-color: #ecf0f1; padding: 20px; border-radius: 5px; margin: 20px 0; }
+                .insight { background-color: #d5dbdb; padding: 10px; margin: 10px 0; border-left: 4px solid #3498db; }
+                .metric { font-weight: bold; color: #2980b9; }
+                .warning { color: #e74c3c; font-weight: bold; }
+                .success { color: #27ae60; font-weight: bold; }
+                table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+                th, td { border: 1px solid #bdc3c7; padding: 12px; text-align: left; }
+                th { background-color: #3498db; color: white; }
+                .figure-list { list-style-type: none; padding: 0; }
+                .figure-list li { margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 5px; }
+            </style>
+        </head>
+        <body>
+            <h1>📊 Relatório de Análise Exploratória</h1>
+            <h2>Predição de Readmissão Hospitalar Diabética</h2>
+            
+            <div class="summary">
+                <h3>📋 Resumo Executivo</h3>
+                <p><span class="metric">Dataset:</span> 101,766 registros, 54 colunas</p>
+                <p><span class="metric">Pacientes únicos:</span> 71,518</p>
+                <p><span class="metric">Taxa de readmissão <30 dias:</span> 11.2%</p>
+                <p><span class="metric">Data da análise:</span> 08/08/2025 19:00</p>
+            </div>
+            
+            <h2>📈 Visualizações Geradas</h2>
+            <ul class="figure-list">
+        <li>📊 Missing Data Analysis</li><li>📊 Demographic Analysis</li><li>📊 Medical Data Histograms</li><li>📊 Medical Data Correlations</li><li>📊 Medical Data Boxplots</li><li>📊 Medication Analysis</li><li>📊 Multivariate Time Race Analysis</li><li>📊 Multivariate Age Insulin Analysis</li><li>📊 Multivariate Gender Specialty Analysis</li><li>📊 Diagnosis Groups Analysis</li>
+            </ul>
+            
+            <div class="summary">
+                <h3>🎯 Como Interpretar os Resultados</h3>
+                <ul>
+                    <li><strong>Gráficos de Distribuição:</strong> Mostram como os dados estão distribuídos</li>
+                    <li><strong>Mapas de Calor:</strong> Revelam padrões de correlação e dados faltantes</li>
+                    <li><strong>Análises Comparativas:</strong> Destacam diferenças entre grupos</li>
+                    <li><strong>Box Plots:</strong> Identificam outliers e diferenças estatísticas</li>
+                </ul>
+            </div>
+            
+            <h2>📁 Arquivos de Saída</h2>
+            <p>Todos os gráficos foram salvos na pasta <code>results/</code> em alta qualidade (300 DPI).</p>
+            
+            <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #bdc3c7; color: #7f8c8d;">
+                <p>Relatório gerado automaticamente pelo módulo de Análise Exploratória</p>
+                <p>Projeto: BCC325 - Inteligência Artificial | UFOP</p>
+            </footer>
+        </body>
+        </html>
+        

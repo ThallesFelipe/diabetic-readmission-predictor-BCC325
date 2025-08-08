@@ -1,0 +1,1690 @@
+{
+  "model_type": "RandomForest",
+  "timestamp": "20250808_191658",
+  "datetime": "2025-08-08T19:31:35.616530",
+  "config": {
+    "random_state": 42,
+    "n_estimators": 300,
+    "max_depth": 15,
+    "min_samples_split": 10,
+    "min_samples_leaf": 4,
+    "max_features": "sqrt",
+    "class_weight": "balanced",
+    "n_jobs": -1,
+    "oob_score": true,
+    "bootstrap": true,
+    "warm_start": false,
+    "verbose": 0
+  },
+  "metrics": {
+    "accuracy": 0.8619608588257648,
+    "precision": 0.15738758029978586,
+    "recall": 0.18081180811808117,
+    "f1": 0.16828849456210646,
+    "roc_auc": 0.6277736853349178,
+    "average_precision": 0.13412061358556077,
+    "log_loss": 0.26589465003226354,
+    "brier_score": 0.07029065587889602,
+    "true_negatives": 8926,
+    "false_positives": 787,
+    "false_negatives": 666,
+    "true_positives": 147,
+    "specificity": 0.9189745701636981,
+    "sensitivity": 0.18081180811808117,
+    "ppv": 0.15738758029978586,
+    "npv": 0.9305671392827356,
+    "n_estimators": 100,
+    "max_depth": 10,
+    "min_samples_split": 15,
+    "min_samples_leaf": 4,
+    "max_features": "log2",
+    "training_time": null,
+    "optimal_threshold": 0.1,
+    "use_smote": false
+  },
+  "optimal_threshold": 0.1,
+  "training_time": null,
+  "use_smote": false,
+  "feature_importance": [
+    {
+      "feature": "number_inpatient",
+      "importance": 0.14303202130284864
+    },
+    {
+      "feature": "total_procedures",
+      "importance": 0.05664388797383312
+    },
+    {
+      "feature": "num_lab_procedures",
+      "importance": 0.05155587123143562
+    },
+    {
+      "feature": "time_in_hospital",
+      "importance": 0.047117696020783105
+    },
+    {
+      "feature": "num_medications",
+      "importance": 0.04367141224335734
+    },
+    {
+      "feature": "number_diagnoses",
+      "importance": 0.039818116010089534
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred to another short term hospital",
+      "importance": 0.037684028810506406
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred/referred to a psychiatric hospital of psychiatric distinct part unit of a hospital",
+      "importance": 0.03501017520993587
+    },
+    {
+      "feature": "number_emergency",
+      "importance": 0.03329260844903542
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred within this institution to Medicare approved swing bed",
+      "importance": 0.02898882335779106
+    },
+    {
+      "feature": "long_stay",
+      "importance": 0.024500977910705348
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged to home",
+      "importance": 0.024043809729492726
+    },
+    {
+      "feature": "num_procedures",
+      "importance": 0.01926034314288066
+    },
+    {
+      "feature": "number_outpatient",
+      "importance": 0.017683432017219492
+    },
+    {
+      "feature": "age_[50-60)",
+      "importance": 0.013789599096694711
+    },
+    {
+      "feature": "insulin_No",
+      "importance": 0.012807383469966403
+    },
+    {
+      "feature": "medical_specialty_Psychiatry",
+      "importance": 0.01046748735500085
+    },
+    {
+      "feature": "medical_specialty_missing",
+      "importance": 0.010346804644451403
+    },
+    {
+      "feature": "diabetesMed_Yes",
+      "importance": 0.009571489702425032
+    },
+    {
+      "feature": "admission_source_desc_Emergency Room",
+      "importance": 0.009499798257934513
+    },
+    {
+      "feature": "age_[80-90)",
+      "importance": 0.009496986661533575
+    },
+    {
+      "feature": "admission_type_desc_Emergency",
+      "importance": 0.0084677319573014
+    },
+    {
+      "feature": "discharge_disposition_desc_Unknown",
+      "importance": 0.008426931973524194
+    },
+    {
+      "feature": "race_Caucasian",
+      "importance": 0.007930107530712879
+    },
+    {
+      "feature": "metformin_Steady",
+      "importance": 0.007759351492215497
+    },
+    {
+      "feature": "change_No",
+      "importance": 0.00772470280731437
+    },
+    {
+      "feature": "medical_specialty_PhysicalMedicineandRehabilitation",
+      "importance": 0.007631109442256899
+    },
+    {
+      "feature": "age_[70-80)",
+      "importance": 0.007615699842137446
+    },
+    {
+      "feature": "admission_source_desc_Physician Referral",
+      "importance": 0.007475036191503371
+    },
+    {
+      "feature": "A1Cresult_>8",
+      "importance": 0.007142816671539742
+    },
+    {
+      "feature": "metformin_No",
+      "importance": 0.007136868293141815
+    },
+    {
+      "feature": "admission_source_desc_Transfer from a hospital",
+      "importance": 0.007075312722630158
+    },
+    {
+      "feature": "medication_changed",
+      "importance": 0.006846877936599604
+    },
+    {
+      "feature": "age_[60-70)",
+      "importance": 0.0063258356726953735
+    },
+    {
+      "feature": "admission_type_desc_Urgent",
+      "importance": 0.006316690678919691
+    },
+    {
+      "feature": "gender_Male",
+      "importance": 0.0060691592747390425
+    },
+    {
+      "feature": "medical_specialty_InternalMedicine",
+      "importance": 0.005993643643110474
+    },
+    {
+      "feature": "insulin_Steady",
+      "importance": 0.0059771823143036605
+    },
+    {
+      "feature": "glipizide_Steady",
+      "importance": 0.005809237416843157
+    },
+    {
+      "feature": "pioglitazone_Steady",
+      "importance": 0.005662532620965686
+    },
+    {
+      "feature": "glyburide_Steady",
+      "importance": 0.005493132984675762
+    },
+    {
+      "feature": "medical_specialty_Emergency/Trauma",
+      "importance": 0.005485749622458629
+    },
+    {
+      "feature": "glipizide_No",
+      "importance": 0.00548056238387032
+    },
+    {
+      "feature": "glyburide_No",
+      "importance": 0.005442955719463995
+    },
+    {
+      "feature": "insulin_Up",
+      "importance": 0.005368677335822874
+    },
+    {
+      "feature": "medical_specialty_Oncology",
+      "importance": 0.005248418717392516
+    },
+    {
+      "feature": "admission_source_desc_Transfer from a Skilled Nursing Facility (SNF)",
+      "importance": 0.005223665473003672
+    },
+    {
+      "feature": "rosiglitazone_No",
+      "importance": 0.0051603874487516225
+    },
+    {
+      "feature": "glimepiride_No",
+      "importance": 0.004725271210551483
+    },
+    {
+      "feature": "age_[40-50)",
+      "importance": 0.004571829939996183
+    },
+    {
+      "feature": "admission_type_desc_Not Available",
+      "importance": 0.004420663835900444
+    },
+    {
+      "feature": "admission_type_desc_Unknown",
+      "importance": 0.004419987098279015
+    },
+    {
+      "feature": "medical_specialty_Family/GeneralPractice",
+      "importance": 0.004242805538013924
+    },
+    {
+      "feature": "glipizide_Up",
+      "importance": 0.004081561900795659
+    },
+    {
+      "feature": "race_missing",
+      "importance": 0.004068742895193773
+    },
+    {
+      "feature": "admission_source_desc_Unknown",
+      "importance": 0.004031604613163047
+    },
+    {
+      "feature": "age_[30-40)",
+      "importance": 0.004001390608367228
+    },
+    {
+      "feature": "pioglitazone_No",
+      "importance": 0.003665252810135074
+    },
+    {
+      "feature": "rosiglitazone_Steady",
+      "importance": 0.0036398154154936
+    },
+    {
+      "feature": "glimepiride_Steady",
+      "importance": 0.0034897853111937743
+    },
+    {
+      "feature": "A1Cresult_Norm",
+      "importance": 0.0034780965111718327
+    },
+    {
+      "feature": "repaglinide_Steady",
+      "importance": 0.0034537221376981803
+    },
+    {
+      "feature": "repaglinide_No",
+      "importance": 0.003437479377737704
+    },
+    {
+      "feature": "medical_specialty_Hematology/Oncology",
+      "importance": 0.00339094226852038
+    },
+    {
+      "feature": "discharge_disposition_desc_Not Mapped",
+      "importance": 0.0033388236985162152
+    },
+    {
+      "feature": "medical_specialty_Cardiology",
+      "importance": 0.003263919819418293
+    },
+    {
+      "feature": "discharge_disposition_desc_Hospice / home",
+      "importance": 0.0032230399941587506
+    },
+    {
+      "feature": "medical_specialty_Surgery-General",
+      "importance": 0.003078957508736273
+    },
+    {
+      "feature": "age_[20-30)",
+      "importance": 0.002976439856004507
+    },
+    {
+      "feature": "medical_specialty_ObstetricsandGynecology",
+      "importance": 0.0028738364288697477
+    },
+    {
+      "feature": "max_glu_serum_Norm",
+      "importance": 0.002861039483426949
+    },
+    {
+      "feature": "max_glu_serum_>300",
+      "importance": 0.00247182232038473
+    },
+    {
+      "feature": "medical_specialty_Orthopedics",
+      "importance": 0.0024614882141543153
+    },
+    {
+      "feature": "medical_specialty_Nephrology",
+      "importance": 0.002440724731395972
+    },
+    {
+      "feature": "admission_source_desc_Transfer from another health care facility",
+      "importance": 0.0024210005112499412
+    },
+    {
+      "feature": "medical_specialty_Surgery-Neuro",
+      "importance": 0.002396882300150277
+    },
+    {
+      "feature": "race_Other",
+      "importance": 0.002133992984140267
+    },
+    {
+      "feature": "medical_specialty_Orthopedics-Reconstructive",
+      "importance": 0.0021283648580288903
+    },
+    {
+      "feature": "race_Hispanic",
+      "importance": 0.002085741466120284
+    },
+    {
+      "feature": "age_[90-100)",
+      "importance": 0.001958590023411247
+    },
+    {
+      "feature": "medical_specialty_Gastroenterology",
+      "importance": 0.0018854311093561037
+    },
+    {
+      "feature": "glimepiride_Up",
+      "importance": 0.001826372920298845
+    },
+    {
+      "feature": "nateglinide_No",
+      "importance": 0.001631020676424361
+    },
+    {
+      "feature": "metformin_Up",
+      "importance": 0.0016183464099581055
+    },
+    {
+      "feature": "medical_specialty_Radiologist",
+      "importance": 0.0016111551738996822
+    },
+    {
+      "feature": "glyburide_Up",
+      "importance": 0.0015932451182386015
+    },
+    {
+      "feature": "medical_specialty_Surgery-Cardiovascular/Thoracic",
+      "importance": 0.0015739391081727638
+    },
+    {
+      "feature": "nateglinide_Steady",
+      "importance": 0.0015684505274676146
+    },
+    {
+      "feature": "glyburide-metformin_Steady",
+      "importance": 0.0015528893548332487
+    },
+    {
+      "feature": "discharge_disposition_desc_Left AMA",
+      "importance": 0.0015207884823759041
+    },
+    {
+      "feature": "glyburide-metformin_No",
+      "importance": 0.0014577336472918366
+    },
+    {
+      "feature": "discharge_disposition_desc_Hospice / medical facility",
+      "importance": 0.0013909688174091298
+    },
+    {
+      "feature": "medical_specialty_Radiology",
+      "importance": 0.001389028155625654
+    },
+    {
+      "feature": "race_Asian",
+      "importance": 0.0013876542567173398
+    },
+    {
+      "feature": "medical_specialty_Hematology",
+      "importance": 0.0012902599932836797
+    },
+    {
+      "feature": "medical_specialty_Pediatrics",
+      "importance": 0.001156211636327738
+    },
+    {
+      "feature": "admission_source_desc_Not Mapped",
+      "importance": 0.0011376776232709322
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-Endocrinology",
+      "importance": 0.0010720718646407233
+    },
+    {
+      "feature": "medical_specialty_Surgery-Vascular",
+      "importance": 0.0010509876217016337
+    },
+    {
+      "feature": "medical_specialty_Urology",
+      "importance": 0.0010115838790041697
+    },
+    {
+      "feature": "admission_type_desc_Not Mapped",
+      "importance": 0.00100237764857153
+    },
+    {
+      "feature": "medical_specialty_Pulmonology",
+      "importance": 0.0009812694489371322
+    },
+    {
+      "feature": "admission_source_desc_HMO Referral",
+      "importance": 0.0009456920439527089
+    },
+    {
+      "feature": "acarbose_Steady",
+      "importance": 0.0007978365096979958
+    },
+    {
+      "feature": "admission_source_desc_Not Available",
+      "importance": 0.0007578280540937094
+    },
+    {
+      "feature": "medical_specialty_Osteopath",
+      "importance": 0.000723825468732794
+    },
+    {
+      "feature": "age_[10-20)",
+      "importance": 0.0007232776366098737
+    },
+    {
+      "feature": "medical_specialty_Neurology",
+      "importance": 0.000635993175840976
+    },
+    {
+      "feature": "medical_specialty_Surgeon",
+      "importance": 0.0005255818853875144
+    },
+    {
+      "feature": "repaglinide_Up",
+      "importance": 0.0004565377309642199
+    },
+    {
+      "feature": "pioglitazone_Up",
+      "importance": 0.0004231475171905366
+    },
+    {
+      "feature": "medical_specialty_Endocrinology",
+      "importance": 0.0003839969431055089
+    },
+    {
+      "feature": "rosiglitazone_Up",
+      "importance": 0.00038359541140336144
+    },
+    {
+      "feature": "chlorpropamide_Steady",
+      "importance": 0.0003510277935624187
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred to home under care of Home IV provider",
+      "importance": 0.00031265218034972215
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-CriticalCare",
+      "importance": 0.0003011660781321328
+    },
+    {
+      "feature": "chlorpropamide_No",
+      "importance": 0.0002442650611926011
+    },
+    {
+      "feature": "medical_specialty_Psychiatry-Child/Adolescent",
+      "importance": 0.00018402757224162007
+    },
+    {
+      "feature": "medical_specialty_Psychology",
+      "importance": 0.00017140064810292025
+    },
+    {
+      "feature": "miglitol_Steady",
+      "importance": 0.00016793932421452746
+    },
+    {
+      "feature": "medical_specialty_Podiatry",
+      "importance": 0.0001569240965477771
+    },
+    {
+      "feature": "medical_specialty_Otolaryngology",
+      "importance": 0.00015454588769672794
+    },
+    {
+      "feature": "medical_specialty_Gynecology",
+      "importance": 0.0001331750158640961
+    },
+    {
+      "feature": "medical_specialty_Surgery-Cardiovascular",
+      "importance": 0.00012108620698738298
+    },
+    {
+      "feature": "medical_specialty_Obstetrics",
+      "importance": 0.00011968963509788318
+    },
+    {
+      "feature": "medical_specialty_Surgery-Plastic",
+      "importance": 0.00011162286955202157
+    },
+    {
+      "feature": "medical_specialty_Surgery-Thoracic",
+      "importance": 9.937368382253383e-05
+    },
+    {
+      "feature": "medical_specialty_Ophthalmology",
+      "importance": 2.770143408441528e-05
+    },
+    {
+      "feature": "medical_specialty_SurgicalSpecialty",
+      "importance": 2.5498993992685303e-05
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred/referred to this institution for outpatient services",
+      "importance": 1.2832125742733959e-05
+    },
+    {
+      "feature": "medical_specialty_Anesthesiology-Pediatric",
+      "importance": 1.2085516744557607e-05
+    },
+    {
+      "feature": "medical_specialty_InfectiousDiseases",
+      "importance": 5.98672139900189e-06
+    },
+    {
+      "feature": "medical_specialty_Hospitalist",
+      "importance": 5.3925283581353705e-06
+    },
+    {
+      "feature": "medical_specialty_Rheumatology",
+      "importance": 4.9279546162625935e-06
+    },
+    {
+      "feature": "tolazamide_Steady",
+      "importance": 3.1563847192498117e-06
+    },
+    {
+      "feature": "medical_specialty_Obsterics&Gynecology-GynecologicOnco",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Anesthesiology",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Cardiology-Pediatric",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Dentistry",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Endocrinology-Metabolism",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Dermatology",
+      "importance": 0.0
+    },
+    {
+      "feature": "gender_Unknown/Invalid",
+      "importance": 0.0
+    },
+    {
+      "feature": "num_previous_admissions",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_DCPTEAM",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-Hematology-Oncology",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-Pulmonology",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Resident",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Speech",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_SportsMedicine",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Colon&Rectal",
+      "importance": 0.0
+    },
+    {
+      "feature": "chlorpropamide_Up",
+      "importance": 0.0
+    },
+    {
+      "feature": "nateglinide_Up",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Maxillofacial",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Pediatric",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-PlasticwithinHeadandNeck",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_OutreachServices",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pathology",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-EmergencyMedicine",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_PhysicianNotFound",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Perinatology",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-Neurology",
+      "importance": 0.0
+    },
+    {
+      "feature": "medical_specialty_Proctology",
+      "importance": 0.0
+    },
+    {
+      "feature": "tolbutamide_Steady",
+      "importance": 0.0
+    },
+    {
+      "feature": "acarbose_Up",
+      "importance": 0.0
+    },
+    {
+      "feature": "miglitol_No",
+      "importance": 0.0
+    },
+    {
+      "feature": "troglitazone_Steady",
+      "importance": 0.0
+    },
+    {
+      "feature": "admission_type_desc_Trauma Center",
+      "importance": 0.0
+    },
+    {
+      "feature": "admission_type_desc_Newborn",
+      "importance": 0.0
+    },
+    {
+      "feature": "glipizide-metformin_Steady",
+      "importance": 0.0
+    },
+    {
+      "feature": "metformin-rosiglitazone_Steady",
+      "importance": 0.0
+    },
+    {
+      "feature": "glyburide-metformin_Up",
+      "importance": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Neonate discharged to another hospital for neonatal aftercare",
+      "importance": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred to a federal health care facility.",
+      "importance": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred/referred another institution for outpatient services",
+      "importance": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Still patient or expected to return for outpatient services",
+      "importance": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Normal Delivery",
+      "importance": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Court/Law Enforcement",
+      "importance": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Extramural Birth",
+      "importance": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Sick Baby",
+      "importance": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Transfer from Ambulatory Surgery Center",
+      "importance": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Transfer from critial access hospital",
+      "importance": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Transfer from hospital inpt/same fac reslt in a sep claim",
+      "importance": 0.0
+    }
+  ],
+  "permutation_importance": [
+    {
+      "feature": "time_in_hospital",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "num_lab_procedures",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "num_procedures",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "num_medications",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "number_outpatient",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "number_emergency",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "number_inpatient",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "number_diagnoses",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "num_previous_admissions",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medication_changed",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "total_procedures",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "long_stay",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "race_Asian",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "race_Caucasian",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "race_Hispanic",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "race_Other",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "race_missing",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "gender_Male",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "gender_Unknown/Invalid",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "age_[10-20)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "age_[20-30)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "age_[30-40)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "age_[40-50)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "age_[50-60)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "age_[60-70)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "age_[70-80)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "age_[80-90)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "age_[90-100)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Anesthesiology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Anesthesiology-Pediatric",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Cardiology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Cardiology-Pediatric",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_DCPTEAM",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Dentistry",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Dermatology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Emergency/Trauma",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Endocrinology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Endocrinology-Metabolism",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Family/GeneralPractice",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Gastroenterology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Gynecology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Hematology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Hematology/Oncology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Hospitalist",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_InfectiousDiseases",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_InternalMedicine",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Nephrology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Neurology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Obsterics&Gynecology-GynecologicOnco",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Obstetrics",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_ObstetricsandGynecology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Oncology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Ophthalmology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Orthopedics",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Orthopedics-Reconstructive",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Osteopath",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Otolaryngology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_OutreachServices",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pathology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-CriticalCare",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-EmergencyMedicine",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-Endocrinology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-Hematology-Oncology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-Neurology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pediatrics-Pulmonology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Perinatology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_PhysicalMedicineandRehabilitation",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_PhysicianNotFound",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Podiatry",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Proctology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Psychiatry",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Psychiatry-Child/Adolescent",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Psychology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Pulmonology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Radiologist",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Radiology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Resident",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Rheumatology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Speech",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_SportsMedicine",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgeon",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Cardiovascular",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Cardiovascular/Thoracic",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Colon&Rectal",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-General",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Maxillofacial",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Neuro",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Pediatric",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Plastic",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-PlasticwithinHeadandNeck",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Thoracic",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Surgery-Vascular",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_SurgicalSpecialty",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_Urology",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "medical_specialty_missing",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "max_glu_serum_>300",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "max_glu_serum_Norm",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "A1Cresult_>8",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "A1Cresult_Norm",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "metformin_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "metformin_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "metformin_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "repaglinide_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "repaglinide_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "repaglinide_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "nateglinide_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "nateglinide_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "nateglinide_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "chlorpropamide_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "chlorpropamide_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "chlorpropamide_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glimepiride_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glimepiride_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glimepiride_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glipizide_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glipizide_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glipizide_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glyburide_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glyburide_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glyburide_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "tolbutamide_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "pioglitazone_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "pioglitazone_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "pioglitazone_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "rosiglitazone_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "rosiglitazone_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "rosiglitazone_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "acarbose_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "acarbose_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "miglitol_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "miglitol_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "troglitazone_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "tolazamide_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "insulin_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "insulin_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "insulin_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glyburide-metformin_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glyburide-metformin_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glyburide-metformin_Up",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "glipizide-metformin_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "metformin-rosiglitazone_Steady",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "change_No",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "diabetesMed_Yes",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_type_desc_Emergency",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_type_desc_Newborn",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_type_desc_Not Available",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_type_desc_Not Mapped",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_type_desc_Trauma Center",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_type_desc_Unknown",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_type_desc_Urgent",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged to home",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred to a federal health care facility.",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred to another short term hospital",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred to home under care of Home IV provider",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred within this institution to Medicare approved swing bed",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred/referred another institution for outpatient services",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred/referred to a psychiatric hospital of psychiatric distinct part unit of a hospital",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Discharged/transferred/referred to this institution for outpatient services",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Hospice / home",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Hospice / medical facility",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Left AMA",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Neonate discharged to another hospital for neonatal aftercare",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Not Mapped",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Still patient or expected to return for outpatient services",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "discharge_disposition_desc_Unknown",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Court/Law Enforcement",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Emergency Room",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Extramural Birth",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_HMO Referral",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Normal Delivery",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Not Available",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Not Mapped",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Physician Referral",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Sick Baby",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Transfer from Ambulatory Surgery Center",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Transfer from a Skilled Nursing Facility (SNF)",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Transfer from a hospital",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Transfer from another health care facility",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Transfer from critial access hospital",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Transfer from hospital inpt/same fac reslt in a sep claim",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    },
+    {
+      "feature": "admission_source_desc_Unknown",
+      "importance_mean": 0.0,
+      "importance_std": 0.0
+    }
+  ]
+}

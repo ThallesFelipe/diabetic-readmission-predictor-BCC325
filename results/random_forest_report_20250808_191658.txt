@@ -1,0 +1,104 @@
+🌲 RANDOM FOREST - RELATÓRIO DE RESULTADOS
+============================================================
+
+📅 Data/Hora: 2025-08-08 19:31:35
+🕒 Timestamp: 20250808_191658
+
+🔧 CONFIGURAÇÕES DO MODELO:
+------------------------------
+random_state: 42
+n_estimators: 300
+max_depth: 15
+min_samples_split: 10
+min_samples_leaf: 4
+max_features: sqrt
+class_weight: balanced
+n_jobs: -1
+oob_score: True
+bootstrap: True
+warm_start: False
+verbose: 0
+SMOTE: False
+
+📊 MÉTRICAS DE PERFORMANCE:
+------------------------------
+accuracy: 0.8620
+precision: 0.1574
+recall: 0.1808
+f1: 0.1683
+roc_auc: 0.6278
+average_precision: 0.1341
+log_loss: 0.2659
+brier_score: 0.0703
+true_negatives: 8926.0000
+false_positives: 787.0000
+false_negatives: 666.0000
+true_positives: 147.0000
+specificity: 0.9190
+sensitivity: 0.1808
+ppv: 0.1574
+npv: 0.9306
+n_estimators: 100.0000
+max_depth: 10.0000
+min_samples_split: 15.0000
+min_samples_leaf: 4.0000
+max_features: log2
+training_time: None
+optimal_threshold: 0.1000
+use_smote: 0.0000
+
+🏆 TOP 20 FEATURES MAIS IMPORTANTES:
+----------------------------------------
+ 1. number_inpatient                         0.143032
+ 2. total_procedures                         0.056644
+ 3. num_lab_procedures                       0.051556
+ 4. time_in_hospital                         0.047118
+ 5. num_medications                          0.043671
+ 6. number_diagnoses                         0.039818
+ 7. discharge_disposition_desc_Discharged/transferred to another short term hospital 0.037684
+ 8. discharge_disposition_desc_Discharged/transferred/referred to a psychiatric hospital of psychiatric distinct part unit of a hospital 0.035010
+ 9. number_emergency                         0.033293
+10. discharge_disposition_desc_Discharged/transferred within this institution to Medicare approved swing bed 0.028989
+11. long_stay                                0.024501
+12. discharge_disposition_desc_Discharged to home 0.024044
+13. num_procedures                           0.019260
+14. number_outpatient                        0.017683
+15. age_[50-60)                              0.013790
+16. insulin_No                               0.012807
+17. medical_specialty_Psychiatry             0.010467
+18. medical_specialty_missing                0.010347
+19. diabetesMed_Yes                          0.009571
+20. admission_source_desc_Emergency Room     0.009500
+
+🔄 TOP 10 FEATURES (IMPORTÂNCIA POR PERMUTAÇÃO):
+--------------------------------------------------
+ 1. time_in_hospital                         0.000000 (±0.000000)
+ 2. num_lab_procedures                       0.000000 (±0.000000)
+ 3. num_procedures                           0.000000 (±0.000000)
+ 4. num_medications                          0.000000 (±0.000000)
+ 5. number_outpatient                        0.000000 (±0.000000)
+ 6. number_emergency                         0.000000 (±0.000000)
+ 7. number_inpatient                         0.000000 (±0.000000)
+ 8. number_diagnoses                         0.000000 (±0.000000)
+ 9. num_previous_admissions                  0.000000 (±0.000000)
+10. medication_changed                       0.000000 (±0.000000)
+
+🔢 MATRIZ DE CONFUSÃO:
+--------------------
+               Predito
+Real     0      1
+   0   8926    787
+   1    666    147
+
+📊 MÉTRICAS CLÍNICAS:
+--------------------
+Especificidade: 0.9190
+Sensibilidade:  0.1808
+VPP:           0.1574
+VPN:           0.9306
+
+ℹ️ INFORMAÇÕES ADICIONAIS:
+-------------------------
+Tempo de treinamento: 0.00 segundos
+Threshold otimizado: 0.1000
+Número de features: 182

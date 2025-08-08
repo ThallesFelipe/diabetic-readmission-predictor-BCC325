@@ -270,6 +270,9 @@ class RandomForestModel:
             # Treinar modelo
             self.model.fit(self.X_train, self.y_train)
             
+            # Definir como melhor modelo (importante para validações)
+            self.best_model = self.model
+            
             # Calcular tempo de treinamento
             self.training_time = (datetime.now() - start_time).total_seconds()
             

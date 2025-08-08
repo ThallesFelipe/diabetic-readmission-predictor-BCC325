@@ -1,0 +1,178 @@
+{
+    "model_type": "LogisticRegression",
+    "timestamp": "20250808_191658",
+    "datetime": "2025-08-08T19:16:58.879997",
+    "config": {
+        "random_state": 42,
+        "max_iter": 1000,
+        "solver": "liblinear",
+        "class_weight": "balanced",
+        "C": 0.01,
+        "penalty": "l1"
+    },
+    "metrics": {
+        "accuracy": 0.6612198365950979,
+        "precision": 0.1168939604787086,
+        "recall": 0.5166051660516605,
+        "f1": 0.19064911484339536,
+        "roc_auc": 0.6303193156506877,
+        "specificity": 0.6733244105837537,
+        "sensitivity": 0.5166051660516605,
+        "ppv": 0.1168939604787086,
+        "npv": 0.9433145824318477,
+        "accuracy_optimized": 0.7432072962188866,
+        "precision_optimized": 0.12999216914643696,
+        "recall_optimized": 0.40836408364083643,
+        "f1_optimized": 0.1972081972081972,
+        "optimal_threshold": 0.529143910777467,
+        "cv_results": {
+            "accuracy": {
+                "mean": 0.6566114800093985,
+                "std": 0.0040552826301028565
+            },
+            "precision": {
+                "mean": 0.11387032892403795,
+                "std": 0.0009536040638848391
+            },
+            "recall": {
+                "mean": 0.5076875812359682,
+                "std": 0.01076282086757911
+            },
+            "f1": {
+                "mean": 0.18601056237625568,
+                "std": 0.0018479145537753001
+            },
+            "roc_auc": {
+                "mean": 0.6299875466041174,
+                "std": 0.0064405044065593145
+            }
+        }
+    },
+    "optimal_threshold": 0.529143910777467,
+    "training_time": 0,
+    "data_info": {
+        "train_samples": 42101,
+        "test_samples": 10526,
+        "features": 182,
+        "train_class_distribution": {
+            "0": 38847,
+            "1": 3254
+        },
+        "test_class_distribution": {
+            "0": 9713,
+            "1": 813
+        }
+    },
+    "feature_importance": [
+        {
+            "feature": "number_inpatient",
+            "coefficient": 0.24904686339896523,
+            "abs_coefficient": 0.24904686339896523
+        },
+        {
+            "feature": "discharge_disposition_desc_Hospice / home",
+            "coefficient": -0.1127895264351326,
+            "abs_coefficient": 0.1127895264351326
+        },
+        {
+            "feature": "age_[50-60)",
+            "coefficient": -0.10844521559297163,
+            "abs_coefficient": 0.10844521559297163
+        },
+        {
+            "feature": "medical_specialty_Pediatrics-Endocrinology",
+            "coefficient": -0.09999730669861769,
+            "abs_coefficient": 0.09999730669861769
+        },
+        {
+            "feature": "number_diagnoses",
+            "coefficient": 0.09776436594297444,
+            "abs_coefficient": 0.09776436594297444
+        },
+        {
+            "feature": "diabetesMed_Yes",
+            "coefficient": 0.09345940854752624,
+            "abs_coefficient": 0.09345940854752624
+        },
+        {
+            "feature": "discharge_disposition_desc_Discharged/transferred to another short term hospital",
+            "coefficient": 0.08905192969694672,
+            "abs_coefficient": 0.08905192969694672
+        },
+        {
+            "feature": "number_emergency",
+            "coefficient": 0.07903868926581437,
+            "abs_coefficient": 0.07903868926581437
+        },
+        {
+            "feature": "discharge_disposition_desc_Discharged/transferred/referred to a psychiatric hospital of psychiatric distinct part unit of a hospital",
+            "coefficient": 0.0727860390774002,
+            "abs_coefficient": 0.0727860390774002
+        },
+        {
+            "feature": "discharge_disposition_desc_Hospice / medical facility",
+            "coefficient": -0.06625437919146826,
+            "abs_coefficient": 0.06625437919146826
+        },
+        {
+            "feature": "discharge_disposition_desc_Discharged/transferred within this institution to Medicare approved swing bed",
+            "coefficient": 0.06024013265269494,
+            "abs_coefficient": 0.06024013265269494
+        },
+        {
+            "feature": "discharge_disposition_desc_Unknown",
+            "coefficient": 0.05496582032189166,
+            "abs_coefficient": 0.05496582032189166
+        },
+        {
+            "feature": "medical_specialty_ObstetricsandGynecology",
+            "coefficient": -0.05267590340709275,
+            "abs_coefficient": 0.05267590340709275
+        },
+        {
+            "feature": "medical_specialty_Surgery-Neuro",
+            "coefficient": -0.04716814569428058,
+            "abs_coefficient": 0.04716814569428058
+        },
+        {
+            "feature": "medical_specialty_Endocrinology",
+            "coefficient": -0.04476351407532579,
+            "abs_coefficient": 0.04476351407532579
+        },
+        {
+            "feature": "medical_specialty_Gynecology",
+            "coefficient": -0.04378332988196076,
+            "abs_coefficient": 0.04378332988196076
+        },
+        {
+            "feature": "medical_specialty_Emergency/Trauma",
+            "coefficient": -0.042417381174003045,
+            "abs_coefficient": 0.042417381174003045
+        },
+        {
+            "feature": "glyburide-metformin_No",
+            "coefficient": 0.041570721530495944,
+            "abs_coefficient": 0.041570721530495944
+        },
+        {
+            "feature": "metformin_Steady",
+            "coefficient": -0.04013846468201267,
+            "abs_coefficient": 0.04013846468201267
+        },
+        {
+            "feature": "time_in_hospital",
+            "coefficient": 0.03959078609052194,
+            "abs_coefficient": 0.03959078609052194
+        }
+    ],
+    "confusion_matrix": [
+        [
+            6540,
+            3173
+        ],
+        [
+            393,
+            420
+        ]
+    ]
+}

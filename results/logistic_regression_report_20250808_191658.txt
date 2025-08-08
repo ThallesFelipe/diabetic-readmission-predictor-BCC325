@@ -1,0 +1,115 @@
+🔬 REGRESSÃO LOGÍSTICA - RELATÓRIO TÉCNICO COMPLETO
+============================================================
+
+📅 Data/Hora: 2025-08-08 19:16:58
+🕒 Timestamp: 20250808_191658
+
+🔧 CONFIGURAÇÕES DO MODELO:
+------------------------------
+random_state: 42
+max_iter: 1000
+solver: liblinear
+class_weight: balanced
+C: 0.01
+penalty: l1
+solver: liblinear
+C: 0.01
+penalty: l1
+class_weight: balanced
+max_iter: 1000
+random_state: 42
+n_jobs: None
+
+📊 MÉTRICAS DE PERFORMANCE:
+------------------------------
+accuracy: 0.6612
+precision: 0.1169
+recall: 0.5166
+f1: 0.1906
+roc_auc: 0.6303
+specificity: 0.6733
+sensitivity: 0.5166
+ppv: 0.1169
+npv: 0.9433
+optimal_threshold: 0.5291
+
+🏆 TOP 20 FEATURES MAIS IMPORTANTES (COEFICIENTES):
+--------------------------------------------------
+ 1. number_inpatient                             0.249047
+ 2. discharge_disposition_desc_Hospice / home    -0.112790
+ 3. age_[50-60)                                 -0.108445
+ 4. medical_specialty_Pediatrics-Endocrinology    -0.099997
+ 5. number_diagnoses                             0.097764
+ 6. diabetesMed_Yes                              0.093459
+ 7. discharge_disposition_desc_Discharged/transferred to another short term hospital     0.089052
+ 8. number_emergency                             0.079039
+ 9. discharge_disposition_desc_Discharged/transferred/referred to a psychiatric hospital of psychiatric distinct part unit of a hospital     0.072786
+10. discharge_disposition_desc_Hospice / medical facility    -0.066254
+11. discharge_disposition_desc_Discharged/transferred within this institution to Medicare approved swing bed     0.060240
+12. discharge_disposition_desc_Unknown           0.054966
+13. medical_specialty_ObstetricsandGynecology    -0.052676
+14. medical_specialty_Surgery-Neuro             -0.047168
+15. medical_specialty_Endocrinology             -0.044764
+16. medical_specialty_Gynecology                -0.043783
+17. medical_specialty_Emergency/Trauma          -0.042417
+18. glyburide-metformin_No                       0.041571
+19. metformin_Steady                            -0.040138
+20. time_in_hospital                             0.039591
+
+📈 TOP 10 FEATURES COM COEFICIENTES POSITIVOS (aumentam risco):
+-------------------------------------------------------
+ 1. number_inpatient                             0.249047
+ 2. number_diagnoses                             0.097764
+ 3. diabetesMed_Yes                              0.093459
+ 4. discharge_disposition_desc_Discharged/transferred to another short term hospital     0.089052
+ 5. number_emergency                             0.079039
+ 6. discharge_disposition_desc_Discharged/transferred/referred to a psychiatric hospital of psychiatric distinct part unit of a hospital     0.072786
+ 7. discharge_disposition_desc_Discharged/transferred within this institution to Medicare approved swing bed     0.060240
+ 8. discharge_disposition_desc_Unknown           0.054966
+ 9. glyburide-metformin_No                       0.041571
+10. time_in_hospital                             0.039591
+
+📉 TOP 10 FEATURES COM COEFICIENTES NEGATIVOS (diminuem risco):
+-------------------------------------------------------
+ 1. discharge_disposition_desc_Hospice / home    -0.112790
+ 2. age_[50-60)                                 -0.108445
+ 3. medical_specialty_Pediatrics-Endocrinology    -0.099997
+ 4. discharge_disposition_desc_Hospice / medical facility    -0.066254
+ 5. medical_specialty_ObstetricsandGynecology    -0.052676
+ 6. medical_specialty_Surgery-Neuro             -0.047168
+ 7. medical_specialty_Endocrinology             -0.044764
+ 8. medical_specialty_Gynecology                -0.043783
+ 9. medical_specialty_Emergency/Trauma          -0.042417
+10. metformin_Steady                            -0.040138
+
+🔢 MATRIZ DE CONFUSÃO:
+--------------------
+               Predito
+Real     0      1
+   0   6540   3173
+   1    393    420
+
+📊 MÉTRICAS CLÍNICAS:
+--------------------
+Especificidade: 0.6733
+Sensibilidade:  0.5166
+VPP:           0.1169
+VPN:           0.9433
+
+🔄 VALIDAÇÃO CRUZADA:
+--------------------
+accuracy: 0.6566 (±0.0041)
+precision: 0.1139 (±0.0010)
+recall: 0.5077 (±0.0108)
+f1: 0.1860 (±0.0018)
+roc_auc: 0.6300 (±0.0064)
+
+ℹ️ INFORMAÇÕES ADICIONAIS:
+-------------------------
+Tempo de treinamento: 0.00 segundos
+Threshold otimizado: 0.5291
+Número de features: 182
+Amostras de treino: 42101
+Amostras de teste: 10526
+Distribuição de classes (treino): {'0': 38847, '1': 3254}
+Distribuição de classes (teste): {'0': 9713, '1': 813}
