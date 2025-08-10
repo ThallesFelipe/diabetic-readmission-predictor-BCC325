@@ -85,7 +85,7 @@ class ExploratoryDataAnalysis:
                 print(f"✅ Usando dados limpos: {CLEAN_DATA_FILE}")
             else:
                 self.data_path = RAW_DATA_FILE
-                print(f"⚠️  Dados limpos não encontrados. Usando dados brutos: {RAW_DATA_FILE}")
+                print(f"⚠️  Dados brutos não encontrados. Usando dados brutos: {RAW_DATA_FILE}")
         else:
             self.data_path = data_path
             
@@ -286,8 +286,8 @@ class ExploratoryDataAnalysis:
         
         # Salvar figura
         visualizer.save_figure(fig, 'target_variable_analysis',
-                              title='Análise da Variável Target - Readmissão Hospitalar',
-                              subtitle='Distribuição e Estatísticas da Variável de Interesse')
+                              title='',
+                              subtitle='')
     
     def analyze_missing_data(self):
         """Analisa dados faltantes no dataset com visualizações"""
@@ -380,7 +380,7 @@ class ExploratoryDataAnalysis:
                 
                 if len(pattern_counts) > 1:
                     ax4.bar(range(len(pattern_counts)), pattern_counts.values, color='lightgreen')
-                    ax4.set_xlabel('Padrões de Dados Faltantes (Top 10)')
+                    ax4.set_xlabel('Padrões de Dados Faltantes')
                     ax4.set_ylabel('Frequência')
                     ax4.set_title('Padrões de Combinação\nDados Faltantes (Top 5 colunas)', 
                                  fontsize=14, fontweight='bold')
@@ -533,11 +533,11 @@ class ExploratoryDataAnalysis:
                 else:
                     print(f"  {race}: {count:,} ({pct:.1f}%)")
             
-            # Gráfico de barras horizontais - distribuição por raça (top 10)
+            # Gráfico de barras horizontais - distribuição por raça
             ax1 = axes[0, col_idx]
             top_races = race_counts.head(10)
             bars1 = ax1.barh(range(len(top_races)), top_races.values, color='lightgreen')
-            ax1.set_title('Distribuição por Raça (Top 10)', fontsize=14, fontweight='bold')
+            ax1.set_title('Distribuição por Raça', fontsize=14, fontweight='bold')
             ax1.set_xlabel('Número de Pacientes')
             ax1.set_yticks(range(len(top_races)))
             ax1.set_yticklabels(top_races.index, fontsize=10)
@@ -547,13 +547,13 @@ class ExploratoryDataAnalysis:
                 ax1.text(v + max(top_races.values)*0.01, i, f'{v:,}', 
                         va='center', ha='left', fontsize=9)
             
-            # Gráfico de barras - taxa de readmissão por raça (top 10)
+            # Gráfico de barras - taxa de readmissão por raça
             ax2 = axes[1, col_idx]
             valid_races = [r for r in top_races.index if r in race_target.index]
             if valid_races:
                 readmission_rates = [race_target.loc[r, 'Taxa_Readmissao'] * 100 for r in valid_races]
                 bars2 = ax2.barh(range(len(valid_races)), readmission_rates, color='salmon')
-                ax2.set_title('Taxa de Readmissão por Raça (Top 10)', fontsize=14, fontweight='bold')
+                ax2.set_title('Taxa de Readmissão por Raça', fontsize=14, fontweight='bold')
                 ax2.set_xlabel('Taxa de Readmissão (%)')
                 ax2.set_yticks(range(len(valid_races)))
                 ax2.set_yticklabels(valid_races, fontsize=10)
@@ -600,7 +600,7 @@ class ExploratoryDataAnalysis:
         
         # Análise de especialidade médica
         if 'medical_specialty' in self.df.columns:
-            print(f"\nTop 10 especialidades médicas:")
+            print(f"\nEspecialidades médicas:")
             specialty_counts = self.df['medical_specialty'].value_counts()
             specialty_target = self.df.groupby('medical_specialty')['target'].agg(['count', 'mean']).round(3)
             specialty_target.columns = ['Total', 'Taxa_Readmissao']
@@ -903,7 +903,7 @@ class ExploratoryDataAnalysis:
                     ax1.set_yticks(range(len(top_meds)))
                     ax1.set_yticklabels([med.replace('_', ' ') for med in top_meds['Medicamento']], fontsize=10)
                     ax1.set_xlabel('Taxa de Prescrição (%)')
-                    ax1.set_title('Top 10 Medicamentos por Taxa de Prescrição', fontsize=14, fontweight='bold')
+                    ax1.set_title('Medicamentos por Taxa de Prescrição', fontsize=14, fontweight='bold')
                     
                     # Adicionar valores
                     for i, v in enumerate(top_meds['Taxa_Prescricao']):
@@ -1264,7 +1264,7 @@ class ExploratoryDataAnalysis:
             
             diagnosis_results[diag_col] = diag_stats
             
-            print(f"  Top 10 categorias por frequência:")
+            print(f"  Categorias por frequência:")
             for category, row in diag_stats.head(10).iterrows():
                 print(f"    {category}: {row['Total_Casos']:,} casos ({row['Taxa_Readmissao']*100:.1f}% readmissão)")
         
@@ -1325,7 +1325,7 @@ class ExploratoryDataAnalysis:
             combo_stats = combo_stats[combo_stats['Total_Casos'] >= 50]  # Filtrar combinações raras
             combo_stats = combo_stats.sort_values('Total_Casos', ascending=False)
             
-            print(f"  Top 10 combinações de diagnósticos:")
+            print(f"  Combinações de diagnósticos:")
             for _, row in combo_stats.head(10).iterrows():
                 print(f"    {row[primary_diag]} + {row[secondary_diag]}: {row['Total_Casos']:,} casos ({row['Taxa_Readmissao']*100:.1f}% readmissão)")
         
